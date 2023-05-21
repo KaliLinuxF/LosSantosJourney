@@ -1,1 +1,1 @@
-console.log('Хуй')
+console.log('Hello from server')
