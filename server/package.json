@@ -1,0 +1,20 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node esbuild.config.mjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/ragemp-s": "github:CocaColaBear/types-ragemp-s#v1.0"
+  },
+  "dependencies": {
+    "@types/node": "^20.2.1",
+    "mysql2": "^3.3.1",
+    "redis": "^4.6.6",
+    "typeorm": "^0.3.16"
+  }
+}

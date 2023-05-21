@@ -1,0 +1,15 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "scripts": {
+    "start": "cd .. && ragemp-server.exe"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "^0.17.19",
+    "terser": "^5.17.4"
+  }
+}
