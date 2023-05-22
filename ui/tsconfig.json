@@ -6,11 +6,10 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "noImplicitAny": true,
-    "jsx": "react"
+    "jsx": "react",
   },
   "exclude": [
     "node_modules",
-    "esbuild.config.mjs",
-    "../dist"
+    "../dist",
   ],
 }

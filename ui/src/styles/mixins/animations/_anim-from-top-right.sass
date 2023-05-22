@@ -1,0 +1,20 @@
+=anim-from-top-right($enterDelay, $enterDuration, $exitDelay, $exitDuration)
+  &-enter
+    opacity: 0
+    transform: translate(30%, -30%)
+
+  &-enter-active
+    opacity: 1
+    transform: translate(0, 0)
+    transition: all $enterDuration ease
+    transition-delay: $enterDelay
+
+  &-exit
+    opacity: 1
+    transform: translate(0, 0)
+
+  &-exit-active
+    opacity: 0
+    transform: translate(30%, -30%)
+    transition: all $exitDuration ease
+    transition-delay: $exitDelay

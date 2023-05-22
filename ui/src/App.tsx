@@ -1,10 +1,11 @@
 import React from 'react';
 import './index.sass'
+import Auth from "./interfaces/Auth";
 
 const App: React.FC = () => {
 	return (
 		<>
-			<h1>Hello World!</h1>
+			<Auth/>
 		</>
 	);
 };

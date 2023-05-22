@@ -46,7 +46,7 @@ const config: webpack.Configuration = {
 			},
 			{
 				test: /\.(png|jpe?g|gif|svg|webp|ico|woff2?|eot|ttf|otf)$/,
-				type: 'asset/resolve',
+				type: 'asset/resource',
 			},
 		],
 	},
