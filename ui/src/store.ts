@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {authReducer} from "./interfaces/Auth/reducer";
+import {notificationsReducer} from "./interfaces/Notifications/reducer";
 
 const rootReducer = combineReducers({
 	auth: authReducer,
+	notifications: notificationsReducer,
 })
 
 export const setupStore = () => {

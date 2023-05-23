@@ -1,0 +1,74 @@
+@import "src/styles/mixins"
+@import "src/styles/variables"
+
+.Auth .Button
+  width: 100%
+  height: 62 *$hPoint
+  backdrop-filter: blur(7.5 *$hPoint)
+  padding: 0 (25 *$hPoint)
+  font-weight: 500
+  font-size: 20 *$hPoint
+  text-transform: uppercase
+  +flex-row-start-center()
+  +anim-from-top-left(.2s, .3s, 0, .3s)
+
+  &.centeredText
+    +flex-row-center-center()
+    text-transform: uppercase
+
+  > .arrow
+    width: 20 *$hPoint
+    height: 20 *$hPoint
+    background-image: url(../../assets/images/arrow-idle.svg)
+    background-size: 100% 100%
+    position: absolute
+    top: 50%
+    right: 25 *$hPoint
+    transform: translateY(-50%)
+    transition: all .1s ease
+
+    &.back
+      transform: translateY(-50%) rotate(180deg)
+
+  &.square
+    width: 62 *$hPoint
+
+    > .arrow
+      left: 50%
+      transform: translate(-50%, -50%)
+
+      &.back
+        transform: translate(-50%, -50%) rotate(180deg)
+
+  &.type-0
+    background-color: #F1C950
+    color: #0D0D0D
+
+    > .arrow
+      background-image: url(../../assets/images/arrow-active.svg)
+
+  &.type-1
+    background-color: rgba(11, 11, 11, .6)
+    color: #fff
+
+  &-enter-done
+    transition: all .1s ease
+
+    &:not(.disabled)
+      cursor: pointer
+      &:hover
+        &.type-0
+          transform: scale(1.04)
+        &.type-1
+          background-color: #F1C950
+          color: #131313
+        > .arrow
+          background-image: url(../../assets/images/arrow-active.svg)
+      &:active
+        &.type-0
+          transform: scale(.96)
+        &.type-1
+          opacity: .3 !important
+
+  &.disabled
+    opacity: .5

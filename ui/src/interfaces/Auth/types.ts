@@ -4,3 +4,14 @@ export enum PageIds {
 	SignUp,
 	PasswordRecovery,
 }
+
+export enum ButtonType {
+	Light,
+	Dark
+}
+
+// export interface IErrorMessages {
+// 	Length: string
+// 	AllowedChars: string
+// 	NotAllowedChars?: string
+// }

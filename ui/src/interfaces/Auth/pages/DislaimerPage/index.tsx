@@ -4,6 +4,8 @@ import {useAppDispatch, useAppSelector} from "../../../../hooks/redux";
 import {CSSTransition} from "react-transition-group";
 import {PageIds} from "../../types";
 import {authActions} from "../../reducer";
+import Logo from "../../components/Logo";
+import {calcVh} from "../../../../utils/calcVh";
 
 const DisclaimerPage: React.FC = () => {
 	const [isShowContent, setIsShowContent] = useState(false)
@@ -40,9 +42,7 @@ const DisclaimerPage: React.FC = () => {
 					</div>
 					<div className="lines"/>
 				</div>
-				<CSSTransition in={isShowContent} timeout={300} mountOnEnter unmountOnExit classNames='logo'>
-					<div className="logo"/>
-				</CSSTransition>
+				<Logo isShowAnim={isShowContent} style={{marginBottom: calcVh(50)}}/>
 				<CSSTransition in={isShowContent} timeout={300} mountOnEnter unmountOnExit classNames='text'>
 					<div className="text">
 						Los Santos Journey is not affiliated with or endorsed by Take-Two, Rockstar North Interactive or any other rights holder. All trademarks used belong to their respective owners and are not affiliated with or endorsed by Take-Two, Rockstar North Interactive.

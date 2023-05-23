@@ -1,0 +1,24 @@
+@import "src/styles/mixins"
+@import "src/styles/variables"
+
+.Auth .SignUpPage
+  +full-screen-block()
+  +anim-opacity(0, .25s, 0, 1s)
+  background-image: url(../../assets/images/bg.png)
+  background-size: cover
+  background-position: 50%
+
+  > .content
+    width: 708 *$hPoint
+    height: 100%
+    position: absolute
+    inset: 0
+    background-image: linear-gradient(90deg, #0007, #0000)
+    padding: 0 (248 *$hPoint) 0 (60 *$hPoint)
+    +flex-col-center-center()
+    align-items: flex-start
+
+    > .row
+      width: 100%
+      height: 62 *$hPoint
+      +flex-row-space-center()

@@ -1,0 +1,59 @@
+@import "src/styles/mixins"
+@import "src/styles/variables"
+
+.Auth .Checkbox
+  width: 100%
+  +anim-from-top-left(.2s, .3s, 0, .3s)
+  +flex-row-start-center()
+  cursor: pointer
+
+  &-enter-done
+    transition: all .1s ease
+
+    &:not(.active):hover
+      opacity: .8
+    &:active
+      opacity: .6
+
+  > .box
+    width: 30 *$hPoint
+    height: 30 *$hPoint
+    background-color: rgba(255, 255, 255, .1)
+    border: (1.5 *$hPoint) solid #fff
+    margin-right: 10 *$hPoint
+    transition: all .1s ease
+    +flex-row-center-center()
+
+    > .tick
+      width: 20 *$hPoint
+      height: 20 *$hPoint
+      background-image: url(../../assets/images/tick.svg)
+      background-size: 100% 100%
+      opacity: 0
+      transition: all .1s ease
+
+  > .text
+    opacity: .5
+    font-size: 16 *$hPoint
+    transition: all .1s ease
+
+  &:not(.active):hover
+
+    > .box
+      background-color: rgba(255, 255, 255, .3)
+
+    > .text
+      opacity: 1
+
+  &.active
+
+    > .box
+      background-color: rgba(241, 201, 80, .1)
+      border-color: #F1C950
+
+      > .tick
+        opacity: 1
+
+    > .text
+      opacity: 1
+      color: #F1C950

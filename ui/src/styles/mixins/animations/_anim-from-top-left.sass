@@ -1,9 +1,9 @@
 @import "../../variables"
 
-=anim-from-top-right($enterDelay, $enterDuration, $exitDelay, $exitDuration)
+=anim-from-top-left($enterDelay, $enterDuration, $exitDelay, $exitDuration)
   &-enter
     opacity: 0
-    transform: translate(100 *$hPoint, -100 *$hPoint)
+    transform: translate(-100 *$hPoint, -100 *$hPoint)
 
   &-enter-active
     opacity: 1
@@ -17,6 +17,6 @@
 
   &-exit-active
     opacity: 0
-    transform: translate(100 *$hPoint, -100 *$hPoint)
+    transform: translate(-100 *$hPoint, -100 *$hPoint)
     transition: all $exitDuration ease
     transition-delay: $exitDelay

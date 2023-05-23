@@ -1,1 +1,4 @@
-console.log('[Shared]: Hello from shared');
+import './auth/types'
+import './auth/validationRegExps'
+
+import './notifications/types'
