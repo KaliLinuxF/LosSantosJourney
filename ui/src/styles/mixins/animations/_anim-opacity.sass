@@ -1,0 +1,16 @@
+=anim-opacity($enterDelay, $enterDuration, $exitDelay, $exitDuration)
+  &-enter
+    opacity: 0
+
+  &-enter-active
+    opacity: 1
+    transition: all $enterDuration ease
+    transition-delay: $enterDelay
+
+  &-exit
+    opacity: 1
+
+  &-exit-active
+    opacity: 0
+    transition: all $exitDuration ease
+    transition-delay: $exitDelay

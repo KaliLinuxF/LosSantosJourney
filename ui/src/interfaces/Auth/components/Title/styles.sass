@@ -1,0 +1,10 @@
+@import "src/styles/mixins"
+@import "src/styles/variables"
+
+.Auth .Title
+  font-weight: 500
+  font-size: 20 *$hPoint
+  line-height: 1.5em
+  text-shadow: 0 (1 *$hPoint) (5 *$hPoint) #000
+  //+anim-from-top-right(.2s, .3s, 0, .3s)
+  +anim-from-top-left(.2s, .3s, 0, .3s)

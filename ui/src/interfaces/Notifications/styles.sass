@@ -1,0 +1,61 @@
+@import "src/styles/variables"
+@import "src/styles/mixins"
+
+.NotificationsList
+  width: 600 *$hPoint
+  height: 100px
+  position: absolute
+  z-index: 9999
+  font-family: Archivo, sans-serif
+
+  &.topLeft
+    top: 60 *$hPoint
+    left: 60 *$hPoint
+
+  > .Notify
+    width: fit-content
+    height: 65 *$hPoint
+    padding: (25 *$hPoint) (15 *$hPoint) (20 *$hPoint)
+    background-color: rgba(12, 11, 11, .6)
+    backdrop-filter: blur(7.5 *$hPoint)
+    font-size: 20 *$hPoint
+    color: #fff
+    position: relative
+    margin-bottom: 20 *$hPoint
+    opacity: 0
+    transform: translate(-100 *$hPoint, -100 *$hPoint)
+    animation-fill-mode: forwards !important
+
+    &::after
+      content: ''
+      width: 100%
+      height: 5 *$hPoint
+      position: absolute
+      top: 0
+      left: 0
+
+    &.type-0::after
+      background-color: #1481C2
+    &.type-1::after
+      background-color: #FF4343
+    &.type-2::after
+      background-color: #F1C950
+    &.type-3::after
+      background-color: #05C02B
+
+
+@keyframes enter
+  0%
+    opacity: 0
+    transform: translate(-100 *$hPoint, -100 *$hPoint)
+  100%
+    opacity: 1
+    transform: translate(0, 0)
+
+@keyframes exit
+  0%
+    opacity: 1
+    transform: translate(0, 0)
+  100%
+    opacity: 0
+    transform: translate(-100 *$hPoint, -100 *$hPoint)

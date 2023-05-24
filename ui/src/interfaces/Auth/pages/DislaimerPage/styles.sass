@@ -1,0 +1,85 @@
+@import "src/styles/mixins"
+@import "src/styles/variables"
+
+.Auth .DisclaimerPage
+  +full-screen-block()
+  +flex-col-center-center()
+  +anim-opacity(0, .75s, .25s, .5s)
+
+  > .bg
+    +full-screen-block()
+    z-index: -1
+    background-color: #0D0D0D
+
+    > .lights
+      +full-screen-block()
+
+      > .light
+        width: 582 *$hPoint
+        height: 615 *$hPoint
+        background-size: 100% 100%
+        opacity: .3
+        filter: blur(125 *$hPoint)
+        +center-block()
+        animation: 2s ease-in-out lightPulse infinite
+
+        &.yellow
+          transform: translate(-160%, -90%)
+          background-image: url(../../assets/images/light-yellow.svg)
+
+        &.blue
+          transform: translate(-20%, 10%)
+          background-image: url(../../assets/images/light-blue.svg)
+          animation-delay: 1s
+
+        &.pink
+          transform: translate(-3%, -100%)
+          width: 1332 *$hPoint
+          height: 1407 *$hPoint
+          background-image: url(../../assets/images/light-pink.svg)
+          animation-delay: 1.5s
+
+    > .lines
+      +full-screen-block()
+      background-size: cover
+      background-position: 50%
+      background-image: url(../../assets/images/lines.svg)
+
+  > .text
+    width: 745 *$hPoint
+    text-align: center
+    font-weight: 500
+    font-size: 24 *$hPoint
+    line-height: 1.5em
+    +anim-from-top-right(0, .3s, 0, .3s)
+
+  > .progress
+    width: calc(90%)
+    height: 5 *$hPoint
+    position: absolute
+    bottom: 62  *$hPoint
+    left: 50%
+    transform: translateX(-50%)
+    background-color: rgba(255, 255, 255, .1)
+
+    > .line
+      height: 100%
+      background-color: #F1C950
+      animation: 5s linear progress
+      animation-fill-mode: forwards
+
+
+@keyframes lightPulse
+  0%
+    opacity: .3
+  50%
+    opacity: .5
+  100%
+    opacity: .3
+
+@keyframes progress
+  0%
+    width: 0
+  100%
+    width: 100%
+
