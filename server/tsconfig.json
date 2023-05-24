@@ -11,11 +11,13 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "resolveJsonModule": true,
   },
   "exclude": [
     "node_modules",
     "esbuild.config.mjs",
-    "../dist"
-  ],
+    "../dist",
+    "./socks"
+  ]
 }

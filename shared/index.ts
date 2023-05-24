@@ -1,1 +1,2 @@
-console.log('[Shared]: Hello from shared');
+import './utils/EventBus';
+import './utils/hooks';

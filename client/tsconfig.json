@@ -15,6 +15,6 @@
   },
   "exclude": [
     "node_modules",
-    "esbuild.config.mjs"
+    "esbuild.config.mjs",
   ],
 }
