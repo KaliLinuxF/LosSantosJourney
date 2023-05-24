@@ -20,7 +20,7 @@ const Input: React.FC<IInputProps> = ({
 																				hasEye
 																			}) => {
 
-	const [isHiddenValue, setIsHiddenValue] = useState(true)
+	const [isHiddenValue, setIsHiddenValue] = useState(false)
 	const inputRef = useRef(null)
 
 	return (
