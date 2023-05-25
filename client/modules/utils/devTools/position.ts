@@ -21,7 +21,3 @@ mp.events.add('goToMark', () => {
         }, 400);
     }
 });
-
-mp.events.add('setlocaltime', (time: number) => {
-    mp.game.time.setClockTime(time, 1, 1);
-});

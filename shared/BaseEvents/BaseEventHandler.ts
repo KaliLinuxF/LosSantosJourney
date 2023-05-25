@@ -18,11 +18,14 @@ export class BaseEventHandler {
 
             mp.events.add(eventName, (...args) => {
                 this.getAllEvents().forEach((item) => {
-                    console.log(item, eventName);
-                    
                     if(item === eventName) {
-                        console.log('Экзикут')
-                        this.get(item).executeHandlers(...args);
+                        const baseEvent = this.get(item);
+
+                        if(!baseEvent) {
+                            throw new Error('[BaseEvents]: BaseEvent undefined');
+                        }
+
+                        baseEvent.executeHandlers(...args);
                     }
                 });
             })

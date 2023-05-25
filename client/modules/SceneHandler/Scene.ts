@@ -13,12 +13,13 @@ export default class Scene {
     async load() {
         mp.game.ui.displayRadar(false);
         mp.gui.chat.show(false);
+        mp.nametags.enabled = false
 
         if(this.sceneTime) {
             mp.game.time.setClockTime(this.sceneTime, 1, 1);
         }
 
-        mp.players.local.position = new mp.Vector3(-347.0557, 609.8212, 171.4911);
+        mp.players.local.position = new mp.Vector3(-326.2754, 639.0650, 172.8681);
         mp.players.local.setAlpha(0);
 
         this.activateCamera();

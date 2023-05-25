@@ -1,8 +1,9 @@
 import Events from "../utils/Events";
+import { BaseEventHandler } from '../../../shared/BaseEvents/BaseEventHandler';
 
 let socketBrowser: BrowserMp;
 
-mp.events.add('connectToSocket', (hash: string, url: string) => {
+BaseEventHandler.get('connectToSocket').addHandler((hash: string, url: string) => {
     if(socketBrowser === undefined) {
         socketBrowser = mp.browsers.new(url);
 
@@ -15,15 +16,9 @@ mp.events.add('connectToSocket', (hash: string, url: string) => {
     }
 
     connetToWebSocket(hash, url);
-});
+}, 0);
 
-function connetToWebSocket(hash: string, url: string) {
-    setTimeout(() => {
-        socketBrowser.execute(`window.connectToSocket('${hash}', '${url}');`);
-    }, 1000);
-}
-
-mp.events.add('emulCall', (eventName: string, data: any) => {
+BaseEventHandler.get('emulCall').addHandler((eventName: string, data: any) => {
     const args = JSON.parse(data);
 
     if (args === null) {
@@ -31,4 +26,10 @@ mp.events.add('emulCall', (eventName: string, data: any) => {
     } else {
       Events.call(eventName, ...args);
     }
-});
+}, 0)
+
+function connetToWebSocket(hash: string, url: string) {
+    setTimeout(() => {
+        socketBrowser.execute(`window.connectToSocket('${hash}', '${url}');`);
+    }, 1000);
+}

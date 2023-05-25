@@ -62,7 +62,7 @@ export class EventBus {
    */
   register<T>(name: string, handler: HookHandler<T>, priority: number = 100) {
     if (this.eventsHandlers.has(name)) {
-      this.eventsHandlers.get(name).push({ handler, priority });
+      this.eventsHandlers.get(name)?.push({ handler, priority });
       const hooks = this.eventsHandlers.get(name);
       this.eventsHandlers.set(name, hooks.sort((a, b) => a.priority - b.priority))
     } else {
@@ -73,7 +73,7 @@ export class EventBus {
 
   registerAsync<T>(name: string, handler: HookHandler<T>, priority: number = 100) {
     if (this.asyncEventsHandlers.has(name)) {
-      this.asyncEventsHandlers.get(name).push({ handler, priority });
+      this.asyncEventsHandlers.get(name)?.push({ handler, priority });
       const hooks = this.asyncEventsHandlers.get(name);
       this.asyncEventsHandlers.set(name, hooks.sort((a, b) => a.priority - b.priority))
     } else {

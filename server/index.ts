@@ -1,15 +1,8 @@
 import './modules/sockets';
 import './modules/proto';
-import './modules/utils/devUtils';
+import './modules/utils/index.ts';
+import { BaseEventHandler } from '../shared/BaseEvents/BaseEventHandler';
 
-import { playerSocketConnect } from './modules/sockets';
-
-mp.events.add('playerJoin', (player: PlayerMp) => {
+BaseEventHandler.get('playerJoin').addHandler((player: PlayerMp) => {
     player.tempValues = {};
-
-    setTimeout(() => {
-        playerSocketConnect(player);
-    }, 4000);
-});
-
-console.log('Hello from server')
+}, 0);
