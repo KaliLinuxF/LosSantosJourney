@@ -18,6 +18,7 @@
     "node_modules",
     "esbuild.config.mjs",
     "../dist",
-    "./socks"
+    "./socks",
+    "node_modules/sequelize/lib/dialects/postgres/hstore.js"
   ]
 }
