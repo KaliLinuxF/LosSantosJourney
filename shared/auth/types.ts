@@ -1,3 +1,3 @@
-export interface IAuthActionShow {
+export interface AuthActionShowPayload {
 	disclaimerDuration: number
 }

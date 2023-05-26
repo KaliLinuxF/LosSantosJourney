@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {PageIds} from "./types";
-import {IAuthActionShow} from "../../../../shared/auth/types";
+import {AuthActionShowPayload} from "../../../../shared/auth/types";
 
 interface AuthState {
 	isOpen: boolean
@@ -18,7 +18,7 @@ export const authSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
-		show(state, action: PayloadAction<IAuthActionShow>) {
+		show(state, action: PayloadAction<AuthActionShowPayload>) {
 			state.isOpen = true
 			const { disclaimerDuration } = action.payload
 			state.disclaimerDuration = disclaimerDuration

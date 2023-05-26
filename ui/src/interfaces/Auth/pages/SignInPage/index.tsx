@@ -11,8 +11,15 @@ import Button from "../../components/Button";
 import {authActions} from "../../reducer";
 import {sendNotify} from "../../../../utils/notify";
 import {NotificationPositions, NotificationTypes} from "../../../../../../shared/notifications/types";
+import {AuthValidationRegExps} from '../../../../../../shared/auth/validationRegExps'
+import rpc from 'rage-rpc'
+import {AuthApiEventNames, AuthApiSignInData} from "../../../../../../shared/auth/api";
 
-const SignInPage: React.FC = () => {
+type SignInPageProps = {
+	sendErrorNotify: (text: string) => void
+}
+
+const SignInPage: React.FC<SignInPageProps> = ({ sendErrorNotify }) => {
 	const [isShowContent, setIsShowContent] = useState(false)
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
@@ -23,6 +30,28 @@ const SignInPage: React.FC = () => {
 
 	const handleClickRecover = () => dispatch(authActions.setPage(PageIds.PasswordRecovery))
 	const handleClickToSignUp = () => dispatch(authActions.setPage(PageIds.SignUp))
+
+	const handleSignIn = () => {
+		const {usernameRegExps, passwordRegExps} = AuthValidationRegExps
+		if(!usernameRegExps.Length.test(username))
+			return sendErrorNotify('Login must contain from 3 to 25 characters!')
+		if(!usernameRegExps.AllowedChars.test(username))
+			return sendErrorNotify('Login can only consist of Latin characters and numbers!')
+		if(!passwordRegExps.Length.test(password))
+			return sendErrorNotify('The password must contain from 6 to 18 characters')
+		if(!passwordRegExps.AllowedChars.test(password))
+			return sendErrorNotify('Password contains invalid characters')
+		const event = AuthApiEventNames.SignIn
+		const data: AuthApiSignInData = { username, password }
+		rpc.callServer(event, data)
+			.then(() => sendNotify({
+				type: NotificationTypes.Success,
+				duration: 3,
+				position: NotificationPositions.TopLeft,
+				text: 'Sign In success'
+			}))
+			.catch(() => sendErrorNotify('Sign In error'))
+	}
 
 	return (
 		<CSSTransition
@@ -67,14 +96,7 @@ const SignInPage: React.FC = () => {
 						style={{marginBottom: calcVh(20)}}
 						arrowState='right'
 						type={ButtonType.Light}
-						onClick={() => {
-							sendNotify({
-								type: NotificationTypes.Success,
-								text: 'You have successfully logged in!',
-								position: NotificationPositions.TopLeft,
-								duration: 5,
-							})
-						}}
+						onClick={handleSignIn}
 					/>
 					<Button
 						text='Register a new account'

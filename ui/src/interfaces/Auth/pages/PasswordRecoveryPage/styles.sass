@@ -17,6 +17,21 @@
     +flex-col-center-center()
     align-items: flex-start
 
+    > .block
+      width: 100%
+      height: 64 *$hPoint
+      margin-bottom: 20 *$hPoint
+      display: flex
+      overflow: hidden
+
+      > div
+        flex-shrink: 0
+
+      &.step-1 > div
+        transform: translateX(-100%)
+      &.step-2 > div
+        transform: translateX(-200%)
+
     > .row
       width: 100%
       height: 62 *$hPoint

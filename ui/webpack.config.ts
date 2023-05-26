@@ -4,7 +4,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import 'webpack-dev-server'
 
 const config: webpack.Configuration = {
-	entry: path.join(__dirname, 'index.tsx'),
+	entry: path.join(__dirname, 'pre-load.ts'),
 	output: {
 		path: path.join(__dirname, '../dist/ui'),
 		assetModuleFilename: 'assets/[hash][ext][query]',

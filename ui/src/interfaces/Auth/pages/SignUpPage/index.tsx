@@ -12,8 +12,15 @@ import {authActions} from "../../reducer";
 import Checkbox from "../../components/Checkbox";
 import {sendNotify} from "../../../../utils/notify";
 import {NotificationPositions, NotificationTypes} from "../../../../../../shared/notifications/types";
+import {AuthValidationRegExps} from "../../../../../../shared/auth/validationRegExps";
+import {AuthApiEventNames, AuthApiSignInData, AuthApiSignUpData} from "../../../../../../shared/auth/api";
+import rpc from "rage-rpc";
 
-const SignUpPage: React.FC = () => {
+type SignUpPageProps = {
+	sendErrorNotify: (text: string) => void
+}
+
+const SignUpPage: React.FC<SignUpPageProps> = ({ sendErrorNotify }) => {
 	const [isShowContent, setIsShowContent] = useState(false)
 	const [username, setUsername] = useState('')
 	const [email, setEmail] = useState('')
@@ -27,6 +34,33 @@ const SignUpPage: React.FC = () => {
 	const nodeRef = useRef(null)
 
 	const handleClickToSignIn = () => dispatch(authActions.setPage(PageIds.SignIn))
+
+	const handleSignUp = () => {
+		const {usernameRegExps, passwordRegExps, mailRegExps} = AuthValidationRegExps
+		if(!usernameRegExps.Length.test(username))
+			return sendErrorNotify('Login must contain from 3 to 25 characters!')
+		if(!usernameRegExps.AllowedChars.test(username))
+			return sendErrorNotify('Login can only consist of Latin characters and numbers!')
+		if(!passwordRegExps.Length.test(password))
+			return sendErrorNotify('The password must contain from 6 to 18 characters')
+		if(!passwordRegExps.AllowedChars.test(password))
+			return sendErrorNotify('Password contains invalid characters')
+		if(password !== repass)
+			return sendErrorNotify('Wrong re-entered password')
+		if(!mailRegExps.AllowedChars.test(email))
+			return sendErrorNotify('Incorrect email address entered')
+
+		const event = AuthApiEventNames.SignIn
+		const data: AuthApiSignUpData = { username, password, email, promocode }
+		rpc.callServer(event, data)
+			.then(() => sendNotify({
+				type: NotificationTypes.Success,
+				duration: 3,
+				position: NotificationPositions.TopLeft,
+				text: 'Sign Up success'
+			}))
+			.catch(() => sendErrorNotify('Sign Up error'))
+	}
 
 	return (
 		<CSSTransition
@@ -101,14 +135,7 @@ const SignUpPage: React.FC = () => {
 							style={{ width: calcVh(328), textAlign: 'center'}}
 							type={ButtonType.Light}
 							centeredText
-							onClick={() => {
-								sendNotify({
-									type: NotificationTypes.Success,
-									text: 'Your account has been successfully created!',
-									position: NotificationPositions.TopLeft,
-									duration: 5,
-								})
-							}}
+							onClick={handleSignUp}
 						/>
 					</div>
 				</div>

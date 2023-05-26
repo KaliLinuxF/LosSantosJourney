@@ -4,7 +4,7 @@ import {CSSTransition} from "react-transition-group";
 
 interface IInputProps {
 	isShowAnim: boolean
-	style: { [key: string]: string }
+	style?: { [key: string]: string }
 	placeholder: string
 	value: string
 	setValue: (newValue: string) => void
@@ -13,14 +13,14 @@ interface IInputProps {
 
 const Input: React.FC<IInputProps> = ({
 																				isShowAnim,
-																				style,
+																				style = {},
 																				placeholder,
 																				value,
 																				setValue,
 																				hasEye
 																			}) => {
 
-	const [isHiddenValue, setIsHiddenValue] = useState(false)
+	const [isHiddenValue, setIsHiddenValue] = useState(hasEye)
 	const inputRef = useRef(null)
 
 	return (

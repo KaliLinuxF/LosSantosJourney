@@ -1,0 +1,16 @@
+=anim-height($height, $enterDelay, $enterDuration, $exitDelay, $exitDuration)
+  &-enter
+    height: 0
+
+  &-enter-active
+    height: $height
+    transition: all $enterDuration ease
+    transition-delay: $enterDelay
+
+  &-exit
+    height: 0
+
+  &-exit-active
+    height: $height
+    transition: all $exitDuration ease
+    transition-delay: $exitDelay
