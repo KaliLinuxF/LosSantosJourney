@@ -9,6 +9,7 @@ const sequelize = new Sequelize({
   username: 'root',
   dialectModule: mysql2,
   password: 'Admin456',
+  logging: false,
   models: [Account]
 });
 

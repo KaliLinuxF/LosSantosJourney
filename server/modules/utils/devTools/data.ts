@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 
 const filePath = path.join(__dirname, '../../position.txt');
-console.log(filePath)
 
 mp.events.addCommand('getcam', (player: PlayerMp, fulltext: string) => {
     player.call('getCamPos', [fulltext]); 
