@@ -32,7 +32,7 @@ export type AuthApiRecoveryPassword = {
 	password: string
 }
 
-export const authRpc = {
+export default {
 	show: (payload: AuthActionShowPayload) => ({ type: "auth/show", payload }),
 	hide: () => ({ type: "auth/hide" }),
 };

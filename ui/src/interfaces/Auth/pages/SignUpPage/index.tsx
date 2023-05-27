@@ -14,7 +14,7 @@ import {sendNotify} from "../../../../utils/notify";
 import {NotificationPositions, NotificationTypes} from "../../../../../../shared/notifications/types";
 import {AuthValidationRegExps} from "../../../../../../shared/auth/validationRegExps";
 import {AuthApiEventNames, AuthApiSignInData, AuthApiSignUpData} from "../../../../../../shared/auth/api";
-import rpc from "rage-rpc";
+import rpc from "../../../../../../shared/rpc";
 
 type SignUpPageProps = {
 	sendErrorNotify: (text: string) => void
@@ -50,9 +50,9 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ sendErrorNotify }) => {
 		if(!mailRegExps.AllowedChars.test(email))
 			return sendErrorNotify('Incorrect email address entered')
 
-		const event = AuthApiEventNames.SignIn
+		const event = AuthApiEventNames.SignUp
 		const data: AuthApiSignUpData = { username, password, email, promocode }
-		rpc.callServer(event, data)
+		rpc.callClient(event, data)
 			.then(() => sendNotify({
 				type: NotificationTypes.Success,
 				duration: 3,

@@ -16,7 +16,7 @@ import {
 	AuthApiRecoveryEmail,
 	AuthApiRecoveryPassword
 } from "../../../../../../shared/auth/api";
-import rpc from 'rage-rpc'
+import rpc from '../../../../../../shared/rpc';
 import {sendNotify} from "../../../../utils/notify";
 import {NotificationPositions, NotificationTypes} from "../../../../../../shared/notifications/types";
 
@@ -66,7 +66,7 @@ const PasswordRecoveryPage: React.FC<PasswordRecoveryPageProps> = ({ sendErrorNo
 					return sendErrorNotify('Incorrect email address entered!')
 				const event = AuthApiEventNames.RecoveryEmail
 				const data: AuthApiRecoveryEmail = {email}
-				rpc.callServer(event, data)
+				rpc.callClient(event, data)
 					.then(() => setStep(Step.Code))
 					.catch(() => sendErrorNotify('There is no account with this email address!'))
 				break
@@ -77,7 +77,7 @@ const PasswordRecoveryPage: React.FC<PasswordRecoveryPageProps> = ({ sendErrorNo
 					return sendErrorNotify('The code field cannot be empty!')
 				const event = AuthApiEventNames.RecoveryCode
 				const data: AuthApiRecoveryCode = {code}
-				rpc.callServer(event, data)
+				rpc.callClient(event, data)
 					.then(() => setStep(Step.Password))
 					.catch(() => sendErrorNotify('!'))
 				break
@@ -91,7 +91,7 @@ const PasswordRecoveryPage: React.FC<PasswordRecoveryPageProps> = ({ sendErrorNo
 					return sendErrorNotify('Password contains invalid characters!')
 				const event = AuthApiEventNames.RecoveryPassword
 				const data: AuthApiRecoveryPassword = {password}
-				rpc.callServer(event, data)
+				rpc.callClient(event, data)
 					.then(() => {
 						sendNotify({
 							type: NotificationTypes.Success,

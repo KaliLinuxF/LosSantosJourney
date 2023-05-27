@@ -3,9 +3,14 @@ import './modules/sockets';
 import './modules/proto';
 import './modules/utils';
 import './modules/database'
-import '../shared/auth/index'
-import { BaseEventHandler } from '../shared/BaseEvents/BaseEventHandler';
+import './modules/AuthService/controller';
 
-BaseEventHandler.get('playerJoin').addHandler((player: PlayerMp) => {
+import { BaseEventHandler } from '../shared/BaseEvents/BaseEventHandler';
+import { AuthSessionHandler } from './modules/AuthService/AuthSessionHandler';
+import { initializePlayerEventBus } from './modules/AuthService/utils';
+
+BaseEventHandler.get('auth:startsesstion').addHandler((player: PlayerMp) => {
     player.tempValues = {};
+    initializePlayerEventBus(player);
+    AuthSessionHandler.create(player);
 }, 0);

@@ -1,53 +1,242 @@
 import { AuthStatus } from "./AuthStatus";
 import { authConfig } from "./config";
-
-export type AccountInstance = {
-    id: number,
-    login: string,
-    password: string,
-    lasLoginIp: string,
-    registrationData: number,
-    email: string,
-    promoCode: string,
-    donat: number,
-    socialClub: string,
-    serial: string
-}
+import { AuthSessionHandler } from "./AuthSessionHandler";
+import { AuthValidationRegExps } from '../../../shared/auth/validationRegExps';
+import { ValidateField } from "./ValidateField";
+import { Account } from "../database/Models/Account";
+import { comparePasswords, hashPassword } from "./utils";
+import { AccountHandler } from "../Account/AccountHandler";
 
 export class AuthSession {
     private status: AuthStatus;
-    private readonly player: PlayerMp;
+    public readonly player: PlayerMp;
     private sessionTimeout: NodeJS.Timeout | null = null;
     private readonly sessionTimeoutTime: number;
     private flood: number;
-    
+
     constructor(player: PlayerMp) {
         this.player = player;
         this.flood = 0;
-        this.sessionTimeoutTime = authConfig.authTimeout * 60;
+        this.sessionTimeoutTime = authConfig.authTimeout * 60 * 1000;
+
+        this.startSession();
     }
 
     private startSession() {
         this.player.accountInstance = null;
         this.player.call('auth:clientpreset');
+
+        this.restartTimeout();
     }
 
     private finishSession() {
-        switch(this.status) {
-            
+        switch (this.status) {
+            case AuthStatus.Timeout: {
+                this.showNotifyError('Auth session time out');
+
+                setTimeout(() => {
+                    this.player.kick('bad login');
+                    this.player.kick('bad login');
+                }, 5000);
+                break;
+            }
+
+            case AuthStatus.Flood: {
+                this.showNotifyError('Too many login attempts, you were kicked')
+
+                setTimeout(() => {
+                    this.player.kick('bad login');
+                    this.player.kick('bad login');
+                }, 5000);
+                break;
+            }
+
+            case AuthStatus.Success: {
+                this.player.call('auth:success');
+                break;
+            }
+        }
+
+        AuthSessionHandler.remove(this);
+    }
+
+    private showNotifyError(message: string) {
+        // SHOW ON FRONTEND ( STUPAK PIDORAS))))) )
+        console.log(message);
+    }
+
+    private badAuth() {
+        this.flood += 1;
+        this.status = AuthStatus.Flood;
+
+        if (this.flood >= authConfig.maxFlood) {
+            this.finishSession()
         }
     }
 
     private restartTimeout() {
-        if(this.sessionTimeout) {
+        if (this.sessionTimeout) {
             clearTimeout(this.sessionTimeout);
             this.sessionTimeout = null;
         }
 
         this.sessionTimeout = setTimeout(() => {
+            this.status = AuthStatus.Timeout;
             this.finishSession();
         }, this.sessionTimeoutTime);
     }
 
+    private validateField(field: string, fieldType: ValidateField) {
+        let result: boolean = true;
 
+        switch (fieldType) {
+            case ValidateField.Email: {
+                if(!AuthValidationRegExps.mailRegExps.AllowedChars.test(field)) {
+                    this.showNotifyError('Invalid mail, only English letters, numbers and special characters are available');
+                    result = false;
+                }
+                break;
+            }
+            case ValidateField.Login: {
+                if(!AuthValidationRegExps.usernameRegExps.AllowedChars.test(field)) {
+                    this.showNotifyError('Invalid login, only English letters, numbers and special characters are avalible');
+                    result = false;
+                }
+
+                if(!AuthValidationRegExps.usernameRegExps.Length.test(field)) {
+                    this.showNotifyError('Invalid login, minimum 4 characters and maximum 25');
+                    result = false;
+                }
+                break;
+            }
+            case ValidateField.Password: {
+                if(!AuthValidationRegExps.passwordRegExps.AllowedChars.test(field)) {
+                    this.showNotifyError('Invalid password, only English letters, numbers and special characters are avalible');
+                    result = false;
+                }
+
+                if(!AuthValidationRegExps.passwordRegExps.Length.test(field)) {
+                    this.showNotifyError('Invalid password, minimum 6 characters and maximum 18');
+                    result = false;
+                }
+                break;
+            }
+
+            default: {
+                result = false;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    async onPlayerTryLogin(login: string, password: string) {
+        if(!this.validateField(login, ValidateField.Login) || !this.validateField(password, ValidateField.Password)) {
+            this.badAuth();
+            this.restartTimeout();
+            return;
+        }
+
+        const account = await Account.findOne({ where: { login }});
+
+        if(!account) {
+            this.showNotifyError('Account not found');
+            this.badAuth();
+            return;
+        }
+
+        const passwordComapre = await comparePasswords(password, account.password);
+
+        if(!passwordComapre) {
+            this.showNotifyError('Bad password');
+            this.badAuth();
+            return;
+        }
+
+        const accountInstance = AccountHandler.get(account.id);
+
+        if(accountInstance) {
+            this.showNotifyError('User already exist');
+            this.badAuth();
+            return;
+        }
+
+        if(this.player.socialClub !== account.socialClub) {
+            this.showNotifyError('SocialClub does not match');
+            this.badAuth();
+            return;
+        }
+
+        AccountHandler.create(account.id, this.player, {
+            login: account.login,
+            password: account.password,
+            lastLoginIp: this.player.ip,
+            registrationData: account.registrationDate,
+            registrationIp: account.registrationIp,
+            email: account.email,
+            promoCode: account.promoCode,
+            donat: account.donat,
+            socialClub: account.socialClub,
+            serial: account.serial
+        });
+ 
+        this.status = AuthStatus.Success;
+        this.finishSession();
+    }
+
+    async onPlayerTryRegister(login: string, password: string, email: string, promo: string) {
+        if(!this.validateField(login, ValidateField.Login) 
+        || !this.validateField(password, ValidateField.Password)
+        || !this.validateField(email, ValidateField.Email)) {
+            this.badAuth();
+            this.restartTimeout();
+            return;
+        }
+
+        const account = await Account.findOne({ where: { login, email }});
+
+        if(account) {
+            if(account.login === login) {
+                this.showNotifyError('Account with this login already exsist');
+                this.badAuth();
+                return;
+            }
+
+            if(account.email === email) {
+                this.showNotifyError('Account with this email already exsist');
+                this.badAuth();
+                return;
+            }
+        }
+
+        const hashedPassword = await hashPassword(password);
+
+        const newAccount = await Account.create({
+            login,
+            password: hashedPassword,
+            lastLoginIp: this.player.ip,
+            registrationIp: this.player.ip,
+            email,
+            promoCode: promo,
+            socialClub: this.player.socialClub,
+            serial: this.player.serial
+        });
+
+        AccountHandler.create(newAccount.id, this.player, {
+            login: newAccount.login,
+            password: newAccount.password,
+            lastLoginIp: newAccount.lastLoginIp,
+            registrationData: newAccount.registrationDate,
+            registrationIp: newAccount.registrationIp,
+            email: newAccount.email,
+            promoCode: newAccount.promoCode,
+            donat: newAccount.donat,
+            socialClub: newAccount.socialClub,
+            serial: newAccount.serial
+        });
+
+        this.status = AuthStatus.Success;
+        this.finishSession();
+    }
 }

@@ -1,3 +1,4 @@
 export const authConfig = {
-    authTimeout: 10 // Minutes
+    authTimeout: 10, // Minutes
+    maxFlood: 10
 }

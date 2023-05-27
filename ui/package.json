@@ -19,7 +19,6 @@
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.4",
     "html-webpack-plugin": "^5.5.1",
-    "rage-rpc": "^0.4.0",
     "react-transition-group": "^4.4.5",
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2",

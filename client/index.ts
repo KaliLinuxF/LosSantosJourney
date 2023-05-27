@@ -1,17 +1,15 @@
 import './modules/sockets/controller';
-// import './modules/raycastingTest';
-import SceneHandler from './modules/SceneHandler/SceneHandler';
-import { authScene } from './modules/SceneHandler/scenes/authScene';
 import './modules/utils';
+import './modules/AuthService/controller';
+import Events from './modules/utils/Events';
 
 const url = 'package://browser/index.html';
 const browser = mp.browsers.new(url);
 
 mp.events.add('browserDomReady', (loadedBrowser: BrowserMp) => {
-    if(loadedBrowser === browser) {
-        setTimeout(() => {
-            SceneHandler.startScene(authScene);
-        }, 1000);
+    if(browser === loadedBrowser) {
+        mp.game.graphics.notify('cef browser ready')
+        Events.callRemote('auth:startsesstion');
     }
 });
 

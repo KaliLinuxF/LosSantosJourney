@@ -12,7 +12,7 @@ import {authActions} from "../../reducer";
 import {sendNotify} from "../../../../utils/notify";
 import {NotificationPositions, NotificationTypes} from "../../../../../../shared/notifications/types";
 import {AuthValidationRegExps} from '../../../../../../shared/auth/validationRegExps'
-import rpc from 'rage-rpc'
+import rpc from "../../../../../../shared/rpc";
 import {AuthApiEventNames, AuthApiSignInData} from "../../../../../../shared/auth/api";
 
 type SignInPageProps = {
@@ -43,7 +43,7 @@ const SignInPage: React.FC<SignInPageProps> = ({ sendErrorNotify }) => {
 			return sendErrorNotify('Password contains invalid characters')
 		const event = AuthApiEventNames.SignIn
 		const data: AuthApiSignInData = { username, password }
-		rpc.callServer(event, data)
+		rpc.callClient(event, data)
 			.then(() => sendNotify({
 				type: NotificationTypes.Success,
 				duration: 3,

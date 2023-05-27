@@ -11,16 +11,9 @@ export default class Scene {
     ) { }
 
     async load() {
-        mp.game.ui.displayRadar(false);
-        mp.gui.chat.show(false);
-        mp.nametags.enabled = false
-
         if(this.sceneTime) {
             mp.game.time.setClockTime(this.sceneTime, 1, 1);
         }
-
-        mp.players.local.position = new mp.Vector3(-326.2754, 639.0650, 172.8681);
-        mp.players.local.setAlpha(0);
 
         this.activateCamera();
 
@@ -38,13 +31,12 @@ export default class Scene {
     }
 
     unload() {
-        mp.game.ui.displayRadar(true);
         for (let element of this.elements) {
             element.destroy();
         }
 
-        this.activeCamera.setActive(false);
-        mp.game.cam.renderScriptCams(true, false, 0, false, false);
+        this.activeCamera?.setActive(false);
+        mp.game.cam.renderScriptCams(false, false, 0, false, false);
 
         this.sceneCamera?.stop();
         this.destroyCamera(this.activeCamera);
