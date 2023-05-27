@@ -45,7 +45,7 @@ const DisclaimerPage: React.FC = () => {
 				<Logo isShowAnim={isShowContent} style={{marginBottom: calcVh(50)}}/>
 				<CSSTransition in={isShowContent} timeout={300} mountOnEnter unmountOnExit classNames='text'>
 					<div className="text">
-						Los Santos Journey is not affiliated with or endorsed by Take-Two, Rockstar North Interactive or any other rights holder. All trademarks used belong to their respective owners and are not affiliated with or endorsed by Take-Two, Rockstar North Interactive.
+						Los Santos Journeys is not affiliated with or endorsed by Take-Two, Rockstar North Interactive or any other rights holder. All trademarks used belong to their respective owners and are not affiliated with or endorsed by Take-Two, Rockstar North Interactive.
 					</div>
 				</CSSTransition>
 				<CSSTransition in={isShowContent} timeout={300} mountOnEnter unmountOnExit classNames='text'>
