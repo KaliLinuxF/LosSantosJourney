@@ -57,9 +57,8 @@ Object.keys(SOUNDS_LIST).forEach((file) => window.soundSystem.playSound({ file, 
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch()
-	console.log('Пенис')
 	rpc.register('executeRpc', (action: any) =>{
-		console.log('Я пидор усатый волосатый')
+		console.log(action)
 		dispatch(action)
 	})
 

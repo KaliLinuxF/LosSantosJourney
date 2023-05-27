@@ -1,5 +1,6 @@
 export enum ValidateField {
     Login,
     Password,
-    Email
+    Email,
+    Promo
 }

@@ -6,6 +6,9 @@ import { ValidateField } from "./ValidateField";
 import { Account } from "../database/Models/Account";
 import { comparePasswords, hashPassword } from "./utils";
 import { AccountHandler } from "../Account/AccountHandler";
+import rpc from '../../../shared/rpc';
+import NotifyApi from '../../../shared/notifications/api';
+import { NotificationPositions, NotificationTypes } from "../../../shared/notifications/types";
 
 export class AuthSession {
     private status: AuthStatus;
@@ -61,8 +64,12 @@ export class AuthSession {
     }
 
     private showNotifyError(message: string) {
-        // SHOW ON FRONTEND ( STUPAK PIDORAS))))) )
-        console.log(message);
+        rpc.callBrowsers(this.player, 'executeRpc', NotifyApi.show({ 
+            position: NotificationPositions.TopLeft,
+            duration: 4,
+            text: message,
+            type: NotificationTypes.Error
+        }));
     }
 
     private badAuth() {
@@ -71,6 +78,8 @@ export class AuthSession {
 
         if (this.flood >= authConfig.maxFlood) {
             this.finishSession()
+        } else {
+            this.restartTimeout();
         }
     }
 
@@ -117,6 +126,13 @@ export class AuthSession {
 
                 if(!AuthValidationRegExps.passwordRegExps.Length.test(field)) {
                     this.showNotifyError('Invalid password, minimum 6 characters and maximum 18');
+                    result = false;
+                }
+                break;
+            }
+            case ValidateField.Promo: {
+                if(!AuthValidationRegExps.promocodeRegExps.AllowedChars.test(field)) {
+                    this.showNotifyError('Invalid promo, only English letters, numbers and special characters are avalible');
                     result = false;
                 }
                 break;
@@ -185,12 +201,25 @@ export class AuthSession {
         this.finishSession();
     }
 
-    async onPlayerTryRegister(login: string, password: string, email: string, promo: string) {
+    async onPlayerTryRegister(login: string, password: string, repass: string, email: string, promo: string) {
         if(!this.validateField(login, ValidateField.Login) 
         || !this.validateField(password, ValidateField.Password)
-        || !this.validateField(email, ValidateField.Email)) {
+        || !this.validateField(email, ValidateField.Email)
+        || !this.validateField(repass, ValidateField.Password)) {
             this.badAuth();
-            this.restartTimeout();
+            return;
+        }
+
+        if(promo.length < 1) {
+            if(!this.validateField(promo, ValidateField.Promo)) {
+                this.badAuth();
+                return;
+            }
+        }
+
+        if(password !== repass) {
+            this.showNotifyError('Passwords dont match')
+            this.badAuth();
             return;
         }
 

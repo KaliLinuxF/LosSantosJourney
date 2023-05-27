@@ -54,14 +54,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ sendErrorNotify }) => {
 
 		const event = AuthApiEventNames.SignUp
 		const data: AuthApiSignUpData = { username, password, repass, email, promocode }
-		rpc.callClient('executeServer', event, data)
-			.then(() => sendNotify({
-				type: NotificationTypes.Success,
-				duration: 3,
-				position: NotificationPositions.TopLeft,
-				text: 'Sign Up success'
-			}))
-			.catch(() => sendErrorNotify('Sign Up error'))
+		rpc.callClient('executeServer', { event, data });
 	}
 
 	return (

@@ -66,10 +66,7 @@ const PasswordRecoveryPage: React.FC<PasswordRecoveryPageProps> = ({ sendErrorNo
 					return sendErrorNotify('Incorrect email address entered!')
 				const event = AuthApiEventNames.RecoveryEmail
 				const data: AuthApiRecoveryEmail = {email}
-				rpc.callClient('executeServer', event, data)
-					.then(() => setStep(Step.Code))
-					.catch(() => sendErrorNotify('There is no account with this email address!'))
-				break
+				rpc.callClient('executeServer', { event, data })
 			}
 
 			case Step.Code: {
@@ -77,10 +74,7 @@ const PasswordRecoveryPage: React.FC<PasswordRecoveryPageProps> = ({ sendErrorNo
 					return sendErrorNotify('The code field cannot be empty!')
 				const event = AuthApiEventNames.RecoveryCode
 				const data: AuthApiRecoveryCode = {code}
-				rpc.callClient('executeServer', event, data)
-					.then(() => setStep(Step.Password))
-					.catch(() => sendErrorNotify('!'))
-				break
+				rpc.callClient('executeServer', { event, data });
 			}
 
 			case Step.Password: {
@@ -91,17 +85,7 @@ const PasswordRecoveryPage: React.FC<PasswordRecoveryPageProps> = ({ sendErrorNo
 					return sendErrorNotify('Password contains invalid characters!')
 				const event = AuthApiEventNames.RecoveryPassword
 				const data: AuthApiRecoveryPassword = {password}
-				rpc.callClient('executeServer', event, data)
-					.then(() => {
-						sendNotify({
-							type: NotificationTypes.Success,
-							duration: 3,
-							position: NotificationPositions.TopLeft,
-							text: 'Password recovery success'
-						})
-						handleClickToSignIn()
-					})
-					.catch(() => sendErrorNotify('Password recovery error'))
+				rpc.callClient('executeServer', { event, data })
 				break
 			}
 		}
