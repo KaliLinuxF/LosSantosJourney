@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './styles.sass'
-import {useAppDispatch} from "../../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {authActions} from './reducer'
 import DisclaimerPage from "./pages/DislaimerPage";
 import SignInPage from "./pages/SignInPage";
@@ -12,6 +12,7 @@ import {NotificationPositions, NotificationTypes} from "../../../../shared/notif
 
 const Auth: React.FC = () => {
 	const dispatch = useAppDispatch()
+	const {isOpen} = useAppSelector(state => state.auth)
 
 	const sendErrorNotify = (text: string) => {
 		// @ts-ignore
@@ -25,9 +26,19 @@ const Auth: React.FC = () => {
 	}
 
 	useEffect(() => {
+		if(isOpen) {
+			// @ts-ignore
+			window.soundSystem.playSound({file: 'auth/bg', volume: .1, loop: true})
+		} else {
+			// @ts-ignore
+			window.soundSystem.stopSound('auth/bg')
+		}
+	}, [isOpen])
+
+	useEffect(() => {
 		// setTimeout(() => {
 		// 	dispatch(authActions.show({ disclaimerDuration: 5 }))
-		// }, 2000)
+		// }, 1000)
 		// -----------------
 		// setTimeout(() => {
 		// 	dispatch(authActions.show({ disclaimerDuration: 0 }))

@@ -16,7 +16,7 @@ const config: webpack.Configuration = {
 		hot: true,
 	},
 	resolve: {
-		extensions: ['.js', '.ts', '.tsx', '.sass'],
+		extensions: ['.js', '.ts', '.tsx', '.sass', '.mp3'],
 		alias: {
 			Styles: path.join(__dirname, 'src', 'styles'),
 			Fonts: path.join(__dirname, 'src', 'fonts'),
@@ -45,7 +45,7 @@ const config: webpack.Configuration = {
 				use: ['style-loader', 'css-loader', 'sass-loader'],
 			},
 			{
-				test: /\.(png|jpe?g|gif|svg|webp|ico|woff2?|eot|ttf|otf)$/,
+				test: /\.(png|jpe?g|gif|svg|webp|ico|woff2?|eot|ttf|otf|mp3)$/,
 				type: 'asset/resource',
 			},
 		],
