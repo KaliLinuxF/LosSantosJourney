@@ -22,11 +22,6 @@ const Notifications: React.FC = () => {
 		}
 	}, [])
 
-	useEffect(() => {
-		// @ts-ignore
-		window.hasAnyNotify = rendered.length > 0
-	}, [rendered])
-
 	const renderList = (list: Notification[]) => list.map(({id, type, text}) => {
 		const animationName = ~rendered.indexOf(id) ? 'enter' : 'exit'
 		return (

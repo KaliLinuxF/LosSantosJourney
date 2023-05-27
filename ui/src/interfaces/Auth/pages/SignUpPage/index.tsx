@@ -36,7 +36,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ sendErrorNotify }) => {
 	const handleClickToSignIn = () => dispatch(authActions.setPage(PageIds.SignIn))
 
 	const handleSignUp = () => {
-		const {usernameRegExps, passwordRegExps, mailRegExps} = AuthValidationRegExps
+		const {usernameRegExps, passwordRegExps, mailRegExps, promocodeRegExps} = AuthValidationRegExps
 		if(!usernameRegExps.Length.test(username))
 			return sendErrorNotify('Login must contain from 3 to 25 characters!')
 		if(!usernameRegExps.AllowedChars.test(username))
@@ -49,10 +49,12 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ sendErrorNotify }) => {
 			return sendErrorNotify('Wrong re-entered password')
 		if(!mailRegExps.AllowedChars.test(email))
 			return sendErrorNotify('Incorrect email address entered')
+		if(promocode && !promocodeRegExps.AllowedChars.test(promocode))
+			return sendErrorNotify('Incorrect promo code entered')
 
 		const event = AuthApiEventNames.SignUp
-		const data: AuthApiSignUpData = { username, password, email, promocode }
-		rpc.callClient(event, data)
+		const data: AuthApiSignUpData = { username, password, repass, email, promocode }
+		rpc.callClient('executeServer', event, data)
 			.then(() => sendNotify({
 				type: NotificationTypes.Success,
 				duration: 3,

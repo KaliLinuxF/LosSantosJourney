@@ -32,6 +32,7 @@ const Input: React.FC<IInputProps> = ({
 					placeholder={placeholder}
 					value={value}
 					onChange={e => setValue(e.target.value)}
+					spellCheck={false}
 				/>
 				<div className="bg"/>
 				{hasEye && (

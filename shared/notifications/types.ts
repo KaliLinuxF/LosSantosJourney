@@ -15,3 +15,7 @@ export interface NotificationsActionSend {
 	text: string
 	duration: number
 }
+
+export type NotifyActionSend = {
+	disclaimerDuration: number
+}

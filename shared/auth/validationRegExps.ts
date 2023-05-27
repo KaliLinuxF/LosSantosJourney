@@ -7,6 +7,7 @@ type ValidationRegExps = {
 	usernameRegExps: AuthValidationRegExp
 	passwordRegExps: AuthValidationRegExp
 	mailRegExps: AuthValidationRegExp
+	promocodeRegExps: AuthValidationRegExp
 }
 
 export const AuthValidationRegExps: ValidationRegExps = {
@@ -20,5 +21,8 @@ export const AuthValidationRegExps: ValidationRegExps = {
 	},
 	mailRegExps: {
 		AllowedChars: /^\w+@[a-z_]+?\.[a-z]{2,3}$/i,
+	},
+	promocodeRegExps: {
+		AllowedChars: /^[a-z0-9]{6,15}$/,
 	},
 }

@@ -20,6 +20,9 @@ export const notificationsSlice = createSlice({
 	reducers: {
 		send(state, action: PayloadAction<NotificationsActionSend>) {
 			const {position, type, text, duration} = action.payload
+
+			if(state.list.some((notify) => notify.text === text))  return
+
 			switch (position) {
 				case NotificationPositions.TopLeft: {
 					const id = state.iterator++

@@ -16,6 +16,7 @@ export type AuthApiSignInData = {
 export type AuthApiSignUpData = {
 	username: string
 	password: string
+	repass: string
 	email: string
 	promocode: string
 }

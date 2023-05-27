@@ -43,7 +43,7 @@ const SignInPage: React.FC<SignInPageProps> = ({ sendErrorNotify }) => {
 			return sendErrorNotify('Password contains invalid characters')
 		const event = AuthApiEventNames.SignIn
 		const data: AuthApiSignInData = { username, password }
-		rpc.callClient(event, data)
+		rpc.callClient('executeServer', event, data)
 			.then(() => sendNotify({
 				type: NotificationTypes.Success,
 				duration: 3,
