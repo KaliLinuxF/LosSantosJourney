@@ -8,7 +8,6 @@ const browser = mp.browsers.new(url);
 
 mp.events.add('browserDomReady', (loadedBrowser: BrowserMp) => {
     if(browser === loadedBrowser) {
-        mp.game.graphics.notify('cef browser ready')
         Events.callRemote('auth:startsesstion');
     }
 });
