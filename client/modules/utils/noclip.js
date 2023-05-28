@@ -131,8 +131,8 @@ mp.events.add('getCamPos', (name) => {
     return;
   }
 
-  const pos = noClipCamera.getCoord();
+  const position = noClipCamera.getCoord();
   const rotation = noClipCamera.getRot(2);
 
-  Events.callRemote('getCamPosServer', name, JSON.stringify({ pos, rot: rotation}));
+  Events.callRemote('getCamPosServer', name, JSON.stringify({ position, rotation }));
 })
