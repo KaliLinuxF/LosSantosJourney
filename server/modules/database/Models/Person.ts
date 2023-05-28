@@ -19,44 +19,21 @@ export class Person extends Model<Person> {
         type: DataType.STRING,
         allowNull: false,
     })
-    login!: string;
-
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-    })
-    password!: string;
-
-    @Column(DataType.STRING)
-    lastLoginIp!: string;
-
-    @Column(DataType.STRING)
-    registrationIp!: string;
-
-    @Column({
-        type: DataType.DATE,
-        defaultValue: DataType.NOW,
-    })
-    registrationDate!: Date;
+    name!: string;
 
     @Index
-    @Column(DataType.STRING)
-    email!: string;
-
-    @Column(DataType.STRING)
-    promoCode!: string;
+    @Column({
+        type: DataType.STRING,
+        allowNull: false
+    })
+    static!: string;
 
     @Column({
-        type: DataType.INTEGER,
-        defaultValue: 0,
+        type: DataType.JSON,
+        allowNull: false,
+        defaultValue: {}
     })
-    donat!: number;
-
-    @Column(DataType.STRING)
-    socialClub!: string;
-
-    @Column(DataType.STRING)
-    serial!: string;
+    characterData: string;
 }
 
 export { Account };
