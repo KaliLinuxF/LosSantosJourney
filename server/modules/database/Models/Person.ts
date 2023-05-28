@@ -1,9 +1,8 @@
-import { Model, Column, Table, DataType, Index, HasMany } from 'sequelize-typescript';
-import { Person } from './Person';
+import { Model, Column, Table, DataType, Index, BelongsTo } from 'sequelize-typescript';
+import { Account } from './Account';
 
-@Table({ tableName: 'accounts', timestamps: false })
-class Account extends Model<Account> {
-
+@Table({ tableName: 'persons', timestamps: false })
+export class Person extends Model<Person> {
     @Index
     @Column({
         type: DataType.INTEGER,
@@ -12,9 +11,9 @@ class Account extends Model<Account> {
     })
     id!: number;
 
-    @HasMany(() => Person)
-    persons: Person[];
-    
+    @BelongsTo(() => Account)
+    account: Account
+
     @Index
     @Column({
         type: DataType.STRING,
