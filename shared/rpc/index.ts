@@ -1,5 +1,4 @@
 import * as util from './util';
-import Events from '../../client/modules/utils/Events';
 
 const environment = util.getEnvironment();
 if(!environment) throw 'Unknown RAGE environment';
@@ -42,7 +41,7 @@ if(!glob[PROCESS_EVENT]){
                     break;
                 case "client": {
                     if(data.env === "server"){
-                        ret = ev => Events.callRemote(PROCESS_EVENT, util.stringifyData(ev));
+                        ret = ev => mp.events.callRemote(PROCESS_EVENT, util.stringifyData(ev));
                     }else if(data.env === "cef"){
                         const browser = data.b && glob.__rpcBrowsers[data.b];
                         info.browser = browser;
@@ -202,7 +201,7 @@ function _callServer(name: string, args?: any, extraData: any = {}): Promise<any
                     args,
                     ...extraData
                 };
-                Events.callRemote(PROCESS_EVENT, util.stringifyData(event));
+                mp.events.callRemote(PROCESS_EVENT, util.stringifyData(event));
             });
         }
         case "cef": {
