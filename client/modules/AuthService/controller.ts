@@ -29,16 +29,5 @@ BaseEventHandler.get('auth:success').addHandler(() => {
 
     SceneHandler.endScene();
 
-    const positions = [{ position: new mp.Vector3(-324.0053, 604.0095, 172.4014), heading: 172 }]
-    const playerController = new PlayerController(positions, {
-        animation: {
-            positionIdx: 0,
-            dict: 'timetable@denice@ig_1',
-            name: 'idle_b'
-        }
-    });
-
-    playerController.init();
-
     mp.game.graphics.notify('Welcome to the club, budy');
 }, 1);
