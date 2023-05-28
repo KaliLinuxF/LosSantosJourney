@@ -9,6 +9,7 @@ import { AccountHandler } from "../Account/AccountHandler";
 import rpc from '../../../shared/rpc';
 import NotifyApi from '../../../shared/notifications/api';
 import { NotificationPositions, NotificationTypes } from "../../../shared/notifications/types";
+import { showNotify } from "../utils/notify/notify";
 
 export class AuthSession {
     private status: AuthStatus;
@@ -64,12 +65,7 @@ export class AuthSession {
     }
 
     private showNotifyError(message: string) {
-        rpc.callBrowsers(this.player, 'executeRpc', NotifyApi.show({ 
-            position: NotificationPositions.TopLeft,
-            duration: 4,
-            text: message,
-            type: NotificationTypes.Error
-        }));
+        showNotify(this.player, NotificationTypes.Error, message, 4, NotificationPositions.TopLeft);
     }
 
     private badAuth() {
