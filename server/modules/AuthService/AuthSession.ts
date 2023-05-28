@@ -206,7 +206,7 @@ export class AuthSession {
             return;
         }
 
-        if(promo.length < 1) {
+        if(promo.length > 0) {
             if(!this.validateField(promo, ValidateField.Promo)) {
                 this.badAuth();
                 return;
