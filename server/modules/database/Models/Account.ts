@@ -3,7 +3,6 @@ import { Person } from './Person';
 
 @Table({ tableName: 'accounts', timestamps: false })
 class Account extends Model<Account> {
-
     @Index
     @Column({
         type: DataType.INTEGER,
@@ -12,8 +11,8 @@ class Account extends Model<Account> {
     })
     id!: number;
 
-    @HasMany(() => Person)
-    persons: Person[];
+    // @HasMany(() => Person)
+    // persons: Person[];
     
     @Index
     @Column({

@@ -11,8 +11,8 @@ export class Person extends Model<Person> {
     })
     id!: number;
 
-    @BelongsTo(() => Account)
-    account: Account
+    // @BelongsTo(() => Account)
+    // account: Account
 
     @Index
     @Column({

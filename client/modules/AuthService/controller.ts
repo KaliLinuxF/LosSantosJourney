@@ -3,7 +3,7 @@ import SceneHandler from "../SceneHandler/SceneHandler";
 import { authScene } from "../SceneHandler/scenes/authScene";
 import authApi from '../../../shared/auth/api';
 import rpc from '../../../shared/rpc';
-import { CameraController } from "../CharacterCreator/CameraController";
+import { PlayerController } from "../CharacterCreator/PlayerController";
 
 BaseEventHandler.get('auth:clientpreset').addHandler(() => {
     mp.gui.cursor.show(true, true);
@@ -28,6 +28,17 @@ BaseEventHandler.get('auth:success').addHandler(() => {
     mp.players.local.setAlpha(255);
 
     SceneHandler.endScene();
+
+    const positions = [{ position: new mp.Vector3(-324.0053, 604.0095, 172.4014), heading: 172 }]
+    const playerController = new PlayerController(positions, {
+        animation: {
+            positionIdx: 0,
+            dict: 'timetable@denice@ig_1',
+            name: 'idle_b'
+        }
+    });
+
+    playerController.init();
 
     mp.game.graphics.notify('Welcome to the club, budy');
 }, 1);
