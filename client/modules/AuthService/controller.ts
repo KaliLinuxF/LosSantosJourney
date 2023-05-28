@@ -3,7 +3,7 @@ import SceneHandler from "../SceneHandler/SceneHandler";
 import { authScene } from "../SceneHandler/scenes/authScene";
 import authApi from '../../../shared/auth/api';
 import rpc from '../../../shared/rpc';
-import { CameraController } from "../CharacterCreator/CameraController";
+import { PlayerController } from "../CharacterCreator/PlayerController";
 
 BaseEventHandler.get('auth:clientpreset').addHandler(() => {
     mp.gui.cursor.show(true, true);
