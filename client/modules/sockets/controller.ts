@@ -1,4 +1,3 @@
-import Events from "../utils/Events";
 import { BaseEventHandler } from '../../../shared/BaseEvents/BaseEventHandler';
 
 let socketBrowser: BrowserMp;
@@ -22,9 +21,9 @@ BaseEventHandler.get('emulCall').addHandler((eventName: string, data: any) => {
     const args = JSON.parse(data);
 
     if (args === null) {
-      Events.call(eventName);
+      mp.events.call(eventName);
     } else {
-      Events.call(eventName, ...args);
+      mp.events.call(eventName, ...args);
     }
 }, 0)
 
