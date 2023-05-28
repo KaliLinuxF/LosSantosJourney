@@ -9,8 +9,6 @@ import Title from "../../components/Title";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import {authActions} from "../../reducer";
-import {sendNotify} from "../../../../utils/notify";
-import {NotificationPositions, NotificationTypes} from "../../../../../../shared/notifications/types";
 import {AuthValidationRegExps} from '../../../../../../shared/auth/validationRegExps'
 import rpc from "../../../../../../shared/rpc";
 import {AuthApiEventNames, AuthApiSignInData} from "../../../../../../shared/auth/api";

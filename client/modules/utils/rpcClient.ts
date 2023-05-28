@@ -1,5 +1,4 @@
 import rpc from '../../../shared/rpc';
-import Events from './Events';
 import { ExecuteServerData } from '../../../shared/rpc/executeServerData';
 
 rpc.register('executeServer', (rpcData: ExecuteServerData) => {
@@ -8,7 +7,7 @@ rpc.register('executeServer', (rpcData: ExecuteServerData) => {
     }
 
     if(!rpcData?.data) {
-        Events.callRemote(rpcData.event);
+        mp.events.callRemote(rpcData.event);
         return;
     }
 
@@ -16,5 +15,5 @@ rpc.register('executeServer', (rpcData: ExecuteServerData) => {
         rpcData.data = JSON.stringify(rpcData.data);
     }
 
-    Events.callRemote(rpcData.event, rpcData.data);
+    mp.events.callRemote(rpcData.event, rpcData.data);
 });
