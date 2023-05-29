@@ -6,58 +6,115 @@ export enum CharacterDataType {
 	Clothes
 }
 
+export enum CharacterDataKeys {
+	shapeFirstId,
+	shapeSecondId,
+	skinFirstId,
+	skinSecondId,
+	shapeMix,
+	skinMix,
+	hairStyle,
+	hairColor,
+	browsStyle,
+	browsColor,
+	chestStyle,
+	chestColor,
+	noseWidth,
+	noseHeight,
+	noseLength,
+	noseBridge,
+	noseTip,
+	noseBridgeShift,
+	browHeight,
+	browWidth,
+	jawWidth,
+	jawHeight,
+	chinLength,
+	chinPosition,
+	chinWidth,
+	chinShape,
+	lips,
+	cheeksWidth,
+	cheekboneHeight,
+	cheekboneWidth,
+	eyes,
+	ageing,
+	blemishes,
+	bodyBlemishes,
+	sunDamage,
+	moles,
+	topData,
+	legs,
+	shoes,
+}
+
 export type CharacterData = {
 	[CharacterDataType.Dna]: {
-		shapeFirstId: number // 0..45
-		shapeSecondId: number // 0..45
-		skinFirstId: number // 0..45
-		skinSecondId: number // 0..45
-		shapeMix: number // -1..1
-		skinMix: number // -1..1
+		[CharacterDataKeys.shapeFirstId]: number // 0..45
+		[CharacterDataKeys.shapeSecondId]: number // 0..45
+		[CharacterDataKeys.skinFirstId]: number // 0..45
+		[CharacterDataKeys.skinSecondId]: number // 0..45
+		[CharacterDataKeys.shapeMix]: number // -1..1
+		[CharacterDataKeys.skinMix]: number // -1..1
 	},
 	[CharacterDataType.Hair]: {
-		hairStyle: number // male: 1, 15, 70 | female: 1, 14, 36
-		hairColor: number	// 0, 5, 14, 61, 62
-		browsStyle: number // 0, 6, 9
-		browsColor: number // 0, 5, 14, 61, 62
-		chestStyle: number // male: 0, 1, 2 | female: 0
-		chestColor: number // 0, 5, 14, 61, 62
+		[CharacterDataKeys.hairStyle]: number // male: 1, 15, 70 | female: 1, 14, 36
+		[CharacterDataKeys.hairColor]: number	// 0, 5, 14, 61, 62
+		[CharacterDataKeys.browsStyle]: number // 0, 6, 9
+		[CharacterDataKeys.browsColor]: number // 0, 5, 14, 61, 62
+		[CharacterDataKeys.chestStyle]: number // male: 0, 1, 2 | female: 0
+		[CharacterDataKeys.chestColor]: number // 0, 5, 14, 61, 62
 	},
 	[CharacterDataType.Face]: {
-		noseWidth: number // -1..1
-		noseHeight: number // -1..1 invert
-		noseLength: number // -1..1 invert
-		noseBridge: number // -1..1
-		noseTip: number // -1..1 invert
-		noseBridgeShift: number // -1..1 invert
-		browHeight: number // -1..1 invert
-		browWidth: number // -1..1
-		jawWidth: number // -1..1
-		jawHeight: number // -1..1 invert
-		chinLength: number // -1..1
-		chinPosition: number // -1..1
-		chinWidth: number // -1..1
-		chinShape: number // -1..1
-		lips: number // -1..1 invert
-		cheeksWidth: number // -1..1 invert
-		cheekboneHeight: number // -1..1 invert
-		cheekboneWidth: number // -1..1
-		eyes: number // -1..1 invert
+		[CharacterDataKeys.noseWidth]: number // -1..1
+		[CharacterDataKeys.noseHeight]: number // -1..1 invert
+		[CharacterDataKeys.noseLength]: number // -1..1 invert
+		[CharacterDataKeys.noseBridge]: number // -1..1
+		[CharacterDataKeys.noseTip]: number // -1..1 invert
+		[CharacterDataKeys.noseBridgeShift]: number // -1..1 invert
+		[CharacterDataKeys.browHeight]: number // -1..1 invert
+		[CharacterDataKeys.browWidth]: number // -1..1
+		[CharacterDataKeys.jawWidth]: number // -1..1
+		[CharacterDataKeys.jawHeight]: number // -1..1 invert
+		[CharacterDataKeys.chinLength]: number // -1..1
+		[CharacterDataKeys.chinPosition]: number // -1..1
+		[CharacterDataKeys.chinWidth]: number // -1..1
+		[CharacterDataKeys.chinShape]: number // -1..1
+		[CharacterDataKeys.lips]: number // -1..1 invert
+		[CharacterDataKeys.cheeksWidth]: number // -1..1 invert
+		[CharacterDataKeys.cheekboneHeight]: number // -1..1 invert
+		[CharacterDataKeys.cheekboneWidth]: number // -1..1
+		[CharacterDataKeys.eyes]: number // -1..1 invert
 	},
 	[CharacterDataType.Body]: {
-		ageing: number // 0..14
-		blemishes: number // 0..23
-		bodyBlemishes: number // 0..11
-		sunDamage: number // 0..10
-		moles: number // 0..17
+		[CharacterDataKeys.ageing]: {
+			value: number // 0..14
+			saturation: number // 0-1
+		}
+		[CharacterDataKeys.blemishes]: {
+			value: number // 0..21
+			saturation: number // 0-1
+		}
+		[CharacterDataKeys.bodyBlemishes]: {
+			value: number // 0..11
+			saturation: number // 0-1
+		}
+		[CharacterDataKeys.sunDamage]: {
+			value: number // 0..10
+			saturation: number // 0-1
+		}
+		[CharacterDataKeys.moles]: {
+			value: number // 0..17
+			saturation: number // 0-1
+		}
 	},
 	[CharacterDataType.Clothes]: {
-		topData: {
+		[CharacterDataKeys.topData]: {
 			top: number // male: 14, 9, 17 | female: 23, 395, 5
 			torso: number // male: 1, 0, 2 | female: 0, 0, 4
 		},
-		legs: number // male: 14, 7, 0 | female: 1, 4, 8
-		shoes: number // male: 1, 5, 6 | female: 3, 5, 0
+		[CharacterDataKeys.legs]: number // male: 14, 7, 0 | female: 1, 4, 8
+		[CharacterDataKeys.shoes]: number // male: 1, 5, 6 | female: 3, 5, 0
 	},
 }
 
