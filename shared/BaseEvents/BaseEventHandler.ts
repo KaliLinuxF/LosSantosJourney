@@ -16,7 +16,7 @@ export class BaseEventHandler {
             const baseEvent = new BaseEvent(eventName);
             baseEventStorage.set(eventName, baseEvent);
 
-            mp.events.add(eventName, (...args) => {
+            mp.events.add(eventName, (...args: any[]) => {
                 this.getAllEvents().forEach((item) => {
                     if(item === eventName) {
                         const baseEvent = this.get(item);

@@ -1,5 +1,6 @@
 import { AuthApiEventNames, AuthApiSignInData, AuthApiSignUpData } from "../../../shared/auth/api";
 import { BaseEventHandler } from "../../../shared/BaseEvents/BaseEventHandler";
+import { AccountHandler } from "../Account/AccountHandler";
 import { AuthSessionHandler } from "./AuthSessionHandler";
 
 BaseEventHandler.get(AuthApiEventNames.SignIn).addHandler((player: PlayerMp, jsonData: string) => {
@@ -24,10 +25,10 @@ BaseEventHandler.get(AuthApiEventNames.SignUp).addHandler((player: PlayerMp, jso
     authSession.onPlayerTryRegister(data.username, data.password, data.repass, data.email, data.promocode);
 }, 1);
 
-BaseEventHandler.get('playerQuit').addHandler((player: PlayerMp) => {
+BaseEventHandler.get('playerBeforeQuit').addHandler((player: PlayerMp) => {
     const authSession = AuthSessionHandler.get(player);
 
     if(authSession) {
-        AuthSessionHandler.remove(authSession);
+        AuthSessionHandler.remove(authSession.id);
     }
 }, 0);

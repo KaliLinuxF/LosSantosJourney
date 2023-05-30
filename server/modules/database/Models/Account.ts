@@ -1,5 +1,4 @@
-import { Model, Column, Table, DataType, Index, HasMany } from 'sequelize-typescript';
-import { Person } from './Person';
+import { Model, Column, Table, DataType, Index } from 'sequelize-typescript';
 
 @Table({ tableName: 'accounts', timestamps: false })
 class Account extends Model<Account> {
@@ -10,9 +9,6 @@ class Account extends Model<Account> {
         primaryKey: true,
     })
     id!: number;
-
-    // @HasMany(() => Person)
-    // persons: Person[];
     
     @Index
     @Column({
@@ -32,6 +28,12 @@ class Account extends Model<Account> {
 
     @Column(DataType.STRING)
     registrationIp!: string;
+
+    @Column({ 
+        type: DataType.DATE,
+        defaultValue: DataType.NOW 
+    })
+    lastLoginDate!: Date;
 
     @Column({
         type: DataType.DATE,

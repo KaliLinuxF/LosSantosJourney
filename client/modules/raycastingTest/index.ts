@@ -3,18 +3,12 @@
 // let ped1 = mp.peds.new(mp.game.joaat('u_m_y_abner'), player.position, 34, 0);
 // let ped2 = mp.peds.new(mp.game.joaat('u_m_y_abner'), new mp.Vector3(player.position.x + 2, player.position.y, player.position.z), 34, 0);
 
-// ped1.setAlpha(100, false);
-// ped2.setAlpha(100, false);
-
-// let camera = mp.cameras.new("gameplay");
-// let distance = 15;
-
 // setTimeout(() => {
 //     mp.console.logInfo(`ped handle ${ped1.handle}`, true, true);
 //     mp.console.logInfo(JSON.stringify(player.position), true, true);
 // }, 3000);
 
-// let drawToEntity: EntityMp = null;
+// let drawToEntity: PedMp = null;
 
 // mp.events.add('render', () => {
 //     if(drawToEntity == null) {
@@ -37,7 +31,7 @@
 //     const coursourCord = mp.game.graphics.screen2dToWorld3d(new mp.Vector3(coursor[0], coursor[1], 0));
 //     const raycast = mp.raycasting.testPointToPoint(camera.getCoord(), new mp.Vector3(coursourCord.x, coursourCord.y, coursourCord.z), player, 8 | 4) 
 
-//     if(raycast && raycast?.entity && (raycast.entity as EntityMp)?.position) {
+//     if(raycast && raycast?.entity && (raycast.entity as PedMp)?.position) {
 //         mp.game.graphics.notify(`entity: ${raycast?.entity}, ped: ${ped1.handle}, ped2 ${ped2.handle}`);
 //         drawToEntity = (raycast.entity as EntityMp);
 //     }

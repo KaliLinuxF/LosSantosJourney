@@ -5,11 +5,9 @@ BaseEventHandler.get('playerJoin').addHandler((player: PlayerMp) => {
     playerSocketConnect(player);
 }, -1)
 
-BaseEventHandler.get('playerQuit').addHandler((player: PlayerMp) => {
+BaseEventHandler.get('playerBeforeQuit').addHandler((player: PlayerMp) => {
     if (player?.socketWeb) {
         player.socketWeb?.disconnect(true);
         player.socketWeb = null;
     }
-
-    console.log('player quit socket handler')
-}, 0);
+}, 50);

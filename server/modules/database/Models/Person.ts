@@ -1,5 +1,6 @@
-import { Model, Column, Table, DataType, Index, BelongsTo } from 'sequelize-typescript';
+import { Model, Column, Table, DataType, Index } from 'sequelize-typescript';
 import { Account } from './Account';
+import { CharacterData } from '../../../../shared/CharacterCreator/CharacterDataType';
 
 @Table({ tableName: 'persons', timestamps: false })
 export class Person extends Model<Person> {
@@ -11,8 +12,12 @@ export class Person extends Model<Person> {
     })
     id!: number;
 
-    // @BelongsTo(() => Account)
-    // account: Account
+    @Index
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false
+    })
+    accountId: number;
 
     @Index
     @Column({
@@ -20,6 +25,12 @@ export class Person extends Model<Person> {
         allowNull: false,
     })
     name!: string;
+
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false,
+    })
+    sex!: number;
 
     @Index
     @Column({
@@ -33,7 +44,7 @@ export class Person extends Model<Person> {
         allowNull: false,
         defaultValue: {}
     })
-    characterData: string;
+    characterData: CharacterData;
 }
 
 export { Account };

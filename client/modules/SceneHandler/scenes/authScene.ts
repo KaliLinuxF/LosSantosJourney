@@ -197,7 +197,7 @@ authScene
             dict:'amb@world_human_bum_standing@drunk@base',
             name: 'base'
         },
-    model: 'mp_m_freemode_01'
+    model: 'a_m_y_beach_03'
 }))
 .addElement(new PedElement({
     position: new mp.Vector3(-333.539, 598.308, 172.00),
@@ -207,7 +207,7 @@ authScene
             dict:'rcmtmom_1leadinout',
             name: 'tmom_1_rcm_p3_leadout_loop'
         },
-    model: 'mp_m_freemode_01'
+    model: 'a_m_y_beach_01'
 }))
 .addElement(new PedElement({
     position: new mp.Vector3(-320.533, 602.557, 172.454),
