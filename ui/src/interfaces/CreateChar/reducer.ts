@@ -7,6 +7,12 @@ import {
 import {SetDataItemActionPayload} from "./types";
 import {Gender} from "../../../../shared/CharacterCreator/types";
 import {act} from "react-dom/test-utils";
+import {
+	CreateCharApiEventNames,
+	CreateCharApiUpdateCategory,
+	CreateCharApiUpdateData
+} from "../../../../shared/CharacterCreator/api";
+import rpc from "../../../../shared/rpc";
 
 type CreateCharState = {
 	isOpen: boolean
@@ -109,6 +115,11 @@ export const createCharSlice = createSlice({
 		},
 		setCategoryId(state, action: PayloadAction<CharacterDataType>) {
 			state.categoryId = action.payload
+			const event = CreateCharApiEventNames.UpdateCategory
+			const data: CreateCharApiUpdateCategory = {
+				categoryId: action.payload
+			}
+			rpc.callClient('executeServer', {event, data})
 		},
 		setDataItem(state, action: PayloadAction<SetDataItemActionPayload>) {
 			const {category, key, value} = action.payload
