@@ -1,0 +1,75 @@
+@import "src/styles/mixins"
+@import "src/styles/variables"
+
+.CreateChar .Categories
+  width: 514 *$hPoint
+  height: 191 *$hPoint
+  position: absolute
+  top: 50 *$hPoint
+  left: 50%
+  transform: translateX(-50%)
+  +anim-opacity(0, .25s, 0, 1s)
+  +flex-col-center-center()
+
+  > .list
+    +anim-from-top(.2s, .3s, 0, .3s)
+    +flex-row-center-center()
+    gap: 5 *$hPoint
+
+    > .item
+      width: 62 *$hPoint
+      height: 62 *$hPoint
+      border-radius: 5 *$hPoint
+      background-color: rgba(11, 11, 11, .6)
+      background-size: 20 *$hPoint
+      background-position: 50%
+      background-repeat: no-repeat
+      transition: all .1s ease
+      cursor: pointer
+
+      &.icon-0
+        background-image: url(../../assets/images/categories/dna.svg)
+      &.icon-1
+        background-image: url(../../assets/images/categories/hair.svg)
+      &.icon-2
+        background-image: url(../../assets/images/categories/face.svg)
+      &.icon-3
+        background-image: url(../../assets/images/categories/body.svg)
+      &.icon-4
+        background-image: url(../../assets/images/categories/clothes.svg)
+
+      &.active, &:hover
+        background-color: #F1C950
+
+        &.icon-0
+          background-image: url(../../assets/images/categories/dna-active.svg)
+        &.icon-1
+          background-image: url(../../assets/images/categories/hair-active.svg)
+        &.icon-2
+          background-image: url(../../assets/images/categories/face-active.svg)
+        &.icon-3
+          background-image: url(../../assets/images/categories/body-active.svg)
+        &.icon-4
+          background-image: url(../../assets/images/categories/clothes-active.svg)
+
+  > .helper
+    width: 100%
+    height: 129 *$hPoint
+    +flex-row-center-center()
+    +anim-from-top(.2s, .3s, 0, .3s)
+    position: relative
+
+    > .bg
+      +full-size-block()
+      background-color: rgba(0, 0, 0, .7)
+      filter: blur(97 *$hPoint)
+
+    > .text
+      +full-size-block()
+      +flex-col-center-center()
+      text-align: center
+      padding: 0 (110 *$hPoint)
+      font-weight: 500
+      font-size: 16 *$hPoint
+      color: rgba(255, 255, 255, .7)
+      text-shadow: 0 (1 *$hPoint) (5 *$hPoint) #000

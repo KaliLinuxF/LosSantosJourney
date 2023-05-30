@@ -1,0 +1,149 @@
+@import "src/styles/mixins"
+@import "src/styles/variables"
+
+.CreateChar .MainPage
+  +anim-opacity(0, .25s, 0, 1s)
+  width: 710 *$hPoint
+  height: 100%
+  position: absolute
+  top: 0
+  left: 0
+  background-image: linear-gradient(90deg, #0007, #0000)
+  +flex-col-center-start()
+  padding: 0 (258 *$hPoint) 0 (50 *$hPoint)
+
+  > .logo
+    +anim-from-top-left(.2s, .3s, 0, .3s)
+    font-family: "GTARussian", sans-serif
+    font-size: 64 *$hPoint
+    text-shadow: 0 (1 *$hPoint) (5 *$hPoint) #000
+    margin-bottom: 89 *$hPoint
+
+  > .title
+    +anim-from-top-left(.2s, .3s, 0, .3s)
+    font-family: "GTARussian", sans-serif
+    text-shadow: 0 (1 *$hPoint) (5 *$hPoint) #000
+    font-size: 48 *$hPoint
+    color: #F1C950
+    margin-bottom: 20 *$hPoint
+
+  > .gender
+    +anim-from-top-left(.2s, .3s, 0, .3s)
+    width: 100%
+    height: 62 *$hPoint
+    +flex-row-space-center()
+    margin-bottom: 30 *$hPoint
+
+    > .item
+      width: 194 *$hPoint
+      height: 100%
+      border-radius: 5 *$hPoint
+      background-color: rgba(12, 11, 11, .6)
+      +flex-row-space-center()
+      padding: 0 (25 *$hPoint)
+      transition: all .1s ease
+      cursor: pointer
+
+      &.active, &:hover
+        &.male
+          background-color: #5090F1
+        &.female
+          background-color: #F150BA
+      &:active
+        transform: scale(.9)
+
+      > .name
+        font-weight: 500
+        font-size: 20 *$hPoint
+        text-transform: uppercase
+
+      > .icon
+        width: 20 *$hPoint
+        height: 20 *$hPoint
+        background-size: 100% 100%
+
+        &.male
+          background-image: url(../../assets/images/male.svg)
+        &.female
+          background-image: url(../../assets/images/female.svg)
+
+
+  > .helper
+    +anim-from-top-left(.2s, .3s, 0, .3s)
+    font-weight: 500
+    font-size: 16 *$hPoint
+    color: #fff7
+    text-shadow: 0 (1 *$hPoint) (5 *$hPoint) #000
+    margin-bottom: 30 *$hPoint
+
+  > .buttons
+    width: 100%
+    +anim-from-top-left(.2s, .3s, 0, .3s)
+
+  > .keys
+    +anim-from-top-left(.2s, .3s, 0, .3s)
+    width: 100%
+    +flex-col-center-center()
+    gap: 7 *$hPoint
+
+    > .row
+      width: 100%
+      height: 39 *$hPoint
+      +flex-row-start-center()
+      gap: 15 *$hPoint
+
+      > .btns
+        width: 85 *$hPoint
+        height: 100%
+        +flex-row-space-center()
+
+        > .btn
+          width: 40 *$hPoint
+          height: 40 *$hPoint
+          border-radius: 5 *$hPoint
+          background-color: #ACACAC
+          position: relative
+          transition: all .1s ease
+
+          > .icon
+            width: 34 *$hPoint
+            height: 34 *$hPoint
+            border-radius: 5 *$hPoint
+            background-color: #fff
+            position: absolute
+            top: 0
+            left: 50%
+            transform: translateX(-50%)
+            font-weight: 500
+            font-size: 14 *$hPoint
+            text-transform: uppercase
+            color: #0D0D0D
+            +flex-row-center-center()
+            background-size: 20 *$hPoint
+            background-position: 50% 50%
+            background-repeat: no-repeat
+            transition: all .05s ease
+
+            &.arrowLeft
+              background-image: url(../../assets/images/arrowLeft.svg)
+            &.arrowRight
+              background-image: url(../../assets/images/arrowRight.svg)
+            &.arrowUp
+              background-image: url(../../assets/images/arrowUp.svg)
+            &.arrowDown
+              background-image: url(../../assets/images/arrowDown.svg)
+
+          &.large
+            width: 100%
+
+            > .icon
+              width: 79 *$hPoint
+
+          &.active > .icon
+            top: 2 *$hPoint
+
+      > .text
+        font-weight: 500
+        font-size: 16 *$hPoint
+        color: rgba(255, 255, 255, .8)
+        text-shadow: 0 (1 *$hPoint) (5 *$hPoint) #000

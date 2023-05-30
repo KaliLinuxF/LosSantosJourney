@@ -1,0 +1,44 @@
+@import "src/styles/mixins"
+@import "src/styles/variables"
+
+.CreateChar .Input
+  width: 100%
+  height: 64 *$hPoint
+  position: relative
+  +anim-from-top-left(.2s, .3s, 0, .3s)
+
+  &-enter-done
+    transition: all .3s ease
+
+  > .bg
+    +full-size-block()
+    z-index: 0
+    background-color: rgba(12, 11, 11, .6)
+    border: (1.5 *$hPoint) solid rgba(255, 255, 255, .2)
+    backdrop-filter: blur(7 *$hPoint)
+    transition: all .1s ease
+
+  > input
+    +full-size-block()
+    z-index: 1
+    padding: 0 (20 *$hPoint)
+    font-size: 20 *$hPoint
+    font-weight: 500
+    color: #fff
+    cursor: pointer
+
+    &::placeholder
+      text-transform: uppercase
+
+    &:focus
+      color: #F1C950
+
+      & ~ .bg
+        border-color: #F1C950
+
+    &:not(:focus):hover
+      &::placeholder
+        color: #fff
+
+      & +.bg
+        background-color: rgba(55, 53, 53, .6)
