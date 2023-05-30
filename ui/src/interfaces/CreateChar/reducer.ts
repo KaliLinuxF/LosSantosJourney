@@ -89,7 +89,7 @@ const initialState: CreateCharState = {
 	isOpen: false,
 	gender: Gender.Male,
 	data: initialData,
-	categoryId: CharacterDataType.Clothes,
+	categoryId: CharacterDataType.Dna,
 }
 
 export const createCharSlice = createSlice({
@@ -117,7 +117,7 @@ export const createCharSlice = createSlice({
 		},
 		resetData(state) {
 			state.data = { ...initialData }
-			// state.categoryId = CharacterDataType.Dna
+			state.categoryId = CharacterDataType.Dna
 		}
 	},
 })

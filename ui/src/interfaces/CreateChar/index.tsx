@@ -24,13 +24,13 @@ const CreateChar: React.FC = () => {
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
-		setTimeout(() => {
-			dispatch(createCharActions.show())
-		}, 100)
+		// setTimeout(() => {
+		// 	dispatch(createCharActions.show())
+		// }, 100)
 		// @ts-ignore
-		window.show = () => dispatch(createCharActions.show())
+		// window.show = () => dispatch(createCharActions.show())
 		// @ts-ignore
-		window.hide = () => dispatch(createCharActions.hide())
+		// window.hide = () => dispatch(createCharActions.hide())
 	}, [])
 
 	return (
