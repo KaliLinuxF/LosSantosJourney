@@ -8,13 +8,11 @@ import CategoryPage from "./pages/CategoryPage";
 import {CreateCharApiEventNames, CreateCharApiUpdateData} from "../../../../shared/CharacterCreator/api";
 import {CharacterDataType} from "../../../../shared/CharacterCreator/CharacterDataType";
 import rpc from "../../../../shared/rpc";
-import {Gender} from "../../../../shared/CharacterCreator/types";
 
 export const callUpdateData = (type: CharacterDataType, dataObj: any) => {
-	console.log(type, dataObj)
 	const event = CreateCharApiEventNames.UpdateData
 	const data: CreateCharApiUpdateData = {
-		type: CharacterDataType.Body,
+		type,
 		data: dataObj,
 	}
 	rpc.callClient(event, data)
