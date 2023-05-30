@@ -15,6 +15,7 @@ export const callUpdateData = (type: CharacterDataType, dataObj: any) => {
 		type,
 		data: dataObj,
 	}
+	console.log(dataObj)
 	rpc.callClient(event, data)
 }
 
@@ -22,9 +23,9 @@ const CreateChar: React.FC = () => {
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
-		// setTimeout(() => {
-		// 	dispatch(createCharActions.show())
-		// }, 100)
+		setTimeout(() => {
+			dispatch(createCharActions.show())
+		}, 100)
 		// @ts-ignore
 		// window.show = () => dispatch(createCharActions.show())
 		// @ts-ignore

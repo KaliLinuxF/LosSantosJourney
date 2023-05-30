@@ -138,7 +138,7 @@ const Select: React.FC<SelectProps> = ({
 						setCurrentId(newIndex)
 					}}
 				/>
-				<div className="current">{list[currentIndex].name}</div>
+				<div className="current">{list[currentIndex]?.name}</div>
 				<div
 					className={`arrow ${isActive && currentIndex < list.length - 1 && 'active'} ${controlKeys.arrowRight && 'pressed'}`}
 					onClick={() => {

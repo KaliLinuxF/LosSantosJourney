@@ -1,0 +1,36 @@
+@import "src/styles/mixins"
+@import "src/styles/variables"
+
+.CreateChar .FaceTitle
+  width: 100%
+  +flex-col-start-center()
+  opacity: .5
+  text-shadow: 0 (1 *$hPoint) (5 *$hPoint) #000
+  transition: all .1s ease
+
+  &:hover
+    opacity: .8
+
+  &:not(.active)
+    cursor: pointer
+
+  > .title
+    font-weight: 600
+    font-size: 20 *$hPoint
+    line-height: 30 *$hPoint
+    text-align: center
+    text-transform: uppercase
+    margin-bottom: 3 *$hPoint
+    transition: all .1s ease
+
+  > .description
+    font-weight: 500
+    line-height: 21 *$hPoint
+    text-align: center
+
+  &.active
+    opacity: 1
+    > .title
+      color: #F1C950
+    > .control
+      border-color: #F1C950

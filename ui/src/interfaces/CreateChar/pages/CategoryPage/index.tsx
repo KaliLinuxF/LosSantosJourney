@@ -8,6 +8,7 @@ import DnaCategory from "../../components/DnaCategory";
 import BodyCategory from "../../components/BodyCategory";
 import HairCategory from "../../components/HairCategory";
 import ClothesCategory from "../../components/ClothesCategory";
+import FaceCategory from "../../components/FaceCategory";
 
 const CategoryTitleList: CategoryTitleListType = {
 	[CharacterDataType.Dna]: 'Genetic',
@@ -54,6 +55,11 @@ const CategoryPage: React.FC = () => {
 						title={CategoryTitleList[CharacterDataType.Clothes]}
 						helper='And independent states form a global economic network and at the same time'
 						isAnimIn={isShowContent && categoryId === CharacterDataType.Clothes}
+					/>
+					<FaceCategory
+						title={CategoryTitleList[CharacterDataType.Face]}
+						helper='And independent states form a global economic network and at the same time'
+						isAnimIn={isShowContent && categoryId === CharacterDataType.Face}
 					/>
 				</div>
 			</div>

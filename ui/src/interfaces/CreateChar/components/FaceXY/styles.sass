@@ -1,0 +1,66 @@
+@import "src/styles/mixins"
+@import "src/styles/variables"
+
+.CreateChar .FaceXY
+  width: 250 *$hPoint
+  height: 250 *$hPoint
+  opacity: .5
+  text-shadow: 0 (1 *$hPoint) (5 *$hPoint) #000
+  transition: all .1s ease
+  margin-left: auto
+  margin-right: auto
+  position: relative
+  +flex-row-center-center()
+
+  &:hover
+    opacity: .8
+
+  &:not(.active)
+    cursor: pointer
+
+  > .helpers
+    width: 100%
+    height: 100%
+    position: relative
+
+    > .block
+      +full-size-block()
+      +flex-col-space-center()
+
+      > .helper
+        width: 100%
+        height: 30 *$hPoint
+        +flex-row-center-center()
+        font-weight: 500
+        font-size: 20 *$hPoint
+        color: #fff7
+        transition: all .1s ease
+
+        &.active
+          color: #F1C950
+
+      &.x
+        transform: rotate(90deg)
+
+  > .block
+    width: 170 *$hPoint
+    height: 170 *$hPoint
+    background-image: url(../../assets/images/xy.svg)
+    background-size: 100% 100%
+    +center-block()
+    cursor: pointer
+
+    > .circle
+      width: 20 *$hPoint
+      height: 20 *$hPoint
+      border-radius: 50%
+      background-color: #fff
+      position: absolute
+      transform: translate(-50%, -50%)
+      pointer-events: none
+      transition: all .05s ease
+
+  &.active
+    opacity: 1
+    > .block > .circle
+      background-color: #F1C950

@@ -10,7 +10,7 @@ import {act} from "react-dom/test-utils";
 import {
 	CreateCharApiEventNames,
 	CreateCharApiUpdateCategory,
-	CreateCharApiUpdateData
+	CreateCharApiUpdateData, CreateCharApiUpdateGender
 } from "../../../../shared/CharacterCreator/api";
 import rpc from "../../../../shared/rpc";
 
@@ -95,7 +95,7 @@ const initialState: CreateCharState = {
 	isOpen: false,
 	gender: Gender.Male,
 	data: initialData,
-	categoryId: CharacterDataType.Dna,
+	categoryId: CharacterDataType.Face,
 }
 
 export const createCharSlice = createSlice({
@@ -128,7 +128,12 @@ export const createCharSlice = createSlice({
 		},
 		resetData(state) {
 			state.data = { ...initialData }
-			state.categoryId = CharacterDataType.Dna
+			// state.categoryId = CharacterDataType.Dna
+			// const event = CreateCharApiEventNames.UpdateCategory
+			// const data: CreateCharApiUpdateCategory = {
+			// 	categoryId: state.categoryId
+			// }
+			// rpc.callClient(event, data)
 		}
 	},
 })
