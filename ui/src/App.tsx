@@ -6,6 +6,7 @@ import Notifications from "./interfaces/Notifications";
 import { SOUNDS_LIST } from './utils/audio/list';
 import {useAppDispatch} from "./hooks/redux";
 import {Howl} from "howler";
+import CreateChar from "./interfaces/CreateChar";
 
 // @ts-ignore
 window.soundSystem = {
@@ -64,8 +65,9 @@ const App: React.FC = () => {
 
 	return (
 		<>
-			<Auth/>
 			<Notifications/>
+			<Auth/>
+			<CreateChar/>
 		</>
 	);
 };

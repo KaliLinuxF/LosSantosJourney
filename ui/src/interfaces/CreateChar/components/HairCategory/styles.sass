@@ -1,0 +1,21 @@
+@import "src/styles/mixins"
+@import "src/styles/variables"
+
+.CreateChar .CategoryHair
+  opacity: 1
+
+  > .content
+    width: 100%
+    height: 760 *$hPoint
+    margin-bottom: 40 *$hPoint
+    overflow-y: auto
+
+    &::-webkit-scrollbar
+      width: 4 *$hPoint
+      background-color: #171616
+    &::-webkit-scrollbar-thumb
+      background-color: #F1C950
+
+    > .list
+      width: calc(100% - .93vh)
+      height: 100%

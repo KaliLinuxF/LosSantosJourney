@@ -1,0 +1,50 @@
+@import "src/styles/mixins"
+@import "src/styles/variables"
+
+.CreateChar .Button
+  width: 100%
+  height: 62 *$hPoint
+  backdrop-filter: blur(7.5 *$hPoint)
+  padding: 0 (25 *$hPoint)
+  border-radius: 5 *$hPoint
+  +flex-row-space-center()
+  transition: all .1s ease
+  cursor: pointer
+
+  > .text
+    font-weight: 500
+    font-size: 20 *$hPoint
+    text-transform: uppercase
+
+  > .icon
+    width: 20 *$hPoint
+    height: 20 *$hPoint
+    background-size: 100% 100%
+    transition: all .1s ease
+
+    &.icon-0
+      background-image: url(../../assets/images/arrow.svg)
+    &.icon-1
+      background-image: url(../../assets/images/random.svg)
+
+  &.type-0
+    background-color: #F1C950
+    color: #0D0D0D
+
+  &.type-1
+    background-color: rgba(11, 11, 11, .6)
+    color: #fff
+
+  &:hover
+    &.type-0
+      transform: scale(1.04)
+    &.type-1
+      background-color: #F1C950
+      color: #131313
+    > .icon-1
+      background-image: url(../../assets/images/random-active.svg)
+  &:active
+    &.type-0
+      transform: scale(.96)
+    &.type-1
+      opacity: .3 !important

@@ -1,0 +1,70 @@
+@import "src/styles/mixins"
+@import "src/styles/variables"
+
+.CreateChar .Range
+  width: 100%
+  padding: 20 *$hPoint
+  border-radius: 5 *$hPoint
+  background-color: #171616
+  border: (1 *$hPoint) solid #171616
+  transition: all .1s ease
+
+  > .title
+    width: 100%
+    font-weight: 500
+    font-size: 16 *$hPoint
+    text-transform: uppercase
+    opacity: .5
+    transition: all .1s ease
+
+  > .rc-slider
+    height: 14 *$hPoint
+    padding: 0
+    border-radius: 0
+    margin-top: 10 *$hPoint
+
+    > .rc-slider-rail
+      height: 4 *$hPoint
+      background-color: rgba(255, 255, 255, .1)
+      border-radius: 2 *$hPoint
+
+    > .rc-slider-track
+      background-color: #fff
+
+    > .rc-slider-step
+      height: 100%
+
+    > .rc-slider-handle
+      width: 10 *$hPoint
+      height: 10 *$hPoint
+      background-color: #fff
+      border: none
+      outline: none
+      box-shadow: none
+      opacity: 1
+      margin-top: -2 *$hPoint
+
+      &.rc-slider-handle-dragging
+        box-shadow: none
+
+  > .description
+    width: 100%
+    font-size: 12 *$hPoint
+    line-height: 18 *$hPoint
+    opacity: .5
+
+
+  &:not(.active):hover
+    cursor: pointer
+
+  &.active, &:not(.active):hover
+    border-color: #F1C950
+    > .title
+      opacity: 1
+    > .rc-slider
+      > .rc-slider-track
+        background-color: #F1C950
+      > .rc-slider-handle
+        background-color: #F1C950
+
+

@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {PageIds} from "./types";
 import {AuthActionShowPayload} from "../../../../shared/auth/types";
 
-interface AuthState {
+type AuthState = {
 	isOpen: boolean
 	page: PageIds
 	disclaimerDuration: number

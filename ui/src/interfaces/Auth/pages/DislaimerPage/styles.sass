@@ -2,17 +2,17 @@
 @import "src/styles/variables"
 
 .Auth .DisclaimerPage
-  +full-screen-block()
+  +full-size-block()
   +flex-col-center-center()
   +anim-opacity(0, .75s, .25s, .5s)
 
   > .bg
-    +full-screen-block()
+    +full-size-block()
     z-index: -1
     background-color: #0D0D0D
 
     > .lights
-      +full-screen-block()
+      +full-size-block()
 
       > .light
         width: 582 *$hPoint
@@ -40,7 +40,7 @@
           animation-delay: 1.5s
 
     > .lines
-      +full-screen-block()
+      +full-size-block()
       background-size: cover
       background-position: 50%
       background-image: url(../../assets/images/lines.svg)

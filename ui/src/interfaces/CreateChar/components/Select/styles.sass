@@ -1,0 +1,73 @@
+@import "src/styles/mixins"
+@import "src/styles/variables"
+
+.CreateChar .Select
+  width: 100%
+  +flex-col-start-center()
+  opacity: .5
+  text-shadow: 0 (1 *$hPoint) (5 *$hPoint) #000
+  transition: all .1s ease
+
+  &:hover
+    opacity: .8
+
+  &:not(.active)
+    cursor: pointer
+
+  > .title
+    font-weight: 600
+    font-size: 20 *$hPoint
+    line-height: 30 *$hPoint
+    text-align: center
+    text-transform: uppercase
+    margin-bottom: 3 *$hPoint
+    transition: all .1s ease
+
+  > .description
+    font-weight: 500
+    line-height: 21 *$hPoint
+    text-align: center
+    margin-bottom: 10 *$hPoint
+
+  > .control
+    width: 100%
+    height: 70 *$hPoint
+    border-radius: 5 *$hPoint
+    background-color: #171616
+    border: (1 *$hPoint) solid #171616
+    transition: all .1s ease
+    +flex-row-space-center()
+    padding: 0 (20 *$hPoint)
+
+    > .arrow
+      width: 20 *$hPoint
+      height: 20 *$hPoint
+      background-size: 100% 100%
+      background-image: url(../../assets/images/selectArrow.svg)
+      transition: all .1s ease
+      cursor: pointer
+
+      &:last-of-type
+        transform: rotate(180deg)
+
+      &.active
+        background-image: url(../../assets/images/selectArrow-active.svg)
+
+      &.pressed
+        transform: scale(.6)
+        &:last-of-type
+          transform: rotate(180deg) scale(.6)
+
+    > .current
+      font-weight: 500
+      font-size: 16 *$hPoint
+      text-transform: uppercase
+
+
+  &.active
+    opacity: 1
+    > .title
+      color: #F1C950
+    > .control
+      border-color: #F1C950
+
