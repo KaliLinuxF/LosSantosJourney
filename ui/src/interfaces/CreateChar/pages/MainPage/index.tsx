@@ -34,11 +34,12 @@ const MainPage: React.FC = () => {
 	const nodeRef = useRef(null)
 
 	useEffect(() => {
+		if(!isOpen) return
 		dispatch(createCharActions.resetData())
 		const event = CreateCharApiEventNames.UpdateGender
 		const data: CreateCharApiUpdateGender = {gender}
 		rpc.callClient('executeServer', { event, data })
-	}, [gender])
+	}, [isOpen, gender])
 
 	const handleSave = () => {
 		const event = CreateCharApiEventNames.Save
