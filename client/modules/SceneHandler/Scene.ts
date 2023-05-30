@@ -2,7 +2,7 @@ import SceneElement from "./elements/SceneElement";
 import ISceneCamera from "./ISceneCamera";
 
 export default class Scene {
-    private elements: SceneElement[] = [];
+    public elements: SceneElement[] = [];
 
     constructor(
         private readonly centerPosition: Vector3Mp,

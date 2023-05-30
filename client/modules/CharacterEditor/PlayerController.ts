@@ -28,10 +28,6 @@ export class PlayerController {
         this.options = options;
     }
 
-    init() {
-        this.changePosition(0);
-    }
-
     async changePosition(positionIdx: number) {
         const position = this.positions[positionIdx];
         
@@ -42,7 +38,7 @@ export class PlayerController {
        await this.destroyAnim();
         
         this.player.position = position.position;
-        this.player.heading = position.heading;
+        this.player.setHeading(position.heading);
 
         if(this.options) {
             if(this.options.animation) {

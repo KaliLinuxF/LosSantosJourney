@@ -117,4 +117,3 @@ export type CharacterData = {
 		[CharacterDataKeys.shoes]: number // male: 1, 5, 6 | female: 3, 5, 0
 	},
 }
-

@@ -3,22 +3,24 @@ import { authConfig } from "./config";
 import { AuthSessionHandler } from "./AuthSessionHandler";
 import { AuthValidationRegExps } from '../../../shared/auth/validationRegExps';
 import { ValidateField } from "./ValidateField";
-import { Account } from "../database/Models/Account";
+import { Account as AccountModel } from "../database/Models/Account";
 import { comparePasswords, hashPassword } from "./utils";
 import { AccountHandler } from "../Account/AccountHandler";
-import rpc from '../../../shared/rpc';
-import NotifyApi from '../../../shared/notifications/api';
+import { Person as PersonModel } from "../database/Models/Person";
 import { NotificationPositions, NotificationTypes } from "../../../shared/notifications/types";
 import { showNotify } from "../utils/notify/notify";
+import { CharacterEditorServiceHandler } from "../CharacterEditor/CharacterEditorServiceHandler";
 
 export class AuthSession {
+    readonly id: number;
     private status: AuthStatus;
     public readonly player: PlayerMp;
     private sessionTimeout: NodeJS.Timeout | null = null;
     private readonly sessionTimeoutTime: number;
     private flood: number;
 
-    constructor(player: PlayerMp) {
+    constructor(id: number, player: PlayerMp) {
+        this.id = id;
         this.player = player;
         this.flood = 0;
         this.sessionTimeoutTime = authConfig.authTimeout * 60 * 1000;
@@ -33,7 +35,7 @@ export class AuthSession {
         this.restartTimeout();
     }
 
-    private finishSession() {
+    private async finishSession() {
         switch (this.status) {
             case AuthStatus.Timeout: {
                 this.showNotifyError('Auth session time out');
@@ -56,12 +58,33 @@ export class AuthSession {
             }
 
             case AuthStatus.Success: {
+                if(!this.player.accountInstance) {
+                    return;
+                }
+
+                // const persons = await PersonModel.findAll({
+                //     where: {
+                //         accountId: this.player.accountInstance.id
+                //     }
+                // });
+
+                // if(persons.length < 1) {
+                //     this.player.call('auth:success');
+                //     // const characterEditor = CharacterEditorServiceHandler.create(this.player);
+                //     // characterEditor.init();
+                // } else {
+
+
+                //     // this.player.call('characterSelector::init', [JSON.stringify(mappedPersons)]);
+                // }
+
+                // IF WE HAVE PERSONS, WE NEED TO SHOW CHARACTER SELECTOR
                 this.player.call('auth:success');
                 break;
             }
         }
 
-        AuthSessionHandler.remove(this);
+        AuthSessionHandler.remove(this.id);
     }
 
     private showNotifyError(message: string) {
@@ -150,7 +173,17 @@ export class AuthSession {
             return;
         }
 
-        const account = await Account.findOne({ where: { login }});
+        let account: AccountModel | null = null;
+
+        try {
+            account = await AccountModel.findOne({
+                where: {
+                    login: login
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
 
         if(!account) {
             this.showNotifyError('Account not found');
@@ -180,21 +213,7 @@ export class AuthSession {
             return;
         }
 
-        AccountHandler.create(account.id, this.player, {
-            login: account.login,
-            password: account.password,
-            lastLoginIp: this.player.ip,
-            registrationData: account.registrationDate,
-            registrationIp: account.registrationIp,
-            email: account.email,
-            promoCode: account.promoCode,
-            donat: account.donat,
-            socialClub: account.socialClub,
-            serial: account.serial
-        });
- 
-        this.status = AuthStatus.Success;
-        this.finishSession();
+        this.successAuth(account);
     }
 
     async onPlayerTryRegister(login: string, password: string, repass: string, email: string, promo: string) {
@@ -219,7 +238,7 @@ export class AuthSession {
             return;
         }
 
-        const account = await Account.findOne({ where: { login, email }});
+        const account = await AccountModel.findOne({ where: { login, email }});
 
         if(account) {
             if(account.login === login) {
@@ -237,7 +256,7 @@ export class AuthSession {
 
         const hashedPassword = await hashPassword(password);
 
-        const newAccount = await Account.create({
+        const newAccount = await AccountModel.create({
             login,
             password: hashedPassword,
             lastLoginIp: this.player.ip,
@@ -248,19 +267,25 @@ export class AuthSession {
             serial: this.player.serial
         });
 
-        AccountHandler.create(newAccount.id, this.player, {
-            login: newAccount.login,
-            password: newAccount.password,
-            lastLoginIp: newAccount.lastLoginIp,
-            registrationData: newAccount.registrationDate,
-            registrationIp: newAccount.registrationIp,
-            email: newAccount.email,
-            promoCode: newAccount.promoCode,
-            donat: newAccount.donat,
-            socialClub: newAccount.socialClub,
-            serial: newAccount.serial
+        this.successAuth(newAccount);
+    }
+
+    successAuth(accountModelInstance: AccountModel) {
+        const accountInstance = AccountHandler.create(accountModelInstance.id, this.player, {
+            login: accountModelInstance.login,
+            password: accountModelInstance.password,
+            lastLoginIp: accountModelInstance.lastLoginIp,
+            lastLoginData: accountModelInstance.lastLoginDate,
+            registrationData: accountModelInstance.registrationDate,
+            registrationIp: accountModelInstance.registrationIp,
+            email: accountModelInstance.email,
+            promoCode: accountModelInstance.promoCode,
+            donat: accountModelInstance.donat,
+            socialClub: accountModelInstance.socialClub,
+            serial: accountModelInstance.serial
         });
 
+        this.player.accountInstance = accountInstance;
         this.status = AuthStatus.Success;
         this.finishSession();
     }

@@ -14,7 +14,7 @@ export class BaseEvent {
         return this._eventName;
     }
     
-    addHandler(handler: handlerFunction, priority: number) {
+    addHandler(handler: handlerFunction, priority: number = 100) {
         if(this.handlers.find((item) => item.handler === handler)) {
             return;
         }

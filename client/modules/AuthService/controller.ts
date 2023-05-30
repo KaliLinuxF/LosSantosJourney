@@ -3,7 +3,6 @@ import SceneHandler from "../SceneHandler/SceneHandler";
 import { authScene } from "../SceneHandler/scenes/authScene";
 import authApi from '../../../shared/auth/api';
 import rpc from '../../../shared/rpc';
-import { PlayerController } from "../CharacterCreator/PlayerController";
 
 BaseEventHandler.get('auth:clientpreset').addHandler(() => {
     mp.gui.cursor.show(true, true);
@@ -20,14 +19,11 @@ BaseEventHandler.get('auth:clientpreset').addHandler(() => {
 
 BaseEventHandler.get('auth:success').addHandler(() => {
     rpc.callBrowsers('executeRpc', authApi.hide());
+    SceneHandler.endScene();
 
     mp.gui.cursor.show(false, false);
     mp.game.ui.displayRadar(true);
     mp.gui.chat.show(true);
-    mp.players.local.position = new mp.Vector3(-326.2754, 639.0650, 172.8681);
+    mp.nametags.enabled = true;
     mp.players.local.setAlpha(255);
-
-    SceneHandler.endScene();
-
-    mp.game.graphics.notify('Welcome to the club, budy');
 }, 1);

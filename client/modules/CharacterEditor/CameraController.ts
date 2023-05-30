@@ -19,8 +19,6 @@ export class CameraController {
     }
 
     init() {
-        this.nextPosition();
-
         mp.keys.bind(charCreatorConfig.cameraSwitchKey, false, () => {
             this.nextPosition();
         });
