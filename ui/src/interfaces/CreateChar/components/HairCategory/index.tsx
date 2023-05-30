@@ -91,13 +91,16 @@ const BodyCategory: React.FC<HairCategoryProps> = ({isAnimIn, title, helper}) =>
 			// @ts-ignore
 			current={categoryData[key]}
 			setCurrent={(value) => {
+				// @ts-ignore
+				if(value === categoryData[key]) return
 				dispatch(createCharActions.setDataItem({
 					category: CharacterDataType.Hair,
 					key,
 					value,
 				}))
 				callUpdateData(CharacterDataType.Hair, {
-					[key]: value
+					// @ts-ignore
+					[key]: Data[key][value]
 				})
 			}}
 			description={description}
@@ -120,6 +123,8 @@ const BodyCategory: React.FC<HairCategoryProps> = ({isAnimIn, title, helper}) =>
 			// @ts-ignore
 			currentId={categoryData[key]}
 			setCurrentId={(value) => {
+				// @ts-ignore
+				if(value === categoryData[key]) return
 				dispatch(createCharActions.setDataItem({
 					category: CharacterDataType.Hair,
 					key,

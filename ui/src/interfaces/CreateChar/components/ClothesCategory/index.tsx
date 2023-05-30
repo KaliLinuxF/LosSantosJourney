@@ -116,6 +116,7 @@ const ClothesCategory: React.FC<ClothesCategoryProps> = ({isAnimIn, title, helpe
 								.map((_, idx) => ({id: idx, name: `Variant ${idx + 1}`})),
 							categoryData[CharacterDataKeys.topData].top,
 							(value) => {
+								if(value === categoryData[CharacterDataKeys.topData].top) return
 								dispatch(createCharActions.setDataItem({
 									category: CharacterDataType.Clothes,
 									key: CharacterDataKeys.topData,
@@ -141,6 +142,7 @@ const ClothesCategory: React.FC<ClothesCategoryProps> = ({isAnimIn, title, helpe
 								.map((_, idx) => ({id: idx, name: `Variant ${idx + 1}`})),
 							categoryData[CharacterDataKeys.legs],
 							(value) => {
+								if(value === categoryData[CharacterDataKeys.legs]) return
 								dispatch(createCharActions.setDataItem({
 									category: CharacterDataType.Clothes,
 									key: CharacterDataKeys.legs,
@@ -160,6 +162,7 @@ const ClothesCategory: React.FC<ClothesCategoryProps> = ({isAnimIn, title, helpe
 								.map((_, idx) => ({id: idx, name: `Variant ${idx + 1}`})),
 							categoryData[CharacterDataKeys.shoes],
 							(value) => {
+								if(value === categoryData[CharacterDataKeys.shoes]) return
 								dispatch(createCharActions.setDataItem({
 									category: CharacterDataType.Clothes,
 									key: CharacterDataKeys.shoes,

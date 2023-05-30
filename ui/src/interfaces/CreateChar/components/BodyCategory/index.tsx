@@ -10,8 +10,6 @@ import {ButtonIcon, ButtonType} from "../../types";
 import {KeyCodes} from "../../../../utils/keyCodes";
 import Select from "../Select";
 import Range from "../Range";
-import {CreateCharApiEventNames, CreateCharApiUpdateData} from "../../../../../../shared/CharacterCreator/api";
-import rpc from "../../../../../../shared/rpc";
 import {callUpdateData} from "../../index";
 
 type BodyCategoryProps = {
@@ -86,6 +84,8 @@ const BodyCategory: React.FC<BodyCategoryProps> = ({isAnimIn, title, helper}) =>
 			// @ts-ignore
 			currentId={categoryData[key].value}
 			setCurrentId={(value) => {
+				// @ts-ignore
+				if(value === categoryData[key].value) return
 				dispatch(createCharActions.setDataItem({
 					category: CharacterDataType.Body,
 					key,
@@ -166,6 +166,8 @@ const BodyCategory: React.FC<BodyCategoryProps> = ({isAnimIn, title, helper}) =>
 					// @ts-ignore
 					value={categoryData[Controls[control]].saturation}
 					setValue={(saturation) => {
+						// @ts-ignore
+						if(saturation === categoryData[Controls[control]].saturation) return
 						dispatch(createCharActions.setDataItem({
 							category: CharacterDataType.Body,
 							key: Controls[control],

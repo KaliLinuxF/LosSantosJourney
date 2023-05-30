@@ -142,6 +142,7 @@ const DnaCategory: React.FC<DnaCategoryProps> = ({isAnimIn, title, helper}) => {
 					style={{marginBottom: calcVh(10)}}
 					value={categoryData[CharacterDataKeys.shapeMix]}
 					setValue={(value) => {
+						if(value === categoryData[CharacterDataKeys.shapeMix]) return
 						dispatch(createCharActions.setDataItem({
 							category: CharacterDataType.Dna,
 							key: CharacterDataKeys.shapeMix,
@@ -160,6 +161,7 @@ const DnaCategory: React.FC<DnaCategoryProps> = ({isAnimIn, title, helper}) => {
 					style={{marginBottom: calcVh(20)}}
 					value={categoryData[CharacterDataKeys.skinMix]}
 					setValue={(value) => {
+						if(value === categoryData[CharacterDataKeys.skinMix]) return
 						dispatch(createCharActions.setDataItem({
 							category: CharacterDataType.Dna,
 							key: CharacterDataKeys.skinMix,
