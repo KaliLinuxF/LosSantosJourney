@@ -37,13 +37,13 @@ const MainPage: React.FC = () => {
 		dispatch(createCharActions.resetData())
 		const event = CreateCharApiEventNames.UpdateGender
 		const data: CreateCharApiUpdateGender = {gender}
-		rpc.callClient('executeServer', { event, data })
+		rpc.callClient(event, data)
 	}, [gender])
 
 	const handleSave = () => {
 		const event = CreateCharApiEventNames.Save
 		const data: CreateCharApiSave = {firstName, lastName}
-		rpc.callClient('executeServer', { event, data })
+		rpc.callClient(event, data);
 	}
 
 	const handleKeyDown = useCallback(

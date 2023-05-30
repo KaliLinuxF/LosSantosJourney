@@ -6,6 +6,7 @@ import './modules/database'
 import './modules/AuthService/controller';
 import './modules/Person/controller';
 import './modules/Account/controller';
+import './modules/CharacterEditor/controller';
 
 import { BaseEventHandler } from '../shared/BaseEvents/BaseEventHandler';
 import { AuthSessionHandler } from './modules/AuthService/AuthSessionHandler';

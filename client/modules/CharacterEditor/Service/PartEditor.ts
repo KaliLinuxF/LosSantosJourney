@@ -43,6 +43,7 @@ export abstract class PartEditor<T> {
             return
         }
 
+        this.gender = gender;
         this.reset();
     }
 

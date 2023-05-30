@@ -63,7 +63,7 @@ export type CharacterData = {
 		[CharacterDataKeys.browsStyle]: number // 0, 6, 9
 		[CharacterDataKeys.browsColor]: number // 0, 5, 14, 61, 62
 		[CharacterDataKeys.chestStyle]: number // male: 0, 1, 2 | female: 0
-		[CharacterDataKeys.chestColor]: number // 0, 5, 14, 61, 62
+	[CharacterDataKeys.chestColor]: number // 0, 5, 14, 61, 62
 	},
 	[CharacterDataType.Face]: {
 		[CharacterDataKeys.noseWidth]: number // -1..1

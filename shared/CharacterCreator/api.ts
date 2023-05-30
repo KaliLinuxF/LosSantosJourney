@@ -1,4 +1,4 @@
-import {CharacterDataKeys, CharacterDataType} from "./CharacterDataType";
+import { CharacterDataType } from "./CharacterDataType";
 import {Gender} from "./types";
 
 export enum CreateCharApiEventNames {
@@ -12,15 +12,15 @@ export type CreateCharApiUpdateCategory = {
 	categoryId: CharacterDataType
 }
 
+export type CreateCharApiUpdateGender = {
+	gender: Gender
+}
+
 export type CreateCharApiUpdateData = {
 	type: CharacterDataType
 	data: {
 		[key: string]: any
 	}
-}
-
-export type CreateCharApiUpdateGender = {
-	gender: Gender
 }
 
 export type CreateCharApiSave = {

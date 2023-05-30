@@ -17,7 +17,7 @@ export const callUpdateData = (type: CharacterDataType, dataObj: any) => {
 		type: CharacterDataType.Body,
 		data: dataObj,
 	}
-	rpc.callClient('executeServer', {event, data})
+	rpc.callClient(event, data)
 }
 
 const CreateChar: React.FC = () => {

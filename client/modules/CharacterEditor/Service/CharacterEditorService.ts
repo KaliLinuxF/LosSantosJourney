@@ -10,6 +10,8 @@ import { CameraController } from "../CameraController";
 import { PlayerController } from "../PlayerController";
 import { charCreatorConfig } from "../config";
 import { destroyCharacterEditorService } from "../controller";
+import rpc from '../../../../shared/rpc';
+import charApi, { CreateCharApiUpdateCategory } from '../../../../shared/CharacterCreator/api';
 
 export class CharacterEditorService {
     private readonly player: PlayerMp;
@@ -19,18 +21,13 @@ export class CharacterEditorService {
     private readonly Hair: Hair;
     private readonly Body: Body;
 
-    private firstName: string;
-    private lastName: string;
     private gender: Gender;
-
     private cameraController: CameraController;
     private playerController: PlayerController;
 
     constructor(defaultData: DefaultCharacterType) { 
         this.player = this.player;
 
-        this.firstName = '';
-        this.lastName = '';
         this.gender = Gender.Male;
 
         this.Dna = new Dna(defaultData.male[CharacterDataType.Dna], defaultData.famale[CharacterDataType.Dna]);
@@ -48,11 +45,41 @@ export class CharacterEditorService {
         this.cameraController.init();
 
         this.playerController.changePosition(0);
+
+        rpc.callBrowsers('executeRpc', charApi.show());
     }
 
-    setName(firstName: string, lastName: string) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    changeCategory(categoryId: CharacterDataType) {
+        switch (categoryId) {
+            case CharacterDataType.Dna: {
+                this.cameraController.setCameras(charCreatorConfig.dnaCameraPositions);
+                this.playerController.changePosition(0);
+                break;
+            }
+            case CharacterDataType.Clothes: {
+                this.cameraController.setCameras(charCreatorConfig.clothesCameraPositions);
+                this.playerController.changePosition(1);
+                break;
+            }
+            case CharacterDataType.Face: {
+                this.cameraController.setCameras(charCreatorConfig.barberCameraPositions);
+                this.playerController.changePosition(2);
+                break;
+            }
+            case CharacterDataType.Hair: {
+                this.cameraController.setCameras(charCreatorConfig.barberCameraPositions);
+                this.playerController.changePosition(2);
+                break;
+            }
+            case CharacterDataType.Body: {
+                this.cameraController.setCameras(charCreatorConfig.dnaCameraPositions);
+                this.playerController.changePosition(0);
+                break;
+            }
+        
+            default:
+                break;
+        }
     }
 
     setGender(gender: Gender) {
@@ -93,23 +120,23 @@ export class CharacterEditorService {
         }
     }
 
-    updateAll(data: CharacterData) {
-        this.Dna.update(data[CharacterDataType.Dna]);
-        this.Clothes.update(data[CharacterDataType.Clothes]);
-        this.Face.update(data[CharacterDataType.Face]);
-        this.Hair.update(data[CharacterDataType.Hair]);
-        this.Body.update(data[CharacterDataType.Body]);
-    }
+    // updateAll(data: CharacterData) {
+    //     this.Dna.update(data[CharacterDataType.Dna]);
+    //     this.Clothes.update(data[CharacterDataType.Clothes]);
+    //     this.Face.update(data[CharacterDataType.Face]);
+    //     this.Hair.update(data[CharacterDataType.Hair]);
+    //     this.Body.update(data[CharacterDataType.Body]);
+    // }
 
-    applyAll() {
-        this.Dna.apply();
-        this.Clothes.apply();
-        this.Face.apply();
-        this.Hair.apply();
-        this.Body.apply();
-    }
+    // applyAll() {
+    //     this.Dna.apply();
+    //     this.Clothes.apply();
+    //     this.Face.apply();
+    //     this.Hair.apply();
+    //     this.Body.apply();
+    // }
 
-    save() {
+    save(firstName: string, lastName: string) {
         const data: CharacterData = {
             [CharacterDataType.Dna]: this.Dna.data,
             [CharacterDataType.Clothes]: this.Clothes.data,
@@ -118,7 +145,8 @@ export class CharacterEditorService {
             [CharacterDataType.Body]: this.Body.data,
         }
 
-        this.player.call('characterEditor:save', [this.firstName, this.lastName, this.gender, data]);
+        this.player.call('characterEditor:save', [firstName, lastName, this.gender, data]);
+        this.destroy();
     }
 
     destroy() {

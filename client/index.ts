@@ -1,6 +1,7 @@
 import './modules/sockets/controller';
 import './modules/utils';
 import './modules/AuthService/controller';
+import './modules/CharacterEditor/controller';
 
 const url = 'package://browser/index.html';
 const browser = mp.browsers.new(url);

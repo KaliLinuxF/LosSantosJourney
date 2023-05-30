@@ -119,7 +119,7 @@ export const createCharSlice = createSlice({
 			const data: CreateCharApiUpdateCategory = {
 				categoryId: action.payload
 			}
-			rpc.callClient('executeServer', {event, data})
+			rpc.callClient(event, data)
 		},
 		setDataItem(state, action: PayloadAction<SetDataItemActionPayload>) {
 			const {category, key, value} = action.payload

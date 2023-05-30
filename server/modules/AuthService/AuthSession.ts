@@ -62,24 +62,18 @@ export class AuthSession {
                     return;
                 }
 
-                // const persons = await PersonModel.findAll({
-                //     where: {
-                //         accountId: this.player.accountInstance.id
-                //     }
-                // });
+                const persons = await PersonModel.findAll({
+                    where: {
+                        accountId: this.player.accountInstance.id
+                    }
+                });
 
-                // if(persons.length < 1) {
-                //     this.player.call('auth:success');
-                //     // const characterEditor = CharacterEditorServiceHandler.create(this.player);
-                //     // characterEditor.init();
-                // } else {
+                if(persons.length < 1) {
+                    CharacterEditorServiceHandler.create(this.player).init();
+                } else {
+                    this.player.call('auth:success');
+                }
 
-
-                //     // this.player.call('characterSelector::init', [JSON.stringify(mappedPersons)]);
-                // }
-
-                // IF WE HAVE PERSONS, WE NEED TO SHOW CHARACTER SELECTOR
-                this.player.call('auth:success');
                 break;
             }
         }

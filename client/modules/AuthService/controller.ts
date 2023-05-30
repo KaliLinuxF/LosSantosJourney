@@ -19,11 +19,4 @@ BaseEventHandler.get('auth:clientpreset').addHandler(() => {
 
 BaseEventHandler.get('auth:success').addHandler(() => {
     rpc.callBrowsers('executeRpc', authApi.hide());
-    SceneHandler.endScene();
-
-    mp.gui.cursor.show(false, false);
-    mp.game.ui.displayRadar(true);
-    mp.gui.chat.show(true);
-    mp.nametags.enabled = true;
-    mp.players.local.setAlpha(255);
 }, 1);
