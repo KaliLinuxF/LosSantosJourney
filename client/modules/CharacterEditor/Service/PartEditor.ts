@@ -4,7 +4,7 @@ export abstract class PartEditor<T> {
     protected _data: T;
     private defaultMale: T;
     private defaultFamele: T;
-    private gender: Gender;
+    protected gender: Gender;
     protected player: PlayerMp;
 
     get data(): T {

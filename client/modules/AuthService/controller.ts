@@ -10,9 +10,8 @@ BaseEventHandler.get('auth:clientpreset').addHandler(() => {
     mp.gui.chat.show(false);
     mp.nametags.enabled = false
     mp.players.local.position = new mp.Vector3(-326.2754, 639.0650, 172.8681);
-    mp.players.local.setAlpha(0);
 
-    rpc.callBrowsers('executeRpc', authApi.show({ disclaimerDuration: 4 }));
+    rpc.callBrowsers('executeRpc', authApi.show({ disclaimerDuration: 3 }));
     
     SceneHandler.startScene(authScene);
 }, 0);

@@ -1,5 +1,4 @@
 import { charCreatorConfig } from "./config";
-import { NotificationTypes, NotificationPositions } from '../../../shared/notifications/types';
 
 export type CameraPosition = {
     position: Vector3Mp;
@@ -12,30 +11,33 @@ export class CameraController {
     private positions: CameraPosition[];
     private readonly fadeTime: number;
 
-    constructor(fadeTime: number) {
+    private readonly switchFadeTimeout: number;
+    private readonly switchFade: number;
+
+    constructor(fadeTime: number, switchFade: number, switchFadeTimeout: number) {
         this.fadeTime = fadeTime;
+        this.switchFade = switchFade;
+        this.switchFadeTimeout = switchFadeTimeout;
         this.currentCameraPosition = 0;
         this.positions = [];
     }
 
     init() {
-        mp.keys.bind(charCreatorConfig.cameraSwitchKey, false, () => {
-            this.nextPosition();
-        });
+        mp.keys.bind(charCreatorConfig.cameraSwitchKey, false, this.nextPosition);
     }
 
     setCameras(positions: CameraPosition[]) {
         this.positions = positions;
         this.currentCameraPosition = 0;
-        this.nextPosition();
+        this.nextPosition(true);
     }
 
-    private nextPosition() {
+    private nextPosition = (isSwitch: boolean = false) => {
         if(this.positions.length < 1) {
             return;
         }
         
-        this.fadeCamera();
+        this.fadeCamera(isSwitch);
         this.destroyCamera();
 
         if(this.currentCameraPosition > this.positions.length - 1) {
@@ -53,9 +55,16 @@ export class CameraController {
         this.currentCameraPosition += 1;
     }
 
-    private fadeCamera() {
+    private fadeCamera(isSwitch: boolean = false) {
         mp.game.cam.doScreenFadeOut(0);
-        mp.game.cam.doScreenFadeIn(this.fadeTime);
+
+        if(isSwitch) {
+            setTimeout(() => {
+                mp.game.cam.doScreenFadeIn(this.switchFade);
+            }, this.switchFadeTimeout);
+        } else {
+            mp.game.cam.doScreenFadeIn(this.fadeTime);
+        }
     }
 
     private destroyCamera() {
@@ -67,6 +76,8 @@ export class CameraController {
     }
 
     destroy() {
+        mp.keys.unbind(charCreatorConfig.cameraSwitchKey, false, this.nextPosition);
+
         this.camera?.setActive(false);
         this.camera?.destroy(true);
         this.camera = null;

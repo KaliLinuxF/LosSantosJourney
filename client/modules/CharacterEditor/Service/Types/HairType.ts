@@ -3,6 +3,6 @@ export type HairType = {
 	hairColor: number	// 0, 5, 14, 61, 62
 	browsStyle: number // 0, 6, 9
 	browsColor: number // 0, 5, 14, 61, 62
-	chestStyle: number // male: 0, 1, 2 | female: 0
-	chestColor: number // 0, 5, 14, 61, 62
+	facialHair: number // male: 0, 1, 2 | female: 0
+	facialColor: number // 0, 5, 14, 61, 62
 }

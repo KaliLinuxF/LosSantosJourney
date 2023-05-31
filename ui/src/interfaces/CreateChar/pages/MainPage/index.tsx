@@ -38,7 +38,7 @@ const MainPage: React.FC = () => {
 		dispatch(createCharActions.resetData())
 		const event = CreateCharApiEventNames.UpdateGender
 		const data: CreateCharApiUpdateGender = {gender}
-		rpc.callClient('executeServer', { event, data })
+		rpc.callClient(event, data );
 	}, [isOpen, gender])
 
 	const handleSave = () => {

@@ -62,22 +62,25 @@ export class AuthSession {
                     return;
                 }
 
+                this.player.call('auth:success');
+
                 const persons = await PersonModel.findAll({
                     where: {
                         accountId: this.player.accountInstance.id
                     }
                 });
-
+                
                 if(persons.length < 1) {
                     CharacterEditorServiceHandler.create(this.player).init();
                 } else {
-                    this.player.call('auth:success');
+                    // TODO: Show character selection
                 }
 
                 break;
             }
         }
 
+        clearTimeout(this.sessionTimeout);
         AuthSessionHandler.remove(this.id);
     }
 

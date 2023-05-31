@@ -9,9 +9,13 @@ import { Gender } from "../../../../shared/CharacterCreator/types";
 import { CameraController } from "../CameraController";
 import { PlayerController } from "../PlayerController";
 import { charCreatorConfig } from "../config";
-import { destroyCharacterEditorService } from "../controller";
 import rpc from '../../../../shared/rpc';
-import charApi, { CreateCharApiUpdateCategory } from '../../../../shared/CharacterCreator/api';
+import charApi from '../../../../shared/CharacterCreator/api';
+
+const fadeTime = 750;
+
+const switchFade = 750;
+const switchFadeTimeout = Math.round(fadeTime / 2);
 
 export class CharacterEditorService {
     private readonly player: PlayerMp;
@@ -26,7 +30,7 @@ export class CharacterEditorService {
     private playerController: PlayerController;
 
     constructor(defaultData: DefaultCharacterType) { 
-        this.player = this.player;
+        this.player = mp.players.local;
 
         this.gender = Gender.Male;
 
@@ -38,13 +42,14 @@ export class CharacterEditorService {
     }
 
     init() {
-        this.cameraController = new CameraController(750);
+        this.cameraController = new CameraController(fadeTime, switchFade, switchFadeTimeout);
         this.playerController = new PlayerController(charCreatorConfig.characterPositions);
 
         this.cameraController.setCameras(charCreatorConfig.dnaCameraPositions);
         this.cameraController.init();
 
         this.playerController.changePosition(0);
+        this.applyAll();
 
         rpc.callBrowsers('executeRpc', charApi.show());
     }
@@ -84,6 +89,9 @@ export class CharacterEditorService {
 
     setGender(gender: Gender) {
         this.gender = gender;
+
+        const model = this.gender === Gender.Male ? 'mp_m_freemode_01' : 'mp_f_freemode_01';
+        this.player.model = mp.game.joaat(model);
 
         this.Dna.changeGender(this.gender);
         this.Clothes.changeGender(this.gender);
@@ -128,13 +136,13 @@ export class CharacterEditorService {
     //     this.Body.update(data[CharacterDataType.Body]);
     // }
 
-    // applyAll() {
-    //     this.Dna.apply();
-    //     this.Clothes.apply();
-    //     this.Face.apply();
-    //     this.Hair.apply();
-    //     this.Body.apply();
-    // }
+    applyAll() {
+        this.Dna.apply();
+        this.Clothes.apply();
+        this.Face.apply();
+        this.Hair.apply();
+        this.Body.apply();
+    }
 
     save(firstName: string, lastName: string) {
         const data: CharacterData = {
@@ -145,13 +153,11 @@ export class CharacterEditorService {
             [CharacterDataType.Body]: this.Body.data,
         }
 
-        this.player.call('characterEditor:save', [firstName, lastName, this.gender, data]);
-        this.destroy();
+        mp.events.callRemote('characterEditor:save', [firstName, lastName, this.gender, data]);
     }
 
     destroy() {
         this.cameraController.destroy();
         this.playerController.destroy();
-        destroyCharacterEditorService();
     }
 }

@@ -17,8 +17,8 @@ export enum CharacterDataKeys {
 	hairColor = 'hairColor',
 	browsStyle = 'browsStyle',
 	browsColor = 'browsColor',
-	chestStyle = 'chestStyle',
-	chestColor = 'chestColor',
+	facialHair = 'facialHair',
+	facialColor = 'facialColor',
 	noseWidth = 'noseWidth',
 	noseHeight = 'noseHeight',
 	noseLength = 'noseLength',
@@ -62,8 +62,8 @@ export type CharacterData = {
 		[CharacterDataKeys.hairColor]: number	// 0, 5, 14, 61, 62
 		[CharacterDataKeys.browsStyle]: number // 0, 6, 9
 		[CharacterDataKeys.browsColor]: number // 0, 5, 14, 61, 62
-		[CharacterDataKeys.chestStyle]: number // male: 0, 1, 2 | female: 0
-	[CharacterDataKeys.chestColor]: number // 0, 5, 14, 61, 62
+		[CharacterDataKeys.facialHair]: number // male: -1, 0, 1, 2 | female: -1
+		[CharacterDataKeys.facialColor]: number // 0, 5, 14, 61, 62
 	},
 	[CharacterDataType.Face]: {
 		[CharacterDataKeys.noseWidth]: number // -1..1
@@ -88,23 +88,23 @@ export type CharacterData = {
 	},
 	[CharacterDataType.Body]: {
 		[CharacterDataKeys.ageing]: {
-			value: number // 0..14
+			value: number // -1..14
 			saturation: number // 0-1
 		}
 		[CharacterDataKeys.blemishes]: {
-			value: number // 0..21
+			value: number // -1..21
 			saturation: number // 0-1
 		}
 		[CharacterDataKeys.bodyBlemishes]: {
-			value: number // 0..11
+			value: number // -1..11
 			saturation: number // 0-1
 		}
 		[CharacterDataKeys.sunDamage]: {
-			value: number // 0..10
+			value: number // -1..10
 			saturation: number // 0-1
 		}
 		[CharacterDataKeys.moles]: {
-			value: number // 0..17
+			value: number // -1..17
 			saturation: number // 0-1
 		}
 	},
