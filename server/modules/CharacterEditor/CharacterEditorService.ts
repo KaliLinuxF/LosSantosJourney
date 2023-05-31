@@ -6,6 +6,8 @@ import { StaticGenerator } from "../Person/StaticGenerator";
 import { PersonHandler } from "../Person/PersonHandler";
 import { CharacterEditorServiceHandler } from "./CharacterEditorServiceHandler";
 import { DefaultCharacterType } from '../../../shared/CharacterCreator/DefaultCharacterDataType';
+import { NotificationTypes, NotificationPositions } from "../../../shared/notifications/types";
+import { showNotify } from "../utils/notify/notify";
 
 export class CharacterEditorService {
     id: number;
@@ -32,6 +34,39 @@ export class CharacterEditorService {
             return;
         }
 
+        if(!firstName) {
+            showNotify(this.player, NotificationTypes.Error, 'Type firstname', 4, NotificationPositions.TopLeft);
+            return;
+        }
+
+        if(!lastName) {
+            showNotify(this.player, NotificationTypes.Error, 'Type lastname', 4, NotificationPositions.TopLeft);
+            return;
+        }
+
+        if(!gender) {
+            showNotify(this.player, NotificationTypes.Error, 'Choose gender', 4, NotificationPositions.TopLeft);
+            return;
+        }
+
+        if(!data) {
+            showNotify(this.player, NotificationTypes.Error, 'Something wrong', 4, NotificationPositions.TopLeft);
+            return;
+        }
+
+        // TODO: check first name and last name
+
+        const personWithSameName = await PersonModel.findOne({
+            where: {
+                name: `${firstName} ${lastName}`
+            }
+        });
+
+        if(personWithSameName) {
+            showNotify(this.player, NotificationTypes.Error, 'Person with same name already exist', 4, NotificationPositions.TopLeft);
+            return;
+        }
+
         const person = await PersonModel.create({
             accountId: account.id,
             name: `${firstName} ${lastName}`,
@@ -54,5 +89,6 @@ export class CharacterEditorService {
 
     finish() {
         CharacterEditorServiceHandler.remove(this.id);
+        this.player.call('characterEditor::finish');
     }
 }

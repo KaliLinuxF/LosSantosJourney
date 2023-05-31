@@ -88,23 +88,23 @@ export type CharacterData = {
 	},
 	[CharacterDataType.Body]: {
 		[CharacterDataKeys.ageing]: {
-			value: number // 0..14
+			value: number // -1..14
 			saturation: number // 0-1
 		}
 		[CharacterDataKeys.blemishes]: {
-			value: number // 0..21
+			value: number // -1..21
 			saturation: number // 0-1
 		}
 		[CharacterDataKeys.bodyBlemishes]: {
-			value: number // 0..11
+			value: number // -1..11
 			saturation: number // 0-1
 		}
 		[CharacterDataKeys.sunDamage]: {
-			value: number // 0..10
+			value: number // -1..10
 			saturation: number // 0-1
 		}
 		[CharacterDataKeys.moles]: {
-			value: number // 0..17
+			value: number // -1..17
 			saturation: number // 0-1
 		}
 	},
