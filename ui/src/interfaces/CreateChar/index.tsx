@@ -15,6 +15,7 @@ export const callUpdateData = (type: CharacterDataType, dataObj: any) => {
 		type,
 		data: dataObj,
 	}
+	// console.log(dataObj)
 	rpc.callClient(event, data)
 }
 

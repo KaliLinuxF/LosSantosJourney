@@ -21,11 +21,11 @@ type CategoryHelperList = {
 	[CharacterDataType.Clothes]: string
 }
 const CategoryHelperList: CategoryHelperList = {
-	[CharacterDataType.Dna]: 'And independent states form a global economic network and at the same time ',
-	[CharacterDataType.Face]: 'And independent states form a global economic network and at the same time ',
-	[CharacterDataType.Body]: 'And independent states form a global economic network and at the same time ',
-	[CharacterDataType.Hair]: 'And independent states form a global economic network and at the same time ',
-	[CharacterDataType.Clothes]: 'And independent states form a global economic network and at the same time ',
+	[CharacterDataType.Dna]: 'This section will help you create a unique character by identifying his ancestors and similarities with them',
+	[CharacterDataType.Face]: 'The "Face" category allows you to fine-tune your character\'s face. Take special care to give your character a special personality',
+	[CharacterDataType.Body]: 'Increase or decrease the number of moles, add wrinkles or other expressive details to create an unusual and memorable image.',
+	[CharacterDataType.Hair]: 'Choose the style, hair color, and brows style to create your personal style.',
+	[CharacterDataType.Clothes]: 'In this section you can customize the starting clothes of your character',
 }
 
 const Categories: React.FC = () => {
@@ -33,6 +33,7 @@ const Categories: React.FC = () => {
 	const {isOpen, categoryId} = useAppSelector(state => state.createChar)
 	const nodeRef = useRef(null)
 	const [isShowContent, setIsShowContent] = useState(false)
+	const [hoveredId, setHoveredId] = useState(CharacterDataType.Dna)
 
 	const setCategoryId = (categoryId: CharacterDataType) => dispatch(createCharActions.setCategoryId(categoryId))
 
@@ -43,6 +44,7 @@ const Categories: React.FC = () => {
 				key={id}
 				className={`item ${isActive && 'active'} icon-${id}`}
 				onClick={() => setCategoryId(id)}
+				onMouseEnter={() => setHoveredId(id)}
 			/>
 		)
 	})
@@ -60,12 +62,12 @@ const Categories: React.FC = () => {
 		>
 			<div className='Categories' ref={nodeRef}>
 				<CSSTransition in={isShowContent} timeout={{enter: 600, exit: 300}} classNames='list'>
-					<div className='list'>{renderList()}</div>
-				</CSSTransition>
-				<CSSTransition in={isShowContent} timeout={{enter: 600, exit: 300}} classNames='helper'>
-					<div className='helper'>
-						<div className="bg"/>
-						<div className="text">{CategoryHelperList[categoryId]}</div>
+					<div className='list'>
+						{renderList()}
+						<div className='helper'>
+							<div className="bg"/>
+							<div className="text">{CategoryHelperList[hoveredId]}</div>
+						</div>
 					</div>
 				</CSSTransition>
 			</div>

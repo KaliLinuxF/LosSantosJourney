@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './index.sass'
 import rpc from '../../shared/rpc';
 import Auth from "./interfaces/Auth";
@@ -7,6 +7,8 @@ import { SOUNDS_LIST } from './utils/audio/list';
 import {useAppDispatch} from "./hooks/redux";
 import {Howl} from "howler";
 import CreateChar from "./interfaces/CreateChar";
+import {authActions} from "./interfaces/Auth/reducer";
+import {createCharActions} from "./interfaces/CreateChar/reducer";
 
 // @ts-ignore
 window.soundSystem = {
@@ -58,6 +60,19 @@ Object.keys(SOUNDS_LIST).forEach((file) => window.soundSystem.playSound({ file, 
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch()
+
+	// useEffect(() => {
+	// 	setTimeout(() => {
+	// 		dispatch(authActions.show({disclaimerDuration: 0}))
+	// 		setTimeout(() => {
+	// 			dispatch(authActions.hide())
+	// 			dispatch(createCharActions.show())
+	// 			setTimeout(() => {
+	// 				dispatch(createCharActions.hide())
+	// 			}, 3000)
+	// 		}, 2000)
+	// 	}, 1000)
+	// }, [])
 
 	rpc.register('executeRpc', (action: any) => {
 		dispatch(action)

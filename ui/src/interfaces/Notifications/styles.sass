@@ -11,7 +11,13 @@
     top: 60 *$hPoint
     left: 60 *$hPoint
 
-  > .Notify
+  &.bottom
+    bottom: 60 *$hPoint
+    left: 50%
+    transform: translateX(-50%)
+    +flex-col-start-center()
+
+  .Notify
     width: fit-content
     //height: 65 *$hPoint
     padding: (25 *$hPoint) (15 *$hPoint) (20 *$hPoint)

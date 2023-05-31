@@ -3,7 +3,7 @@
 
 .CreateChar .Categories
   width: 514 *$hPoint
-  height: 191 *$hPoint
+  height: 62 *$hPoint
   position: absolute
   top: 50 *$hPoint
   left: 50%
@@ -15,6 +15,7 @@
     +anim-from-top(.2s, .3s, 0, .3s)
     +flex-row-center-center()
     gap: 5 *$hPoint
+    z-index: 1
 
     > .item
       width: 62 *$hPoint
@@ -52,24 +53,33 @@
         &.icon-4
           background-image: url(../../assets/images/categories/clothes-active.svg)
 
-  > .helper
-    width: 100%
-    height: 129 *$hPoint
-    +flex-row-center-center()
-    +anim-from-top(.2s, .3s, 0, .3s)
-    position: relative
+      &:hover ~ .helper
+        opacity: 1
 
-    > .bg
-      +full-size-block()
-      background-color: rgba(0, 0, 0, .7)
-      filter: blur(97 *$hPoint)
+    > .helper
+      width: 100%
+      height: 129 *$hPoint
+      +flex-row-center-center()
+      +anim-from-top(.2s, .3s, 0, .3s)
+      position: absolute
+      top: 100%
+      left: 0
+      opacity: 0
+      transition: all .1s ease
+      z-index: -1
 
-    > .text
-      +full-size-block()
-      +flex-col-center-center()
-      text-align: center
-      padding: 0 (110 *$hPoint)
-      font-weight: 500
-      font-size: 16 *$hPoint
-      color: rgba(255, 255, 255, .7)
-      text-shadow: 0 (1 *$hPoint) (5 *$hPoint) #000
+      > .bg
+        +full-size-block()
+        background-color: rgba(0, 0, 0, .7)
+        filter: blur(97 *$hPoint)
+
+      > .text
+        +full-size-block()
+        +flex-col-center-center()
+        text-align: center
+        padding: 0 (110 *$hPoint)
+        font-weight: 500
+        font-size: 16 *$hPoint
+        color: rgba(255, 255, 255, .7)
+        text-shadow: 0 (1 *$hPoint) (5 *$hPoint) #000
+

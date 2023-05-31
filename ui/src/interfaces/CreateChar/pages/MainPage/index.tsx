@@ -15,7 +15,10 @@ import {
 	CreateCharApiUpdateGender
 } from "../../../../../../shared/CharacterCreator/api";
 import {createCharActions} from "../../reducer";
-import {callUpdateData} from "../../index";
+import {CharacterDataType} from "../../../../../../shared/CharacterCreator/CharacterDataType";
+import {NameRegExp} from "../../../../../../shared/CharacterCreator/RegExps";
+import {sendNotify} from "../../../../utils/notify";
+import {NotificationPositions, NotificationTypes} from "../../../../../../shared/notifications/types";
 
 const MainPage: React.FC = () => {
 	const [isShowContent, setIsShowContent] = useState(false)
@@ -42,6 +45,20 @@ const MainPage: React.FC = () => {
 	}, [isOpen, gender])
 
 	const handleSave = () => {
+		if(!NameRegExp.test(firstName)) return sendNotify({
+			text: 'Bad firstname',
+			position: NotificationPositions.Bottom,
+			type: NotificationTypes.Error,
+			duration: 5,
+		})
+
+		if(!NameRegExp.test(lastName)) return sendNotify({
+			text: 'Bad lastname',
+			position: NotificationPositions.Bottom,
+			type: NotificationTypes.Error,
+			duration: 5,
+		})
+
 		const event = CreateCharApiEventNames.Save
 		const data: CreateCharApiSave = {firstName, lastName}
 		rpc.callClient(event, data);
@@ -108,6 +125,15 @@ const MainPage: React.FC = () => {
 			document.removeEventListener('keyup', handleKeyUp);
 		};
 	}, [handleKeyUp]);
+
+	const handleRandom = () => {
+		dispatch(createCharActions.setCategoryId(CharacterDataType.Dna))
+		dispatch(createCharActions.randomDataCategory(CharacterDataType.Dna))
+		dispatch(createCharActions.randomDataCategory(CharacterDataType.Face))
+		dispatch(createCharActions.randomDataCategory(CharacterDataType.Body))
+		dispatch(createCharActions.randomDataCategory(CharacterDataType.Hair))
+		dispatch(createCharActions.randomDataCategory(CharacterDataType.Clothes))
+	}
 
 	return (
 		<CSSTransition
@@ -180,6 +206,7 @@ const MainPage: React.FC = () => {
 							type={ButtonType.Dark}
 							icon={ButtonIcon.Random}
 							style={{marginBottom: calcVh(59)}}
+							onClick={handleRandom}
 						/>
 					</div>
 				</CSSTransition>

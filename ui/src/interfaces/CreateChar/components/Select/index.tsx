@@ -6,6 +6,7 @@ type SelectProps = {
 	isShowContent: boolean
 	isActive: boolean
 	setActive: () => void
+	hasMinus?: boolean
 	title: string
 	description: string
 	list: { id: number, name: string }[]
@@ -18,6 +19,7 @@ const Select: React.FC<SelectProps> = ({
 																				 isShowContent,
 																				 isActive,
 																				 setActive,
+																				 hasMinus = false,
 																				 title,
 																				 description,
 																				 list,
@@ -31,6 +33,8 @@ const Select: React.FC<SelectProps> = ({
 		arrowLeft: false,
 		arrowRight: false,
 	})
+
+	const min = hasMinus ? -1 : 0
 
 	useEffect(() => {
 		if (isActive && isShowContent)
@@ -54,7 +58,7 @@ const Select: React.FC<SelectProps> = ({
 			}
 
 			const length = list.length - 1
-			if (index < 0) index = 0
+			if (index < min) index = min
 			else if (index > length) index = length
 
 			setCurrentId(list[index].id)
@@ -98,7 +102,7 @@ const Select: React.FC<SelectProps> = ({
 		({keyCode}) => {
 			switch (keyCode) {
 				case KeyCodes.ArrowLeft:
-					if (currentIndex < 0) return
+					if (currentIndex < min) return
 					setControlKeys(prev => ({...prev, arrowLeft: false}))
 					break;
 				case KeyCodes.ArrowRight:
@@ -134,11 +138,11 @@ const Select: React.FC<SelectProps> = ({
 					className={`arrow ${isActive && currentIndex > 0 && 'active'} ${controlKeys.arrowLeft && 'pressed'}`}
 					onClick={() => {
 						let newIndex = currentIndex - 1
-						if(newIndex < 0) newIndex = 0
+						if(newIndex < min) newIndex = min
 						setCurrentId(newIndex)
 					}}
 				/>
-				<div className="current">{list[currentIndex].name}</div>
+				<div className="current">{list[currentIndex]?.name}</div>
 				<div
 					className={`arrow ${isActive && currentIndex < list.length - 1 && 'active'} ${controlKeys.arrowRight && 'pressed'}`}
 					onClick={() => {

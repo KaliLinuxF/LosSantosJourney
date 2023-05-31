@@ -11,8 +11,6 @@ import {calcVh} from "../../../../utils/calcVh";
 import Button from "../Button";
 import {ButtonIcon, ButtonType} from "../../types";
 import {KeyCodes} from "../../../../utils/keyCodes";
-import {CreateCharApiEventNames, CreateCharApiUpdateData} from "../../../../../../shared/CharacterCreator/api";
-import rpc from "../../../../../../shared/rpc";
 import {callUpdateData} from "../../index";
 
 type DnaCategoryProps = {
@@ -138,7 +136,7 @@ const DnaCategory: React.FC<DnaCategoryProps> = ({isAnimIn, title, helper}) => {
 					isActive={currentControl === CharacterDataKeys.shapeMix}
 					setActive={() => setControl(Controls.findIndex(key => key === CharacterDataKeys.shapeMix))}
 					title='Similarity'
-					description='And independent states form a global economic network and at the same time'
+					description='Move the slider to determine which of the selected genes your character looks more like'
 					style={{marginBottom: calcVh(10)}}
 					value={categoryData[CharacterDataKeys.shapeMix]}
 					setValue={(value) => {
@@ -157,7 +155,7 @@ const DnaCategory: React.FC<DnaCategoryProps> = ({isAnimIn, title, helper}) => {
 					isActive={currentControl === CharacterDataKeys.skinMix}
 					setActive={() => setControl(Controls.findIndex(key => key === CharacterDataKeys.skinMix))}
 					title='Skin color'
-					description='And independent states form a global economic network and at the same time'
+					description='Move the slider to determine which skin color your character will borrow'
 					style={{marginBottom: calcVh(20)}}
 					value={categoryData[CharacterDataKeys.skinMix]}
 					setValue={(value) => {
@@ -176,6 +174,7 @@ const DnaCategory: React.FC<DnaCategoryProps> = ({isAnimIn, title, helper}) => {
 					text='Randomize category'
 					type={ButtonType.Dark}
 					icon={ButtonIcon.Random}
+					onClick={() => dispatch(createCharActions.randomDataCategory(CharacterDataType.Dna))}
 				/>
 			</div>
 		</CSSTransition>

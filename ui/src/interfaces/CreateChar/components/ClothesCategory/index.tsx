@@ -110,7 +110,7 @@ const ClothesCategory: React.FC<ClothesCategoryProps> = ({isAnimIn, title, helpe
 						{renderSelect(
 							CharacterDataKeys.topData,
 							'Top',
-							'And independent states form a global economic network and at the same time',
+							`Choose a starter outfit that suits your character to start with`,
 							new Array(Data[CharacterDataKeys.topData].top[gender].length)
 								.fill(null)
 								.map((_, idx) => ({id: idx, name: `Variant ${idx + 1}`})),
@@ -136,7 +136,7 @@ const ClothesCategory: React.FC<ClothesCategoryProps> = ({isAnimIn, title, helpe
 						{renderSelect(
 							CharacterDataKeys.legs,
 							'Legs',
-							'And independent states form a global economic network and at the same time',
+							`Choose a starter trousers that suits your character to start with`,
 							new Array(Data[CharacterDataKeys.legs][gender].length)
 								.fill(null)
 								.map((_, idx) => ({id: idx, name: `Variant ${idx + 1}`})),
@@ -156,7 +156,7 @@ const ClothesCategory: React.FC<ClothesCategoryProps> = ({isAnimIn, title, helpe
 						{renderSelect(
 							CharacterDataKeys.shoes,
 							'Shoes',
-							'And independent states form a global economic network and at the same time',
+							`Choose a starter footwear that suits your character to start with`,
 							new Array(Data[CharacterDataKeys.shoes][gender].length)
 								.fill(null)
 								.map((_, idx) => ({id: idx, name: `Variant ${idx + 1}`})),
@@ -179,6 +179,7 @@ const ClothesCategory: React.FC<ClothesCategoryProps> = ({isAnimIn, title, helpe
 					text='Randomize category'
 					type={ButtonType.Dark}
 					icon={ButtonIcon.Random}
+					onClick={() => dispatch(createCharActions.randomDataCategory(CharacterDataType.Clothes))}
 				/>
 			</div>
 		</CSSTransition>

@@ -41,6 +41,9 @@ const Notifications: React.FC = () => {
 			<div className="NotificationsList topLeft">
 				{renderList(list.filter(({position}) => position === NotificationPositions.TopLeft))}
 			</div>
+			<div className="NotificationsList bottom">
+				{renderList(list.filter(({position}) => position === NotificationPositions.Bottom).reverse())}
+			</div>
 		</>
 	);
 };
