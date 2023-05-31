@@ -16,6 +16,7 @@ import rpc from "../../../../shared/rpc";
 import {getRandomInt} from "../../utils/getRandomInt";
 import {getRandomFloat} from "../../utils/getRandomFloat";
 import {Data} from "./data";
+import categories from "./components/Categories";
 
 type CreateCharState = {
 	isOpen: boolean
@@ -117,6 +118,7 @@ export const createCharSlice = createSlice({
 			state.gender = action.payload
 		},
 		setCategoryId(state, action: PayloadAction<CharacterDataType>) {
+			if(state.categoryId === action.payload) return
 			state.categoryId = action.payload
 			const event = CreateCharApiEventNames.UpdateCategory
 			const data: CreateCharApiUpdateCategory = {
@@ -276,7 +278,7 @@ export const createCharSlice = createSlice({
 								// @ts-ignore
 								top: Data[CharacterDataKeys.topData].top[state.gender][state.data[CharacterDataType.Clothes][CharacterDataKeys.topData].top],
 								// @ts-ignore
-								torso: Data[CharacterDataKeys.topData].top[state.gender][state.data[CharacterDataType.Clothes][CharacterDataKeys.topData].top],
+								torso: Data[CharacterDataKeys.topData].torso[state.gender][state.data[CharacterDataType.Clothes][CharacterDataKeys.topData].top],
 							},
 							// @ts-ignore
 							[CharacterDataKeys.legs]: Data[CharacterDataKeys.legs][state.gender][state.data[CharacterDataType.Clothes][CharacterDataKeys.legs]],
@@ -284,6 +286,7 @@ export const createCharSlice = createSlice({
 							[CharacterDataKeys.shoes]: Data[CharacterDataKeys.shoes][state.gender][state.data[CharacterDataType.Clothes][CharacterDataKeys.shoes]],
 						},
 					}
+					console.log(data)
 					rpc.callClient(event, data)
 					break
 				}
