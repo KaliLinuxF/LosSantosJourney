@@ -7,6 +7,7 @@ export enum NotificationTypes {
 
 export enum NotificationPositions {
 	TopLeft,
+	Bottom,
 }
 
 export interface NotificationsActionSend {

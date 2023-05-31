@@ -80,7 +80,8 @@ const BodyCategory: React.FC<BodyCategoryProps> = ({isAnimIn, title, helper}) =>
 			isShowContent={isShowContent}
 			title={title}
 			description={description}
-			list={list}
+			list={[{id: -1, name: `None`}, ...list]}
+			hasMinus={true}
 			// @ts-ignore
 			currentId={categoryData[key].value}
 			setCurrentId={(value) => {
@@ -128,31 +129,31 @@ const BodyCategory: React.FC<BodyCategoryProps> = ({isAnimIn, title, helper}) =>
 						{renderSelect(
 							CharacterDataKeys.ageing,
 							'Skin aging',
-							'And independent states form a global economic network and at the same time',
+							`Set the skin aging parameter for your character if you want to show his age`,
 							new Array(15).fill(null).map((_, idx) => ({id: idx, name: `Variant ${idx + 1}`})),
 						)}
 						{renderSelect(
 							CharacterDataKeys.blemishes,
 							'Blemishes',
-							'And independent states form a global economic network and at the same time',
+							`Set the blemishes parameter for your character to make it stand out from the rest`,
 							new Array(24).fill(null).map((_, idx) => ({id: idx, name: `Variant ${idx + 1}`})),
 						)}
 						{renderSelect(
 							CharacterDataKeys.bodyBlemishes,
 							'Body blemishes',
-							'And independent states form a global economic network and at the same time',
+							`Set the body blemishes parameter for your character to make it stand out from the rest`,
 							new Array(12).fill(null).map((_, idx) => ({id: idx, name: `Variant ${idx + 1}`})),
 						)}
 						{renderSelect(
 							CharacterDataKeys.sunDamage,
 							'Sun damage',
-							'And independent states form a global economic network and at the same time',
+							`Set the sun damage parameter for your character to make it stand out from the rest`,
 							new Array(11).fill(null).map((_, idx) => ({id: idx, name: `Variant ${idx + 1}`})),
 						)}
 						{renderSelect(
 							CharacterDataKeys.moles,
 							'Moles/Freckles',
-							'And independent states form a global economic network and at the same time',
+							`Set the moles/freckles parameter for your character to make it stand out from the rest`,
 							new Array(18).fill(null).map((_, idx) => ({id: idx, name: `Variant ${idx + 1}`})),
 						)}
 					</div>
@@ -160,7 +161,7 @@ const BodyCategory: React.FC<BodyCategoryProps> = ({isAnimIn, title, helper}) =>
 				<Range
 					isActive
 					title='Saturation'
-					description='And independent states form a global economic network and at the same time'
+					description={`Set how explicitly your character will reflect the selected feature`}
 					style={{marginBottom: calcVh(10)}}
 					min={0}
 					// @ts-ignore
@@ -190,6 +191,7 @@ const BodyCategory: React.FC<BodyCategoryProps> = ({isAnimIn, title, helper}) =>
 					text='Randomize category'
 					type={ButtonType.Dark}
 					icon={ButtonIcon.Random}
+					onClick={() => dispatch(createCharActions.randomDataCategory(CharacterDataType.Body))}
 				/>
 			</div>
 		</CSSTransition>

@@ -25,11 +25,11 @@ const Controls: CharacterDataKeys[] = [
 	CharacterDataKeys.hairColor,
 	CharacterDataKeys.browsStyle,
 	CharacterDataKeys.browsColor,
-	CharacterDataKeys.chestStyle,
-	CharacterDataKeys.chestColor,
+	CharacterDataKeys.facialHair,
+	CharacterDataKeys.facialColor,
 ]
 
-const BodyCategory: React.FC<HairCategoryProps> = ({isAnimIn, title, helper}) => {
+const HairCategory: React.FC<HairCategoryProps> = ({isAnimIn, title, helper}) => {
 	const dispatch = useAppDispatch()
 	const {data, gender} = useAppSelector(state => state.createChar)
 	const [isShowContent, setIsShowContent] = useState(false)
@@ -163,40 +163,40 @@ const BodyCategory: React.FC<HairCategoryProps> = ({isAnimIn, title, helper}) =>
 						{renderSelect(
 							CharacterDataKeys.hairStyle,
 							'Hair Style',
-							'And independent states form a global economic network and at the same time',
+							`Choose a starter hairstyle option for your character. You can change it in the future`,
 							// @ts-ignore
 							new Array(Data[CharacterDataKeys.hairStyle][gender].length).fill(null).map((_, idx) => ({id: idx, name: `Variant ${idx + 1}`})),
 						)}
 						{renderColor(
 							CharacterDataKeys.hairColor,
 							'Hair color',
-							'And independent states form a global economic network and at the same time',
+							`Choose an initial hair color for your character. You can change it in the future`,
 						)}
 						{renderSelect(
 							CharacterDataKeys.browsStyle,
 							'Brows style',
-							'And independent states form a global economic network and at the same time',
+							`Choose an initial eyebrow type for your character. You can change it in the future`,
 							// @ts-ignore
 							new Array(Data[CharacterDataKeys.browsStyle].length).fill(null).map((_, idx) => ({id: idx, name: `Variant ${idx + 1}`})),
 						)}
 						{renderColor(
 							CharacterDataKeys.browsColor,
 							'Brows color',
-							'And independent states form a global economic network and at the same time',
+							`Choose an initial eyebrow color for your character. You can change it in the future`,
 						)}
 						{gender === Gender.Male && (
 							<>
 								{renderSelect(
-									CharacterDataKeys.chestStyle,
-									'Chest hair style',
-									'And independent states form a global economic network and at the same time',
+									CharacterDataKeys.facialHair,
+									'Beard style',
+									`Choose an beard style for your character if you want.You can change it in the future`,
 									// @ts-ignore
-									new Array(Data[CharacterDataKeys.chestStyle][gender].length).fill(null).map((_, idx) => ({id: idx, name: `Variant ${idx + 1}`})),
+									new Array(Data[CharacterDataKeys.facialHair][gender].length).fill(null).map((_, idx) => ({id: idx, name: `Variant ${idx + 1}`})),
 								)}
 								{renderColor(
-									CharacterDataKeys.chestColor,
-									'Chest hair color',
-									'And independent states form a global economic network and at the same time',
+									CharacterDataKeys.facialColor,
+									'Beard color',
+									`Choose the initial beard color for your character. You can change this in the future`,
 								)}
 							</>
 						)}
@@ -206,10 +206,11 @@ const BodyCategory: React.FC<HairCategoryProps> = ({isAnimIn, title, helper}) =>
 					text='Randomize category'
 					type={ButtonType.Dark}
 					icon={ButtonIcon.Random}
+					onClick={() => dispatch(createCharActions.randomDataCategory(CharacterDataType.Hair))}
 				/>
 			</div>
 		</CSSTransition>
 	);
 };
 
-export default BodyCategory;
+export default HairCategory;

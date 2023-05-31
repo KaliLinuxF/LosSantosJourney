@@ -4,14 +4,16 @@ import './styles.sass'
 type FaceXYProps = {
 	isShowContent: boolean
 	isActive: boolean
+	idx: number
+	titleRef: React.RefObject<HTMLDivElement>
 	setActive: () => void
 	helpers: {
 		x: [string, string]
 		y: [string, string]
 	}
 	current: {
-		x: { value: number, isInverted: boolean },
-		y: { value: number, isInverted: boolean },
+		x: number,
+		y: number,
 	}
 	setCurrent: (newCurrent: { x: number, y: number }) => void
 	style?: { [key: string]: string }
@@ -20,6 +22,8 @@ type FaceXYProps = {
 const FaceXY: React.FC<FaceXYProps> = ({
 																				 isShowContent,
 																				 isActive,
+																				 idx,
+																				 titleRef,
 																				 setActive,
 																				 helpers,
 																				 current,
@@ -36,14 +40,16 @@ const FaceXY: React.FC<FaceXYProps> = ({
 	const [debounce, setDebounce] = useState(false)
 
 	useEffect(() => {
-		if (isActive && isShowContent)
-			nodeRef.current.scrollIntoView({block: "end", behavior: 'smooth'})
-	}, [isActive])
+		if (isActive && isShowContent) {
+			if (idx === 0)
+				titleRef.current?.scrollIntoView({block: "end", behavior: 'smooth'})
+			else
+				nodeRef.current.scrollIntoView({block: "end", behavior: 'smooth'})
+		}
+	}, [isActive, isShowContent, idx, titleRef])
 
 	useEffect(() => {
 		let {x, y} = dragData
-		x *= (current.x.isInverted ? -1 : 1)
-		y *= (current.y.isInverted ? 1 : -1)
 		setCurrent({x, y})
 	}, [dragData])
 
@@ -70,7 +76,7 @@ const FaceXY: React.FC<FaceXYProps> = ({
 	}
 
 	const handleMouseDown = (event: React.MouseEvent) => {
-		if(!isActive) return
+		if (!isActive) return
 		let {x, y} = getOffset(event)
 		setDragData({isActive: true, x, y})
 	}
@@ -96,12 +102,12 @@ const FaceXY: React.FC<FaceXYProps> = ({
 		>
 			<div className="helpers">
 				<div className="block x">
-					<div className={`helper ${current.x.value * (current.x.isInverted ? -1 : 1) > 0 && 'active'}`}>{helpers.x[1]}</div>
-					<div className={`helper ${current.x.value * (current.x.isInverted ? -1 : 1) < 0 && 'active'}`}>{helpers.x[0]}</div>
+					<div className={`helper ${current.x > 0 && 'active'}`}>{helpers.x[1]}</div>
+					<div className={`helper ${current.x < 0 && 'active'}`}>{helpers.x[0]}</div>
 				</div>
 				<div className="block y">
-					<div className={`helper ${current.y.value * (current.y.isInverted ? -1 : 1) > 0 && 'active'}`}>{helpers.y[1]}</div>
-					<div className={`helper ${current.y.value * (current.y.isInverted ? -1 : 1) < 0 && 'active'}`}>{helpers.y[0]}</div>
+					<div className={`helper ${current.y < 0 && 'active'}`}>{helpers.y[1]}</div>
+					<div className={`helper ${current.y > 0 && 'active'}`}>{helpers.y[0]}</div>
 				</div>
 			</div>
 			<div
@@ -112,8 +118,8 @@ const FaceXY: React.FC<FaceXYProps> = ({
 				<div
 					className="circle"
 					style={{
-						top: `${50 + getPercents(dragData.isActive ? dragData.y : current.y.value)}%`,
-						left: `${50 + getPercents(dragData.isActive ? dragData.x : current.x.value)}%`,
+						top: `${50 + getPercents(dragData.isActive ? dragData.y : current.y)}%`,
+						left: `${50 + getPercents(dragData.isActive ? dragData.x : current.x)}%`,
 					}}
 				/>
 			</div>

@@ -2,11 +2,15 @@
 @import "src/styles/variables"
 
 .CreateChar .FaceX
-  width: 100%
-  +flex-col-start-center()
+  width: 250 *$hPoint
+  height: 66 *$hPoint
   opacity: .5
   text-shadow: 0 (1 *$hPoint) (5 *$hPoint) #000
   transition: all .1s ease
+  margin-left: auto
+  margin-right: auto
+  position: relative
+  +flex-row-center-center()
 
   &:hover
     opacity: .8
@@ -14,17 +18,50 @@
   &:not(.active)
     cursor: pointer
 
-  > .title
-    font-weight: 600
-    font-size: 20 *$hPoint
-    line-height: 30 *$hPoint
-    text-align: center
-    text-transform: uppercase
-    margin-bottom: 3 *$hPoint
-    transition: all .1s ease
+  > .helpers
+    width: 66 *$hPoint
+    height: 250 *$hPoint
+    position: relative
 
-  > .description
-    font-weight: 500
-    line-height: 21 *$hPoint
-    text-align: center
-    margin-bottom: 16 *$hPoint
+    > .block
+      +full-size-block()
+      +flex-col-space-center()
+
+      > .helper
+        width: 100%
+        height: 30 *$hPoint
+        +flex-row-center-center()
+        font-weight: 500
+        font-size: 20 *$hPoint
+        color: #fff7
+        transition: all .1s ease
+
+        &.active
+          color: #F1C950
+
+      &.x
+        transform: rotate(90deg)
+
+  > .block
+    width: 170 *$hPoint
+    height: 61 *$hPoint
+    background-image: url(../../assets/images/x.svg)
+    background-size: 100% 100%
+    +center-block()
+    cursor: pointer
+
+    > .circle
+      width: 20 *$hPoint
+      height: 20 *$hPoint
+      border-radius: 50%
+      background-color: #fff
+      position: absolute
+      top: 50%
+      transform: translate(-50%, -40%)
+      pointer-events: none
+      transition: all .05s ease
+
+  &.active
+    opacity: 1
+    > .block > .circle
+      background-color: #F1C950

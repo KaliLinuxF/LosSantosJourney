@@ -34,6 +34,16 @@ export const notificationsSlice = createSlice({
 					}, duration * 1000)
 					break
 				}
+				case NotificationPositions.Bottom: {
+					const id = state.iterator++
+					state.list.push({position, id, type, text, duration})
+					state.rendered.push(id)
+					setTimeout(() => {
+						// @ts-ignore
+						window.removeNotify(id)
+					}, duration * 1000)
+					break
+				}
 			}
 		},
 		removeFromRendered(state, action: PayloadAction<number>) {

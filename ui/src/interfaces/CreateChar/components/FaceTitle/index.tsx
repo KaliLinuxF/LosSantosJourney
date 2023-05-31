@@ -1,8 +1,9 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React from 'react';
 import './styles.sass'
 import {KeyCodes} from "../../../../utils/keyCodes";
 
 type FaceTitleProps = {
+	nodeRef: React.RefObject<HTMLDivElement>
 	isActive: boolean
 	title: string
 	description: string
@@ -10,6 +11,7 @@ type FaceTitleProps = {
 }
 
 const FaceTitle: React.FC<FaceTitleProps> = ({
+																			 nodeRef,
 																			 isActive,
 																			 title,
 																			 description,
@@ -17,7 +19,7 @@ const FaceTitle: React.FC<FaceTitleProps> = ({
 																		 }) => {
 
 	return (
-		<div className={`FaceTitle ${isActive && 'active'}`} style={style}>
+		<div className={`FaceTitle ${isActive && 'active'}`} style={style} ref={nodeRef}>
 			<div className="title">{title}</div>
 			<div className="description">{description}</div>
 		</div>

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import './styles.sass'
 import {CSSTransition} from "react-transition-group";
 import {useAppDispatch, useAppSelector} from "../../../../hooks/redux";
@@ -11,6 +11,7 @@ import {KeyCodes} from "../../../../utils/keyCodes";
 import FaceXY from "../FaceXY";
 import FaceTitle from "../FaceTitle";
 import {callUpdateData} from "../../index";
+import FaceX from "../FaceX";
 
 type FaceCategoryProps = {
 	isAnimIn: boolean
@@ -143,6 +144,7 @@ const TabsControl: TabControlsTypes = {
 type RenderXY = {
 	tab: number
 	idx: number
+	titleRef: React.RefObject<HTMLDivElement>
 	helpers: {
 		x: [string, string]
 		y: [string, string]
@@ -151,11 +153,31 @@ type RenderXY = {
 	style?: { [key: string]: any }
 }
 
+type RenderX = {
+	tab: number
+	idx: number
+	titleRef: React.RefObject<HTMLDivElement>
+	helpers: {
+		x: [string, string]
+	}
+	current: ControlXType
+	style?: { [key: string]: any }
+}
+
 const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) => {
 	const dispatch = useAppDispatch()
 	const {data} = useAppSelector(state => state.createChar)
 	const categoryData = data[CharacterDataType.Face]
 	const [isShowContent, setIsShowContent] = useState(false)
+	const titleNoseRef = useRef(null)
+	const titleBrowRef = useRef(null)
+	const titleJawRef = useRef(null)
+	const titleChinRef = useRef(null)
+	const titleLipsRef = useRef(null)
+	const titleJowlsRef = useRef(null)
+	const titleCheeksRef = useRef(null)
+	const titleEyesRef = useRef(null)
+	const [isAnimTab, setIsAnimTab] = useState(false)
 	const [tabsControl, setTabsControl] = useState({tab: Tabs.Nose, control: 0})
 	const {tab, control} = tabsControl
 	let currentControl: ControlXYType | ControlXType
@@ -209,6 +231,7 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 					className={`tab tab-${tabId} ${isActive && 'active'}`}
 					onClick={() => {
 						if (isActive) return
+						setIsAnimTab(true)
 						setTabsControl({tab: tabId, control: 0})
 					}}
 				/>
@@ -218,6 +241,7 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 	const renderXY = ({
 											tab,
 											idx,
+											titleRef,
 											helpers,
 											current,
 											style = {},
@@ -229,13 +253,15 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 
 		return (
 			<FaceXY
-				isShowContent={isShowContent}
+				isShowContent={isShowContent && !isAnimTab}
 				isActive={tabsControl.tab === tab && tabsControl.control === idx}
+				idx={idx}
+				titleRef={titleRef}
 				setActive={() => setTabsControl({tab, control: idx})}
 				helpers={helpers}
 				current={{
-					x: {value: currentValueX, isInverted: current.x.isInverted},
-					y: {value: currentValueY, isInverted: current.y.isInverted},
+					x: currentValueX,
+					y: currentValueY,
 				}}
 				setCurrent={({x, y}) => {
 					// @ts-ignore
@@ -252,8 +278,48 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 						value: y,
 					}))
 					callUpdateData(CharacterDataType.Face, {
-						[current.x.key]: x,
-						[current.y.key]: y,
+						[current.x.key]: x * (current.x.isInverted ? -1 : 1),
+						[current.y.key]: y * (current.x.isInverted ? -1 : 1),
+					})
+				}}
+				style={style}
+			/>
+		)
+	}
+
+	const renderX = ({
+											tab,
+											idx,
+											titleRef,
+											helpers,
+											current,
+											style = {},
+										}: RenderX) => {
+		// @ts-ignore
+		const currentValueX = categoryData[current.x.key]
+
+		return (
+			<FaceX
+				isShowContent={isShowContent && !isAnimTab}
+				isActive={tabsControl.tab === tab && tabsControl.control === idx}
+				idx={idx}
+				titleRef={titleRef}
+				setActive={() => setTabsControl({tab, control: idx})}
+				helpers={helpers}
+				current={{
+					x: currentValueX,
+				}}
+				setCurrent={({x}) => {
+					// @ts-ignore
+					if (categoryData[current.x.key] === x)
+						return
+					dispatch(createCharActions.setDataItem({
+						category: CharacterDataType.Face,
+						key: current.x.key,
+						value: x,
+					}))
+					callUpdateData(CharacterDataType.Face, {
+						[current.x.key]: x * (current.x.isInverted ? -1 : 1),
 					})
 				}}
 				style={style}
@@ -279,48 +345,258 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 				<div className='helper'>{helper}</div>
 				<div className="tabs">{renderTabs()}</div>
 				<div className="content">
-					<div className="list">
-						<FaceTitle
-							isActive={tabsControl.tab === Tabs.Nose && tabsControl.control >= 0 && tabsControl.control <= 2}
-							title='Nose'
-							description='And independent states form a global economic network and at the same time'
-							style={{marginBottom: calcVh(35)}}
-						/>
-						{renderXY({
-							tab: Tabs.Nose,
-							idx: 0,
-							helpers: {
-								x: ['Low', 'High'],
-								y: ['Narrow', 'Wide'],
-							},
-							current: TabsControl[Tabs.Nose].WidthHeight,
-							style: {marginBottom: calcVh(35)},
-						})}
-						{renderXY({
-							tab: Tabs.Nose,
-							idx: 1,
-							helpers: {
-								x: ['Short', 'Long'],
-								y: ['Round', 'Hollow'],
-							},
-							current: TabsControl[Tabs.Nose].LengthBridge,
-							style: {marginBottom: calcVh(35)},
-						})}
-						{renderXY({
-							tab: Tabs.Nose,
-							idx: 2,
-							helpers: {
-								x: ['Downward', 'Upward'],
-								y: ['Left', 'Right'],
-							},
-							current: TabsControl[Tabs.Nose].TipShift,
-						})}
-					</div>
+					<CSSTransition
+						in={tabsControl.tab === Tabs.Nose}
+						timeout={{enter: 350, exit: 250}}
+						mountOnEnter
+						unmountOnExit
+						classNames='list'
+						onEntered={() => setIsAnimTab(false)}
+					>
+						<div className="list">
+							<div className='content'>
+								<FaceTitle
+									isActive={tabsControl.tab === Tabs.Nose && tabsControl.control >= 0 && tabsControl.control <= 2}
+									title='Nose'
+									nodeRef={titleNoseRef}
+									description="Change the parameters of your character's nose to personalize it"
+									style={{marginBottom: calcVh(25)}}
+								/>
+								{renderXY({
+									tab: Tabs.Nose,
+									idx: 0,
+									titleRef: titleNoseRef,
+									helpers: {
+										x: ['Narrow', 'Wide'],
+										y: ['Low', 'High'],
+									},
+									current: TabsControl[Tabs.Nose].WidthHeight,
+									style: {marginBottom: calcVh(10)},
+								})}
+								{renderXY({
+									tab: Tabs.Nose,
+									idx: 1,
+									titleRef: titleNoseRef,
+									helpers: {
+										x: ['Short', 'Long'],
+										y: ['Round', 'Hollow'],
+									},
+									current: TabsControl[Tabs.Nose].LengthBridge,
+									style: {marginBottom: calcVh(10)},
+								})}
+								{renderXY({
+									tab: Tabs.Nose,
+									idx: 2,
+									titleRef: titleNoseRef,
+									helpers: {
+										x: ['Left', 'Right'],
+										y: ['Downward', 'Upward'],
+									},
+									current: TabsControl[Tabs.Nose].TipShift,
+								})}
+							</div>
+						</div>
+					</CSSTransition>
+					<CSSTransition
+						in={tabsControl.tab === Tabs.Brows}
+						timeout={{enter: 350, exit: 250}}
+						mountOnEnter
+						unmountOnExit
+						classNames='list'
+						onEntered={() => setIsAnimTab(false)}
+					>
+						<div className="list">
+							<div className="content">
+								<FaceTitle
+									isActive={tabsControl.tab === Tabs.Brows && tabsControl.control === 0}
+									title='Brow'
+									nodeRef={titleBrowRef}
+									description={`Change the parameters of your character's eyebrow area to give him personality`}
+									style={{marginBottom: calcVh(25)}}
+								/>
+								{renderXY({
+									tab: Tabs.Brows,
+									idx: 0,
+									titleRef: titleBrowRef,
+									helpers: {
+										x: ['Inward', 'Outward'],
+										y: ['Bottom', 'Top'],
+									},
+									current: TabsControl[Tabs.Brows].WidthHeight,
+								})}
+							</div>
+						</div>
+					</CSSTransition>
+					<CSSTransition
+						in={tabsControl.tab === Tabs.Jaw}
+						timeout={{enter: 350, exit: 250}}
+						mountOnEnter
+						unmountOnExit
+						classNames='list'
+						onEntered={() => setIsAnimTab(false)}
+					>
+						<div className="list">
+							<div className="content">
+								<FaceTitle
+									isActive={tabsControl.tab === Tabs.Jaw && tabsControl.control === 0}
+									title='Jaw'
+									nodeRef={titleJawRef}
+									description={`Change the parameters of your character's jaw to give him personality`}
+									style={{marginBottom: calcVh(25)}}
+								/>
+								{renderXY({
+									tab: Tabs.Jaw,
+									idx: 0,
+									titleRef: titleJawRef,
+									helpers: {
+										x: ['Narrow', 'Wide'],
+										y: ['Bottom', 'Top'],
+									},
+									current: TabsControl[Tabs.Jaw].WidthHeight,
+									style: {marginBottom: calcVh(25)}
+								})}
+								<FaceTitle
+									isActive={tabsControl.tab === Tabs.Jaw && tabsControl.control >= 1 && tabsControl.control <= 2}
+									title='Chin'
+									nodeRef={titleChinRef}
+									description={`Change your character's chin parameters to give him personality`}
+									style={{marginBottom: calcVh(25)}}
+								/>
+								{renderXY({
+									tab: Tabs.Jaw,
+									idx: 1,
+									titleRef: titleChinRef,
+									helpers: {
+										x: ['Inward', 'Outward'],
+										y: ['Small', 'Long'],
+									},
+									current: TabsControl[Tabs.Jaw].LengthPosition,
+									style: {marginBottom: calcVh(25)}
+								})}
+								{renderXY({
+									tab: Tabs.Jaw,
+									idx: 2,
+									titleRef: titleChinRef,
+									helpers: {
+										x: ['Narrow', 'Grand'],
+										y: ['Simple', 'Double'],
+									},
+									current: TabsControl[Tabs.Jaw].WidthShape,
+								})}
+							</div>
+						</div>
+					</CSSTransition>
+					<CSSTransition
+						in={tabsControl.tab === Tabs.Lips}
+						timeout={{enter: 350, exit: 250}}
+						mountOnEnter
+						unmountOnExit
+						classNames='list'
+						onEntered={() => setIsAnimTab(false)}
+					>
+						<div className="list">
+							<div className="content">
+								<FaceTitle
+									isActive={tabsControl.tab === Tabs.Lips && tabsControl.control === 0}
+									title='Brow'
+									nodeRef={titleLipsRef}
+									description={`Change your character's lips options to give him personality`}
+									style={{marginBottom: calcVh(25)}}
+								/>
+								{renderX({
+									tab: Tabs.Lips,
+									idx: 0,
+									titleRef: titleLipsRef,
+									helpers: {
+										x: ['Narrow', 'Wide'],
+									},
+									current: TabsControl[Tabs.Lips].Width,
+								})}
+							</div>
+						</div>
+					</CSSTransition>
+					<CSSTransition
+						in={tabsControl.tab === Tabs.Jowls}
+						timeout={{enter: 350, exit: 250}}
+						mountOnEnter
+						unmountOnExit
+						classNames='list'
+						onEntered={() => setIsAnimTab(false)}
+					>
+						<div className="list">
+							<div className="content">
+								<FaceTitle
+									isActive={tabsControl.tab === Tabs.Jowls && tabsControl.control === 0}
+									title='Cheeks'
+									nodeRef={titleJowlsRef}
+									description={`Change the parameters of your character's cheeks to give him personality`}
+									style={{marginBottom: calcVh(25)}}
+								/>
+								{renderX({
+									tab: Tabs.Jowls,
+									idx: 0,
+									titleRef: titleJowlsRef,
+									helpers: {
+										x: ['Narrow', 'Wide'],
+									},
+									current: TabsControl[Tabs.Jowls].Width,
+									style: { marginBottom: calcVh(35) }
+								})}
+								<FaceTitle
+									isActive={tabsControl.tab === Tabs.Jowls && tabsControl.control === 0}
+									title='Cheekbone'
+									nodeRef={null}
+									description={`Change the parameters of your character's cheekbones to give him personality`}
+									style={{marginBottom: calcVh(25)}}
+								/>
+								{renderXY({
+									tab: Tabs.Jowls,
+									idx: 0,
+									titleRef: titleJowlsRef,
+									helpers: {
+										x: ['Narrow', 'Wide'],
+										y: ['Bottom', 'Top'],
+									},
+									current: TabsControl[Tabs.Jowls].WidthHeight,
+								})}
+							</div>
+						</div>
+					</CSSTransition>
+					<CSSTransition
+						in={tabsControl.tab === Tabs.Eyes}
+						timeout={{enter: 350, exit: 250}}
+						mountOnEnter
+						unmountOnExit
+						classNames='list'
+						onEntered={() => setIsAnimTab(false)}
+					>
+						<div className="list">
+							<div className="content">
+								<FaceTitle
+									isActive={tabsControl.tab === Tabs.Eyes && tabsControl.control === 0}
+									title='Brow'
+									nodeRef={titleEyesRef}
+									description={`Change the parameters of your character's eyes to give them personality`}
+									style={{marginBottom: calcVh(25)}}
+								/>
+								{renderX({
+									tab: Tabs.Eyes,
+									idx: 0,
+									titleRef: titleEyesRef,
+									helpers: {
+										x: ['Closed', 'Opened'],
+									},
+									current: TabsControl[Tabs.Lips].Width,
+								})}
+							</div>
+						</div>
+					</CSSTransition>
 				</div>
 				<Button
 					text='Randomize category'
 					type={ButtonType.Dark}
 					icon={ButtonIcon.Random}
+					onClick={() => dispatch(createCharActions.randomDataCategory(CharacterDataType.Face))}
 				/>
 			</div>
 		</CSSTransition>

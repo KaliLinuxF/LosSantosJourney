@@ -38,27 +38,27 @@ const CategoryPage: React.FC = () => {
 				<div className="content">
 					<DnaCategory
 						title={CategoryTitleList[CharacterDataType.Dna]}
-						helper='And independent states form a global economic network and at the same time'
+						helper="This section will help you create a unique character by identifying his ancestors and similarities with them"
 						isAnimIn={isShowContent && categoryId === CharacterDataType.Dna}
 					/>
 					<BodyCategory
 						title={CategoryTitleList[CharacterDataType.Body]}
-						helper='And independent states form a global economic network and at the same time'
+						helper='Increase or decrease the number of moles, add wrinkles or other expressive details to create an unusual and memorable image.'
 						isAnimIn={isShowContent && categoryId === CharacterDataType.Body}
 					/>
 					<HairCategory
 						title={CategoryTitleList[CharacterDataType.Hair]}
-						helper='And independent states form a global economic network and at the same time'
+						helper='Choose the style, hair color, and brows style to create your personal style.'
 						isAnimIn={isShowContent && categoryId === CharacterDataType.Hair}
 					/>
 					<ClothesCategory
 						title={CategoryTitleList[CharacterDataType.Clothes]}
-						helper='And independent states form a global economic network and at the same time'
+						helper='In this section you can customize the starting clothes of your character'
 						isAnimIn={isShowContent && categoryId === CharacterDataType.Clothes}
 					/>
 					<FaceCategory
 						title={CategoryTitleList[CharacterDataType.Face]}
-						helper='And independent states form a global economic network and at the same time'
+						helper={`The "Face" category allows you to fine-tune your character's face. Take special care to give your character a special personality`}
 						isAnimIn={isShowContent && categoryId === CharacterDataType.Face}
 					/>
 				</div>
