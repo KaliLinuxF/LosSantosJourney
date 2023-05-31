@@ -60,8 +60,7 @@ const Select: React.FC<SelectProps> = ({
 			const length = list.length - 1
 			if (index < min) index = min
 			else if (index > length) index = length
-
-			setCurrentId(list[index].id)
+			setCurrentId(index === -1 ? -1 : list[index].id)
 		},
 		[isActive, currentIndex, list, setCurrentId]
 	);
@@ -137,19 +136,22 @@ const Select: React.FC<SelectProps> = ({
 				<div
 					className={`arrow ${isActive && currentIndex > 0 && 'active'} ${controlKeys.arrowLeft && 'pressed'}`}
 					onClick={() => {
-						let newIndex = currentIndex - 1
-						if(newIndex < min) newIndex = min
-						setCurrentId(newIndex)
+						let index = currentIndex - 1
+						const length = list.length - 1
+						if (index < min) index = min
+						else if (index > length) index = length
+						setCurrentId(index === -1 ? -1 : list[index].id)
 					}}
 				/>
 				<div className="current">{list[currentIndex]?.name}</div>
 				<div
 					className={`arrow ${isActive && currentIndex < list.length - 1 && 'active'} ${controlKeys.arrowRight && 'pressed'}`}
 					onClick={() => {
-						let newIndex = currentIndex + 1
+						let index = currentIndex + 1
 						const length = list.length - 1
-						if(newIndex > length) newIndex = length
-						setCurrentId(newIndex)
+						if (index < min) index = min
+						else if (index > length) index = length
+						setCurrentId(index === -1 ? -1 : list[index].id)
 					}}
 				/>
 			</div>

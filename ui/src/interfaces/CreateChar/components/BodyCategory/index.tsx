@@ -53,8 +53,8 @@ const BodyCategory: React.FC<BodyCategoryProps> = ({isAnimIn, title, helper}) =>
 			}
 
 			const length = Controls.length - 1
-			if (newControl < 0) newControl = length
-			else if (newControl > length) newControl = 0
+			if (newControl < 0) newControl = 0
+			else if (newControl > length) newControl = length
 
 			setControl(newControl)
 		},
@@ -164,6 +164,7 @@ const BodyCategory: React.FC<BodyCategoryProps> = ({isAnimIn, title, helper}) =>
 					description={`Set how explicitly your character will reflect the selected feature`}
 					style={{marginBottom: calcVh(10)}}
 					min={0}
+					keysDisabled
 					// @ts-ignore
 					value={categoryData[Controls[control]].saturation}
 					setValue={(saturation) => {

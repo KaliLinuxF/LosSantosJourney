@@ -34,7 +34,7 @@ const Color: React.FC<ColorProps> = ({
 	useEffect(() => {
 		if (isActive && isShowContent)
 			nodeRef.current.scrollIntoView({block: "end", behavior: 'smooth'})
-	}, [isActive])
+	}, [isActive, isShowContent])
 
 	const handleKeyDown = useCallback(
 		// @ts-ignore

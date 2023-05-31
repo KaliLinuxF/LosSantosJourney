@@ -15,6 +15,7 @@ import {
 import rpc from "../../../../shared/rpc";
 import {getRandomInt} from "../../utils/getRandomInt";
 import {getRandomFloat} from "../../utils/getRandomFloat";
+import {Data} from "./data";
 
 type CreateCharState = {
 	isOpen: boolean
@@ -152,18 +153,44 @@ export const createCharSlice = createSlice({
 						[CharacterDataKeys.shapeMix]: getRandomFloat(-1, 1),
 						[CharacterDataKeys.skinMix]: getRandomFloat(-1, 1),
 					}
+					const event = CreateCharApiEventNames.UpdateData
+					const data: CreateCharApiUpdateData = {
+						type: categoryId,
+						data: state.data[categoryId],
+					}
+					rpc.callClient(event, data)
 					break
 				}
 
 				case CharacterDataType.Hair: {
 					state.data[categoryId] = {
-						[CharacterDataKeys.hairStyle]: getRandomInt(0, 2),
+						[CharacterDataKeys.hairStyle]: getRandomInt(0, 3),
 						[CharacterDataKeys.hairColor]: getRandomInt(0, 4),
-						[CharacterDataKeys.browsStyle]: getRandomInt(0, 2),
+						[CharacterDataKeys.browsStyle]: getRandomInt(0, 3),
 						[CharacterDataKeys.browsColor]: getRandomInt(0, 4),
 						[CharacterDataKeys.facialHair]: state.gender === Gender.Male ? getRandomInt(-1, 2) : 0,
 						[CharacterDataKeys.facialColor]: getRandomInt(0, 4),
 					}
+
+					const event = CreateCharApiEventNames.UpdateData
+					const data: CreateCharApiUpdateData = {
+						type: categoryId,
+						data: {
+							// @ts-ignore
+							[CharacterDataKeys.hairStyle]: Data[CharacterDataKeys.hairStyle][state.gender][state.data[CharacterDataType.Hair][CharacterDataKeys.hairStyle]],
+							// @ts-ignore
+							[CharacterDataKeys.hairColor]: Data[CharacterDataKeys.hairColor][state.gender][state.data[CharacterDataType.Hair][CharacterDataKeys.hairColor]],
+							// @ts-ignore
+							[CharacterDataKeys.browsStyle]: Data[CharacterDataKeys.browsStyle][state.gender][state.data[CharacterDataType.Hair][CharacterDataKeys.browsStyle]],
+							// @ts-ignore
+							[CharacterDataKeys.browsColor]: Data[CharacterDataKeys.browsColor][state.gender][state.data[CharacterDataType.Hair][CharacterDataKeys.browsColor]],
+							// @ts-ignore
+							[CharacterDataKeys.facialHair]: state.gender === Gender.Male ? Data[CharacterDataKeys.facialHair][state.gender][state.data[CharacterDataType.Hair][CharacterDataKeys.facialColor]] : -1,
+							// @ts-ignore
+							[CharacterDataKeys.facialColor]: Data[CharacterDataKeys.facialColor][state.gender][state.data[CharacterDataType.Hair][CharacterDataKeys.facialColor]],
+						},
+					}
+					rpc.callClient(event, data)
 					break
 				}
 
@@ -189,6 +216,12 @@ export const createCharSlice = createSlice({
 						[CharacterDataKeys.cheekboneWidth]: getRandomFloat(-1, 1),
 						[CharacterDataKeys.eyes]: getRandomFloat(-1, 1),
 					}
+					const event = CreateCharApiEventNames.UpdateData
+					const data: CreateCharApiUpdateData = {
+						type: categoryId,
+						data: state.data[categoryId],
+					}
+					rpc.callClient(event, data)
 					break
 				}
 
@@ -215,6 +248,13 @@ export const createCharSlice = createSlice({
 							saturation: getRandomFloat(0, 1),
 						},
 					}
+					const event = CreateCharApiEventNames.UpdateData
+					const data: CreateCharApiUpdateData = {
+						type: categoryId,
+						data: state.data[categoryId],
+					}
+					rpc.callClient(event, data)
+					break
 					break
 				}
 
@@ -228,16 +268,26 @@ export const createCharSlice = createSlice({
 						[CharacterDataKeys.legs]: getRandomInt(0, 3),
 						[CharacterDataKeys.shoes]: getRandomInt(0, 3),
 					}
+					const event = CreateCharApiEventNames.UpdateData
+					const data: CreateCharApiUpdateData = {
+						type: categoryId,
+						data: {
+							[CharacterDataKeys.topData]: {
+								// @ts-ignore
+								top: Data[CharacterDataKeys.topData].top[state.gender][state.data[CharacterDataType.Clothes][CharacterDataKeys.topData].top],
+								// @ts-ignore
+								torso: Data[CharacterDataKeys.topData].top[state.gender][state.data[CharacterDataType.Clothes][CharacterDataKeys.topData].top],
+							},
+							// @ts-ignore
+							[CharacterDataKeys.legs]: Data[CharacterDataKeys.legs][state.gender][state.data[CharacterDataType.Clothes][CharacterDataKeys.legs]],
+							// @ts-ignore
+							[CharacterDataKeys.shoes]: Data[CharacterDataKeys.shoes][state.gender][state.data[CharacterDataType.Clothes][CharacterDataKeys.shoes]],
+						},
+					}
+					rpc.callClient(event, data)
 					break
 				}
 			}
-
-			const event = CreateCharApiEventNames.UpdateData
-			const data: CreateCharApiUpdateData = {
-				type: categoryId,
-				data: state.data[categoryId],
-			}
-			rpc.callClient(event, data)
 		}
 	},
 })

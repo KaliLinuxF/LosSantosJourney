@@ -13,6 +13,7 @@ interface RangeProps {
 	max?: number
 	step?: number
 	startPoint?: number
+	keysDisabled?: boolean
 	value: number
 	setValue: (value: number) => void
 	style?: {
@@ -29,6 +30,7 @@ const Range: React.FC<RangeProps> = ({
 																			 max = 1,
 																			 step = .1,
 																			 startPoint = 0,
+	keysDisabled = false,
 																			 value,
 																			 setValue,
 																			 style = {},
@@ -37,7 +39,7 @@ const Range: React.FC<RangeProps> = ({
 	const handleKeyDown = useCallback(
 		// @ts-ignore
 		({keyCode}) => {
-			if(!isActive) return
+			if(!isActive || keysDisabled) return
 
 			let newValue = value
 
@@ -55,7 +57,7 @@ const Range: React.FC<RangeProps> = ({
 
 			setValue(newValue)
 		},
-		[isActive, value, step, setValue]
+		[isActive, value, step, setValue, keysDisabled]
 	);
 
 	useEffect(() => {

@@ -206,8 +206,8 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 			}
 
 			const length = Object.keys(TabsControl[tabsControl.tab]).length - 1
-			if (newControl < 0) newControl = length
-			else if (newControl > length) newControl = 0
+			if (newControl < 0) newControl = 0
+			else if (newControl > length) newControl = length
 
 			setTabsControl(prev => ({...prev, control: newControl}))
 		},
@@ -491,7 +491,7 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 						timeout={{enter: 350, exit: 250}}
 						mountOnEnter
 						unmountOnExit
-						classNames='list'
+						classNames='Lips'
 						onEntered={() => setIsAnimTab(false)}
 					>
 						<div className="list">
@@ -574,7 +574,7 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 							<div className="content">
 								<FaceTitle
 									isActive={tabsControl.tab === Tabs.Eyes && tabsControl.control === 0}
-									title='Brow'
+									title='Eyes'
 									nodeRef={titleEyesRef}
 									description={`Change the parameters of your character's eyes to give them personality`}
 									style={{marginBottom: calcVh(25)}}
@@ -586,7 +586,7 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 									helpers: {
 										x: ['Closed', 'Opened'],
 									},
-									current: TabsControl[Tabs.Lips].Width,
+									current: TabsControl[Tabs.Eyes].Height,
 								})}
 							</div>
 						</div>

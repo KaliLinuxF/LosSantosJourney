@@ -189,7 +189,7 @@ const MainPage: React.FC = () => {
 					</div>
 				</CSSTransition>
 				<CSSTransition in={isShowContent} timeout={{enter: 600, exit: 300}} classNames='helper'>
-					<div className='helper'>And independent states form a global economic<br/>network and at the same time</div>
+					<div className='helper'>Choose the gender of your character</div>
 				</CSSTransition>
 				<CSSTransition in={isShowContent} timeout={{enter: 600, exit: 300}} mountOnEnter unmountOnExit
 											 classNames='buttons'>

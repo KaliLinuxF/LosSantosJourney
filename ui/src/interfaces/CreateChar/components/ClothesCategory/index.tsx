@@ -52,8 +52,8 @@ const ClothesCategory: React.FC<ClothesCategoryProps> = ({isAnimIn, title, helpe
 			}
 
 			const length = Controls.length - 1
-			if (newControl < 0) newControl = length
-			else if (newControl > length) newControl = 0
+			if (newControl < 0) newControl = 0
+			else if (newControl > length) newControl = length
 
 			setControl(newControl)
 		},

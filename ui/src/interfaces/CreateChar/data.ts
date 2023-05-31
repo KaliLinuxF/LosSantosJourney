@@ -42,7 +42,7 @@ export const Data: DataType = {
 			[Gender.Female]: [15, 23, 395, 5],
 		},
 		torso: {
-			[Gender.Male]: [15, 23, 395, 5],
+			[Gender.Male]: [15, 1, 0, 5],
 			[Gender.Female]: [15, 0, 0, 4],
 		},
 	},
