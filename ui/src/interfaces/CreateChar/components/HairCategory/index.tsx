@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import './styles.sass'
 import {CSSTransition} from "react-transition-group";
 import {useAppDispatch, useAppSelector} from "../../../../hooks/redux";
@@ -36,6 +36,7 @@ const HairCategory: React.FC<HairCategoryProps> = ({isAnimIn, title, helper}) =>
 	const categoryData = data[CharacterDataType.Hair]
 	const [control, setControl] = useState(0)
 	const currentControl = Controls[control]
+	const listRef = useRef(null)
 
 	useEffect(() => {
 		setControl(0)
@@ -56,8 +57,14 @@ const HairCategory: React.FC<HairCategoryProps> = ({isAnimIn, title, helper}) =>
 			}
 
 			const length = Controls.length - 1
-			if (newControl < 0) newControl = 0
-			else if (newControl > length) newControl = length
+			if (newControl <= 0) {
+				newControl = 0
+				listRef.current?.scrollBy({ top: -1000, behavior: 'smooth' })
+			}
+			else if (newControl >= length) {
+				newControl = length
+				listRef.current?.scrollBy({ top: 1000, behavior: 'smooth' })
+			}
 
 			setControl(newControl)
 		},
@@ -158,7 +165,7 @@ const HairCategory: React.FC<HairCategoryProps> = ({isAnimIn, title, helper}) =>
 					<div className='icon icon-1'/>
 				</div>
 				<div className='helper'>{helper}</div>
-				<div className="content">
+				<div className="content" ref={listRef}>
 					<div className="list">
 						{renderSelect(
 							CharacterDataKeys.hairStyle,

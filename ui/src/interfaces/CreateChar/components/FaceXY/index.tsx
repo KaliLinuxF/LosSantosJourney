@@ -42,9 +42,9 @@ const FaceXY: React.FC<FaceXYProps> = ({
 	useEffect(() => {
 		if (isActive && isShowContent) {
 			if (idx === 0)
-				titleRef.current?.scrollIntoView({block: "end", behavior: 'smooth'})
+				titleRef.current?.scrollIntoView({block: "nearest", behavior: 'smooth'})
 			else
-				nodeRef.current.scrollIntoView({block: "end", behavior: 'smooth'})
+				nodeRef.current.scrollIntoView({block: "nearest", behavior: 'smooth'})
 		}
 	}, [isActive, isShowContent, idx, titleRef])
 

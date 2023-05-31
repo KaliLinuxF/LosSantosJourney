@@ -38,7 +38,7 @@ const Select: React.FC<SelectProps> = ({
 
 	useEffect(() => {
 		if (isActive && isShowContent)
-			nodeRef.current.scrollIntoView({block: "end", behavior: 'smooth'})
+			nodeRef.current.scrollIntoView({block: "nearest", behavior: 'smooth'})
 	}, [isActive])
 
 	const handleKeyDown = useCallback(

@@ -178,6 +178,7 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 	const titleCheeksRef = useRef(null)
 	const titleEyesRef = useRef(null)
 	const [isAnimTab, setIsAnimTab] = useState(false)
+	const listRef = useRef(null)
 	const [tabsControl, setTabsControl] = useState({tab: Tabs.Nose, control: 0})
 	const {tab, control} = tabsControl
 	let currentControl: ControlXYType | ControlXType
@@ -206,8 +207,14 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 			}
 
 			const length = Object.keys(TabsControl[tabsControl.tab]).length - 1
-			if (newControl < 0) newControl = 0
-			else if (newControl > length) newControl = length
+			if (newControl < 0) {
+				newControl = 0
+				listRef.current?.scrollBy({ top: -1000, behavior: 'smooth' })
+			}
+			else if (newControl > length) {
+				newControl = length
+				listRef.current?.scrollBy({ top: 1000, behavior: 'smooth' })
+			}
 
 			setTabsControl(prev => ({...prev, control: newControl}))
 		},
@@ -353,7 +360,7 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 						classNames='list'
 						onEntered={() => setIsAnimTab(false)}
 					>
-						<div className="list">
+						<div className="list" ref={listRef}>
 							<div className='content'>
 								<FaceTitle
 									isActive={tabsControl.tab === Tabs.Nose && tabsControl.control >= 0 && tabsControl.control <= 2}
@@ -405,7 +412,7 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 						classNames='list'
 						onEntered={() => setIsAnimTab(false)}
 					>
-						<div className="list">
+						<div className="list" ref={listRef}>
 							<div className="content">
 								<FaceTitle
 									isActive={tabsControl.tab === Tabs.Brows && tabsControl.control === 0}
@@ -435,7 +442,7 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 						classNames='list'
 						onEntered={() => setIsAnimTab(false)}
 					>
-						<div className="list">
+						<div className="list" ref={listRef}>
 							<div className="content">
 								<FaceTitle
 									isActive={tabsControl.tab === Tabs.Jaw && tabsControl.control === 0}
@@ -494,7 +501,7 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 						classNames='Lips'
 						onEntered={() => setIsAnimTab(false)}
 					>
-						<div className="list">
+						<div className="list" ref={listRef}>
 							<div className="content">
 								<FaceTitle
 									isActive={tabsControl.tab === Tabs.Lips && tabsControl.control === 0}
@@ -523,7 +530,7 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 						classNames='list'
 						onEntered={() => setIsAnimTab(false)}
 					>
-						<div className="list">
+						<div className="list" ref={listRef}>
 							<div className="content">
 								<FaceTitle
 									isActive={tabsControl.tab === Tabs.Jowls && tabsControl.control === 0}
@@ -570,7 +577,7 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 						classNames='list'
 						onEntered={() => setIsAnimTab(false)}
 					>
-						<div className="list">
+						<div className="list" ref={listRef}>
 							<div className="content">
 								<FaceTitle
 									isActive={tabsControl.tab === Tabs.Eyes && tabsControl.control === 0}

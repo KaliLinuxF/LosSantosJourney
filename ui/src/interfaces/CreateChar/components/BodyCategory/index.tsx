@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import './styles.sass'
 import {CSSTransition} from "react-transition-group";
 import {useAppDispatch, useAppSelector} from "../../../../hooks/redux";
@@ -32,6 +32,7 @@ const BodyCategory: React.FC<BodyCategoryProps> = ({isAnimIn, title, helper}) =>
 	const [isShowContent, setIsShowContent] = useState(false)
 	const categoryData = data[CharacterDataType.Body]
 	const [control, setControl] = useState(0)
+	const listRef = useRef(null)
 	const currentControl = Controls[control]
 
 	useEffect(() => {
@@ -53,8 +54,14 @@ const BodyCategory: React.FC<BodyCategoryProps> = ({isAnimIn, title, helper}) =>
 			}
 
 			const length = Controls.length - 1
-			if (newControl < 0) newControl = 0
-			else if (newControl > length) newControl = length
+			if (newControl <= 0) {
+				newControl = 0
+				listRef.current?.scrollBy({ top: -1000, behavior: 'smooth' })
+			}
+			else if (newControl >= length) {
+				newControl = length
+				listRef.current?.scrollBy({ top: 1000, behavior: 'smooth' })
+			}
 
 			setControl(newControl)
 		},
@@ -124,7 +131,7 @@ const BodyCategory: React.FC<BodyCategoryProps> = ({isAnimIn, title, helper}) =>
 					<div className='icon icon-3'/>
 				</div>
 				<div className='helper'>{helper}</div>
-				<div className="content">
+				<div className="content" ref={listRef}>
 					<div className="list">
 						{renderSelect(
 							CharacterDataKeys.ageing,
