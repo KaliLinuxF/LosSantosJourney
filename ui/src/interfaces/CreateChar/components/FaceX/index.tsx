@@ -36,14 +36,14 @@ const FaceX: React.FC<FaceXProps> = ({
 	const debounceTimer = useRef(null)
 	const [debounce, setDebounce] = useState(false)
 
-	useEffect(() => {
-		if (isActive && isShowContent) {
-			if (idx === 0)
-				titleRef.current?.scrollIntoView({block: "nearest", behavior: 'smooth'})
-			else
-				nodeRef.current.scrollIntoView({block: "nearest", behavior: 'smooth'})
-		}
-	}, [isActive, isShowContent, idx, titleRef])
+	// useEffect(() => {
+	// 	if (isActive && isShowContent) {
+	// 		if (idx === 0)
+	// 			titleRef.current?.scrollIntoView({block: "nearest", behavior: 'smooth'})
+	// 		else
+	// 			nodeRef.current.scrollIntoView({block: "nearest", behavior: 'smooth'})
+	// 	}
+	// }, [isActive, isShowContent, idx, titleRef])
 
 	useEffect(() => {
 		let {x} = dragData

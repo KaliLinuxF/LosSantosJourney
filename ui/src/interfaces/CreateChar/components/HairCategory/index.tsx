@@ -59,11 +59,15 @@ const HairCategory: React.FC<HairCategoryProps> = ({isAnimIn, title, helper}) =>
 			const length = Controls.length - 1
 			if (newControl <= 0) {
 				newControl = 0
-				listRef.current?.scrollBy({ top: -1000, behavior: 'smooth' })
 			}
 			else if (newControl >= length) {
 				newControl = length
-				listRef.current?.scrollBy({ top: 1000, behavior: 'smooth' })
+			}
+			if(newControl <= 3) {
+				listRef.current?.scrollBy({ top: -9999, behavior: 'smooth' })
+			}
+			else if(newControl >= 4) {
+				listRef.current?.scrollBy({ top: 9999, behavior: 'smooth' })
 			}
 
 			setControl(newControl)

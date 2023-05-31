@@ -36,10 +36,10 @@ const Select: React.FC<SelectProps> = ({
 
 	const min = hasMinus ? -1 : 0
 
-	useEffect(() => {
-		if (isActive && isShowContent)
-			nodeRef.current.scrollIntoView({block: "nearest", behavior: 'smooth'})
-	}, [isActive])
+	// useEffect(() => {
+	// 	if (isActive && isShowContent)
+	// 		nodeRef.current.scrollIntoView({block: "nearest", behavior: 'smooth'})
+	// }, [isActive])
 
 	const handleKeyDown = useCallback(
 		// @ts-ignore

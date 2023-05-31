@@ -207,13 +207,17 @@ const FaceCategory: React.FC<FaceCategoryProps> = ({isAnimIn, title, helper}) =>
 			}
 
 			const length = Object.keys(TabsControl[tabsControl.tab]).length - 1
-			if (newControl < 0) {
+			if (newControl <= 0) {
 				newControl = 0
-				listRef.current?.scrollBy({ top: -1000, behavior: 'smooth' })
 			}
-			else if (newControl > length) {
+			else if (newControl >= length) {
 				newControl = length
-				listRef.current?.scrollBy({ top: 1000, behavior: 'smooth' })
+			}
+			if(newControl <= 1) {
+				listRef.current?.scrollBy({ top: -9999, behavior: 'smooth' })
+			}
+			else if(newControl >= 2) {
+				listRef.current?.scrollBy({ top: 9999, behavior: 'smooth' })
 			}
 
 			setTabsControl(prev => ({...prev, control: newControl}))
