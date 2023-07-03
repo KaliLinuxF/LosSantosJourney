@@ -71,11 +71,12 @@ export class AuthSession {
                 });
                 
                 if(persons.length < 1) {
-                    CharacterEditorServiceHandler.create(this.player).init();
+                    
                 } else {
                     // TODO: Show character selection
                 }
 
+                CharacterEditorServiceHandler.create(this.player).init();
                 break;
             }
         }

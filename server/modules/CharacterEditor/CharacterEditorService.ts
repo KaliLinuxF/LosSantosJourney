@@ -8,6 +8,7 @@ import { CharacterEditorServiceHandler } from "./CharacterEditorServiceHandler";
 import { DefaultCharacterType } from '../../../shared/CharacterCreator/DefaultCharacterDataType';
 import { NotificationTypes, NotificationPositions } from "../../../shared/notifications/types";
 import { showNotify } from "../utils/notify/notify";
+import { NameRegExp } from "../../../shared/CharacterCreator/RegExps";
 
 export class CharacterEditorService {
     id: number;
@@ -35,37 +36,45 @@ export class CharacterEditorService {
         }
 
         if(!firstName) {
-            showNotify(this.player, NotificationTypes.Error, 'Type firstname', 4, NotificationPositions.TopLeft);
+            showNotify(this.player, NotificationTypes.Error, 'Type firstname', 4, NotificationPositions.Bottom);
             return;
         }
 
         if(!lastName) {
-            showNotify(this.player, NotificationTypes.Error, 'Type lastname', 4, NotificationPositions.TopLeft);
+            showNotify(this.player, NotificationTypes.Error, 'Type lastname', 4, NotificationPositions.Bottom);
             return;
         }
 
         if(!gender) {
-            showNotify(this.player, NotificationTypes.Error, 'Choose gender', 4, NotificationPositions.TopLeft);
+            showNotify(this.player, NotificationTypes.Error, 'Choose gender', 4, NotificationPositions.Bottom);
             return;
         }
 
         if(!data) {
-            showNotify(this.player, NotificationTypes.Error, 'Something wrong', 4, NotificationPositions.TopLeft);
+            showNotify(this.player, NotificationTypes.Error, 'Something wrong', 4, NotificationPositions.Bottom);
             return;
         }
 
-        // TODO: check first name and last name
+        // if(!NameRegExp.test(firstName)) {
+        //     showNotify(this.player, NotificationTypes.Error, 'Bad first name', 4, NotificationPositions.Bottom);
+        //     return;
+        // }
 
-        const personWithSameName = await PersonModel.findOne({
-            where: {
-                name: `${firstName} ${lastName}`
-            }
-        });
+        // if(!NameRegExp.test(lastName)) {
+        //     showNotify(this.player, NotificationTypes.Error, 'Bad last name', 4, NotificationPositions.Bottom);
+        //     return;
+        // }
 
-        if(personWithSameName) {
-            showNotify(this.player, NotificationTypes.Error, 'Person with same name already exist', 4, NotificationPositions.TopLeft);
-            return;
-        }
+        // const personWithSameName = await PersonModel.findOne({
+        //     where: {
+        //         name: `${firstName} ${lastName}`
+        //     }
+        // });
+
+        // if(personWithSameName) {
+        //     showNotify(this.player, NotificationTypes.Error, 'Person with same name already exist', 4, NotificationPositions.Bottom);
+        //     return;
+        // }
 
         const person = await PersonModel.create({
             accountId: account.id,

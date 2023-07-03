@@ -35,23 +35,18 @@ BaseEventHandler.get('characterEditor::finish').addHandler(() => {
 });
 
 rpc.register(CreateCharApiEventNames.UpdateCategory, (data: CreateCharApiUpdateCategory) => {
-    mp.console.logInfo('Update category');
     characterEditorService.changeCategory(data.categoryId);
 });
 
 rpc.register(CreateCharApiEventNames.UpdateGender, (data: CreateCharApiUpdateGender) => {
-    mp.console.logInfo('UpdateGender');
     characterEditorService.setGender(data.gender);
 });
 
 rpc.register(CreateCharApiEventNames.Save, (data: CreateCharApiSave) => {
-    mp.console.logInfo(`Save ${JSON.stringify(data)}`);
     characterEditorService.save(data.firstName, data.lastName);
 });
 
 rpc.register(CreateCharApiEventNames.UpdateData, (data: CreateCharApiUpdateData) => {
-    mp.console.logInfo('UpdateData');
-    mp.console.logInfo(`update ${JSON.stringify(data)}`);
     characterEditorService.update(data.type, data.data);
 });
 
@@ -59,6 +54,8 @@ mp.events.add('render', () => {
     if(!characterEditorService) {
         return;
     }
+
+    mp.players.local.taskSetBlockingOfNonTemporaryEvents(true);
 
     mp.game.controls.disableAllControlActions(0);
     mp.game.controls.disableAllControlActions(1);

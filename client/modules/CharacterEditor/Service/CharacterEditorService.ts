@@ -153,11 +153,11 @@ export class CharacterEditorService {
             [CharacterDataType.Body]: this.Body.data,
         }
 
-        mp.events.callRemote('characterEditor:save', [firstName, lastName, this.gender, data]);
+        mp.events.callRemote('characterEditor:save', firstName, lastName, this.gender, data);
     }
 
     destroy() {
         this.cameraController.destroy();
-        this.playerController.destroy();
+        // this.playerController.destroy();
     }
 }
